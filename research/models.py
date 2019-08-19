@@ -1,4 +1,8 @@
+import json
+import requests
 from django.db import models
+
+from timeline.settings import PERMA_KEY, PERMA_FOLDER
 
 
 class Tag(models.Model):
@@ -51,19 +55,37 @@ class Weight(models.Model):
     def __str__(self):
         return "%s: %s" % (self.level, self.description)
 
+
 class Image(models.Model):
     data = models.FileField()
     src = models.ForeignKey('Citation', null=True, related_name='images', on_delete=models.DO_NOTHING)
 
     def __str__(self):
-        return self.id
+        return "%s %s" % (str(self.id), str(self.src.name))
+
 
 class Citation(models.Model):
     name = models.CharField(max_length=800)
     url = models.URLField(blank=True, null=True)
     book_or_article = models.CharField(blank=True, null=True, max_length=2000)
-    archived = models.URLField(blank=True, null=True)
+    archived_url = models.URLField(blank=True, null=True)
+    archived_date = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        if self.url and not self.archived_url:
+            if PERMA_KEY:
+                data = {"url": self.url, "folder": PERMA_FOLDER}
+                res = requests.post("https://api.perma.cc/v1/archives/?api_key=%s" % PERMA_KEY,
+                                    data=json.dumps(data),
+                                    headers={'Content-type': 'application/json'},
+                                    allow_redirects=True)
+
+                if res.status_code == 201:
+                    content = json.loads(res.content.decode())
+                    self.archived_url = "https://perma.cc/%s" % content['guid']
+                    self.archived_date = content['creation_timestamp']
+
+        return super(Citation, self).save(*args, **kwargs)

@@ -121,3 +121,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# PERMA
+PERMA_KEY = "claim your perma key: https://perma.cc/settings/tools"
+PERMA_FOLDER = "0"
