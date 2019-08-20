@@ -15,6 +15,40 @@ class Tag(models.Model):
         return self.name
 
 
+class Citation(models.Model):
+    name = models.CharField(max_length=800)
+    cite = models.CharField(max_length=800, blank=True, null=True)
+    url = models.URLField(blank=True, null=True)
+    book_or_article = models.CharField(blank=True, null=True, max_length=2000)
+    archived_url = models.URLField(blank=True, null=True)
+    archived_date = models.DateTimeField(blank=True, null=True)
+    type = models.CharField(max_length=100, blank=True, null=True,
+                            choices=(("image", "image"),
+                                     ("caselaw", "caselaw"),
+                                     ("webpage", "webpage"),
+                                     ("article", "article"),
+                                     ("book", "book")))
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        if self.url and not self.archived_url:
+            if PERMA_KEY:
+                data = {"url": self.url, "folder": PERMA_FOLDER}
+                res = requests.post("https://api.perma.cc/v1/archives/?api_key=%s" % PERMA_KEY,
+                                    data=json.dumps(data),
+                                    headers={'Content-type': 'application/json'},
+                                    allow_redirects=True)
+
+                if res.status_code == 201:
+                    content = json.loads(res.content.decode())
+                    self.archived_url = "https://perma.cc/%s" % content['guid']
+                    self.archived_date = content['creation_timestamp']
+
+        return super(Citation, self).save(*args, **kwargs)
+
+
 class Event(models.Model):
     name = models.CharField(max_length=1000)
     date = models.DateTimeField(null=True, blank=True)
@@ -35,6 +69,7 @@ class KeyEvent(models.Model):
     date_end = models.DateTimeField(null=True, blank=True)
     description_long = models.TextField(blank=True)
     description_short = models.CharField(max_length=800, blank=True)
+    citations = models.ManyToManyField(Citation, blank=True)
 
     def __str__(self):
         return self.name
@@ -62,30 +97,3 @@ class Image(models.Model):
 
     def __str__(self):
         return "%s %s" % (str(self.id), str(self.src.name))
-
-
-class Citation(models.Model):
-    name = models.CharField(max_length=800)
-    url = models.URLField(blank=True, null=True)
-    book_or_article = models.CharField(blank=True, null=True, max_length=2000)
-    archived_url = models.URLField(blank=True, null=True)
-    archived_date = models.DateTimeField(blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-    def save(self, *args, **kwargs):
-        if self.url and not self.archived_url:
-            if PERMA_KEY:
-                data = {"url": self.url, "folder": PERMA_FOLDER}
-                res = requests.post("https://api.perma.cc/v1/archives/?api_key=%s" % PERMA_KEY,
-                                    data=json.dumps(data),
-                                    headers={'Content-type': 'application/json'},
-                                    allow_redirects=True)
-
-                if res.status_code == 201:
-                    content = json.loads(res.content.decode())
-                    self.archived_url = "https://perma.cc/%s" % content['guid']
-                    self.archived_date = content['creation_timestamp']
-
-        return super(Citation, self).save(*args, **kwargs)
