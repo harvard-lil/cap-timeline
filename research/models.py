@@ -2,7 +2,7 @@ import json
 import requests
 from django.db import models
 
-from timeline.settings import PERMA_KEY, PERMA_FOLDER
+from timeline.settings import PERMA_KEY, PERMA_FOLDER, STORAGES
 
 
 class Tag(models.Model):
@@ -51,33 +51,32 @@ class Citation(models.Model):
 
 class Event(models.Model):
     name = models.CharField(max_length=1000)
-    date = models.DateTimeField(null=True, blank=True)
+    start_date = models.DateField(null=True, blank=True)
+    end_date = models.DateField(null=True, blank=True)
     citation = models.ForeignKey('Citation', null=True, blank=True, related_name='events', on_delete=models.DO_NOTHING)
     weight = models.ForeignKey('Weight', null=True, blank=True, related_name='events', on_delete=models.DO_NOTHING)
     image = models.ForeignKey('Image', null=True, blank=True, related_name='events', on_delete=models.DO_NOTHING)
     description_long = models.TextField(blank=True)
     description_short = models.CharField(max_length=800, blank=True)
     tags = models.ManyToManyField(Tag, blank=True)
-
-    def __str__(self):
-        return self.name
-
-
-class KeyEvent(models.Model):
-    name = models.CharField(max_length=1000)
-    date_start = models.DateTimeField(null=True, blank=True)
-    date_end = models.DateTimeField(null=True, blank=True)
-    description_long = models.TextField(blank=True)
-    description_short = models.CharField(max_length=800, blank=True)
-    citations = models.ManyToManyField(Citation, blank=True)
+    hide = models.BooleanField(default=False)
+    type = models.CharField(blank=True, null=True, max_length=100,
+                            choices=(("us_event", "us_event"),
+                                     ("international_event", "international_event"),
+                                     ("legislature", "legislature"),
+                                     ("caselaw", "caselaw")))
 
     def __str__(self):
         return self.name
 
 
 class Finding(models.Model):
+    """
+        Editorializing events
+    """
     description_short = models.CharField(max_length=1000, blank=True)
     description_long = models.TextField(blank=True)
+    events = models.ManyToManyField(Event, blank=True)
 
     def __str__(self):
         return self.description_short
@@ -92,8 +91,12 @@ class Weight(models.Model):
 
 
 class Image(models.Model):
-    data = models.FileField()
+    data = models.FileField(storage=STORAGES['image_storage'])
     src = models.ForeignKey('Citation', null=True, related_name='images', on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return "%s %s" % (str(self.id), str(self.src.name))
+
+    def save(self, *args, **kwargs):
+        self.src.type = 'image'
+        return super(Image, self).save(*args, **kwargs)

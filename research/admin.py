@@ -1,9 +1,12 @@
 from django.contrib import admin
-from research.models import Event, KeyEvent, Finding, Weight, Image, Citation, Tag
+from research.models import Event, Finding, Weight, Image, Citation, Tag
 
 
-admin.site.register(Event)
-admin.site.register(KeyEvent)
+@admin.register(Event)
+class EventAdmin(admin.ModelAdmin):
+    list_display = ['name', 'start_date', 'type', 'id']
+
+
 admin.site.register(Finding)
 admin.site.register(Weight)
 admin.site.register(Image)
