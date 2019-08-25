@@ -2,8 +2,15 @@ requests
 
 psycopg2-binary
 
+libsasscompiler
+
 django
 django-storages
+django-pipeline
+django-libsass
+django-webpack-loader
+django-cors-headers
 
+pytz
 pip-tools
 Fabric3

@@ -5,5 +5,7 @@ from research import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index)
+    path('', views.index),
+    path('events', views.events),
+    path('events/<int:event_id>', views.event),
 ]

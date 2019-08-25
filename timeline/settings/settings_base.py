@@ -14,7 +14,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -25,21 +24,30 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
-
+    'corsheaders',
+    'compressor',
+    'pipeline',
     'research',
     'storages',  # http://django-storages.readthedocs.io/en/latest/index.html
+    'webpack_loader',
 
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:8080"
+]
+
 
 ROOT_URLCONF = 'timeline.urls'
 
@@ -58,6 +66,9 @@ TEMPLATES = [
         },
     },
 ]
+
+TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+FRONTEND_DIR = os.path.join(BASE_DIR, 'frontend')
 
 WSGI_APPLICATION = 'timeline.wsgi.application'
 
@@ -109,18 +120,37 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+# STATIC_URL = '/static/'
+
+PIPELINE = {
+    'COMPILERS': (
+        'libsasscompiler.LibSassCompiler',
+    ),
+    'STYLESHEETS': {
+    }
+}
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "../static"),
-    '/var/www/static/',
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, "../static"),
+#     '/var/www/static/',
+# ]
 
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': DEBUG,
+        'BUNDLE_DIR_NAME': '/bundles/',  # must end with slash
+        'STATS_FILE': os.path.join(FRONTEND_DIR, 'webpack-stats.json'),
+    }
+}
 
+DB_DIR = os.path.join(BASE_DIR, 'db-files')
 STORAGES = {
     'image_storage': {
         'class': 'FileSystemStorage',
         'kwargs': {
-            'location': os.path.join(BASE_DIR, 'db-files/images'),
+            'location': '%s/images' % DB_DIR,
         },
     },
 }

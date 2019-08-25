@@ -1,6 +1,7 @@
 import json
 import requests
 from django.db import models
+from django.core import serializers
 
 from timeline.settings import PERMA_KEY, PERMA_FOLDER, STORAGES
 
@@ -12,6 +13,9 @@ class Tag(models.Model):
     date_end = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
+        return self.name
+
+    def as_json(self):
         return self.name
 
 
@@ -31,6 +35,17 @@ class Citation(models.Model):
 
     def __str__(self):
         return self.name
+
+    def as_json(self):
+        return dict(
+            name=self.name,
+            cite=self.cite,
+            url=self.url,
+            book_or_article=self.book_or_article,
+            archived_url=self.archived_url,
+            archived_date=str(self.archived_date),
+            type=self.type
+        )
 
     def save(self, *args, **kwargs):
         if self.url and not self.archived_url:
@@ -68,6 +83,19 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
+
+    def as_json(self):
+        return dict(
+            id=self.id,
+            name=self.name,
+            start_date=str(self.start_date),
+            citation=self.citation.as_json(),
+            type=self.type,
+            hide=self.hide,
+            description_long=self.description_long,
+            description_short=self.description_short,
+            tags=[tag.as_json() for tag in self.tags.all()],
+        )
 
 
 class Finding(models.Model):
