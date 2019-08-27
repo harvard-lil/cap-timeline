@@ -14,7 +14,7 @@
     "popper.js": "^1.15.0",
     "vue": "^2.6.10",
     "vue-resource": "^1.5.1",
-    "vuetify": "^2.0.0"
+    "vue-router": "^3.0.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.10.0",
@@ -29,7 +29,6 @@
     "style-loader": "^1.0.0",
     "vue-cli-plugin-vuetify": "^0.6.3",
     "vue-template-compiler": "^2.6.10",
-    "vuetify-loader": "^1.2.2",
     "webpack-bundle-tracker": "^0.4.2-beta"
   },
   "eslintConfig": {

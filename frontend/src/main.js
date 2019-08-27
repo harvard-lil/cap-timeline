@@ -1,15 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
-import vuetify from './plugins/vuetify';
 import Resource from 'vue-resource';
-import 'bootstrap';
 import './assets/css/styles.scss';
+import router from '../router';
 
 
 Vue.use(Resource);
 Vue.config.productionTip = false;
 
 new Vue({
-  vuetify,
+  router: router,
   render: h => h(App),
 }).$mount("#app");

@@ -1,3 +1,68 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/utilities/flex";
+@import "~bootstrap/scss/utilities/text";
+@import "~bootstrap/scss/buttons";
+@import "~bootstrap/scss/type";
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/nav";
+@import "~bootstrap/scss/alert";
+
+@import "_fonts";
+@import "_variables";
+
 body {
-  background: pink;
+  font-family: $font-family-sans-serif;
+  color: $color-black;
+}
+
+main {
+  padding: 48px 0 0;
+
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  padding: 4em 0 0;
+  li {
+    list-style: none;
+  }
+}
+
+.sidebar-sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: .5rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.year-list {
+  li {
+    cursor: pointer;
+  }
+}
+
+.event-list {
+  li {
+    list-style: none;
+  }
+}
+.event-container {
+  border: 1px solid $color-black;
+  padding: 1em;
+  list-style: none;
+  margin: 2em;
+}
+
+.text-bold {
+  font-weight: 700;
 }
