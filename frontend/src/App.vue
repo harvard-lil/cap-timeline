@@ -9,9 +9,14 @@
       <nav class="sidebar d-none d-md-block col-md-2">
         <div class="sidebar-sticky">
           <ul class="year-list">
-            <li v-on:click="setCurrentYear(year)"
-                v-for="year in years" :key="year">
-              {{ year }}
+            <li v-for="year in years" :key="year" class="year">
+              <span v-if="currentYear === year" class="active selected">
+                {{ year }}
+              </span>
+              <span v-else-if="activeYears.includes(year)"
+                    @click="setCurrentYear(year)"
+                    class="active">{{ year }}</span>
+              <span v-else>{{ year }}</span>
             </li>
           </ul>
         </div>
@@ -40,21 +45,19 @@
       getData() {
         this.$http.get('http://localhost:8000/events')
             .then((response) => {
-              this.events = response.body
-              this.getDates();
-            }, response => {
-              // error callback
+              this.events = response.body;
             })
       },
-      getDates() {
-        for (let i = 0; i < this.events.length; i++) {
-          let year = Number(this.events[i]['start_date'].split('-')[0]);
-          this.minYear = year < this.minYear ? year : this.minYear;
-          this.maxYear = year > this.maxYear ? year : this.maxYear;
-        }
-        this.getYears()
+      getActiveYears() {
+        this.$http.get('http://localhost:8000/years')
+            .then((response) => {
+              this.activeYears = response.body;
+              this.minYear = this.activeYears[0];
+              this.maxYear = this.activeYears[this.activeYears.length - 1];
+              this.backfillYears();
+            })
       },
-      getYears() {
+      backfillYears() {
         for (let i = 0; i < this.maxYear - this.minYear + 1; i++) {
           this.years.push(this.minYear + i)
         }
@@ -73,15 +76,16 @@
         events: {},
         minYear: 9999,
         maxYear: 0,
+        activeYears: [],
         years: [],
         currentYear: undefined,
       }
     }
     ,
     created() {
-      this.getData()
-    }
-    ,
+      this.getData();
+      this.getActiveYears()
+    },
   }
   ;
 </script>

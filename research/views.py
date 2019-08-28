@@ -21,3 +21,9 @@ def events(request):
 def event(request, event_id):
     one_event = json.dumps(Event.objects.get(id=event_id).as_json())
     return HttpResponse(one_event, content_type='application/json')
+
+
+def years(request):
+    all_events = Event.objects.all()
+    all_years = [event_instance.start_date.year for event_instance in all_events]
+    return HttpResponse(json.dumps(sorted(set(all_years))), content_type='application/json')

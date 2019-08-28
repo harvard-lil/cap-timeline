@@ -1,8 +1,9 @@
 <template>
-  <div v-show=!hide class="event-container">
+  <div v-show=!hide class="event-container" :class="'event-type-' + data.type">
     <h3>{{ data.name }}</h3>
-    <p class="text-bold">{{ data.start_date }}</p>
+    <p class="text-semibold">{{ data.start_date_parsed }}</p>
     <p>{{ data.description_short }}</p>
+    <p>{{ data.type }}</p>
   </div>
 </template>
 
@@ -25,10 +26,10 @@
       currentYear() {
         this.hide = this.currentYear && this.year !== this.currentYear;
       }
+    },
+    beforeMount() {
+      let date = new Date(this.data.start_date);
+      return "" + date.getMonth()
     }
   }
 </script>
-
-<style scoped>
-
-</style>

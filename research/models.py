@@ -1,5 +1,6 @@
 import json
 import requests
+from datetime import datetime
 from django.db import models
 from django.core import serializers
 
@@ -78,7 +79,7 @@ class Event(models.Model):
     type = models.CharField(blank=True, null=True, max_length=100,
                             choices=(("us_event", "us_event"),
                                      ("international_event", "international_event"),
-                                     ("legislature", "legislature"),
+                                     ("legislation", "legislation"),
                                      ("caselaw", "caselaw")))
 
     def __str__(self):
@@ -89,6 +90,7 @@ class Event(models.Model):
             id=self.id,
             name=self.name,
             start_date=str(self.start_date),
+            start_date_parsed=self.start_date.strftime("%B %d, %Y"),
             citation=self.citation.as_json(),
             type=self.type,
             hide=self.hide,

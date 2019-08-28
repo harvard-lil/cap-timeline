@@ -24,7 +24,7 @@ def run_django(port="127.0.0.1:8000"):
 def create_json():
     from research.models import Event
     events = Event.objects.select_related('citation', 'image', 'weight').all()
-    all_events = [event.as_json() for event in events if event.hide == False]
+    all_events = [event.as_json() for event in events if event.hide is False]
     storage_dir = os.path.join(settings.DB_DIR, 'json')
     with open(os.path.join(storage_dir, 'events.json'), 'w+') as f:
         json.dump(all_events, f)
