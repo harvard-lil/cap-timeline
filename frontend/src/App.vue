@@ -6,7 +6,7 @@
       </a>
     </nav>
     <div clss="row">
-      <nav class="sidebar d-none d-md-block col-md-2">
+      <nav class="sidebar d-none d-md-block col-md-1">
         <div class="sidebar-sticky">
           <ul class="year-list">
             <li v-for="year in years" :key="year" class="year">
@@ -21,7 +21,7 @@
           </ul>
         </div>
       </nav>
-      <main class="col-md-9 ml-sm-auto col-lg-10">
+      <main class="col-md-10 ml-sm-auto col-lg-10">
         <ul class="event-list">
           <li class="event"
               v-for="eventObj in events"
@@ -45,7 +45,9 @@
       getData() {
         this.$http.get('http://localhost:8000/events')
             .then((response) => {
-              this.events = response.body;
+              this.events = response.body.sort((a, b) => {
+                return this.getYear(a.start_date) - this.getYear(b.start_date)
+              });
             })
       },
       getActiveYears() {
@@ -80,8 +82,7 @@
         years: [],
         currentYear: undefined,
       }
-    }
-    ,
+    },
     created() {
       this.getData();
       this.getActiveYears()
