@@ -1,8 +1,6 @@
 import json
 import requests
-from datetime import datetime
 from django.db import models
-from django.core import serializers
 
 from timeline.settings import PERMA_KEY, PERMA_FOLDER, STORAGES
 
@@ -65,6 +63,20 @@ class Citation(models.Model):
         return super(Citation, self).save(*args, **kwargs)
 
 
+class Relationship(models.Model):
+    head = models.ForeignKey('Event', on_delete=models.DO_NOTHING, related_name='heads')
+    tail = models.ForeignKey('Event', on_delete=models.DO_NOTHING, related_name='tails')
+    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return "%s related to %s" % (self.head.name, self.tail.name)
+
+    def post_save(self, *args, **kwargs):
+        self.head.relationships.add(self.id)
+        self.tail.relationships.add(self.id)
+        return super(Relationship, self).save(*args, **kwargs)
+
+
 class Event(models.Model):
     name = models.CharField(max_length=1000)
     start_date = models.DateField(null=True, blank=True)
@@ -75,6 +87,7 @@ class Event(models.Model):
     description_long = models.TextField(blank=True)
     description_short = models.CharField(max_length=800, blank=True)
     tags = models.ManyToManyField(Tag, blank=True)
+    relationships = models.ManyToManyField(Relationship, blank=True)
     hide = models.BooleanField(default=False)
     type = models.CharField(blank=True, null=True, max_length=100,
                             choices=(("us_event", "us_event"),
