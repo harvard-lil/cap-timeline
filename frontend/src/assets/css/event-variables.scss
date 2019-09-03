@@ -1,0 +1,17 @@
+$legislation: $color-purple;
+$caselaw: $color-navy;
+$world-event: $color-green;
+$us-event: $color-red;
+
+.event-container {
+  &.event-type-legislation {
+    border: 1px solid $color-red;
+  }
+  &.event-type-caselaw {
+    border: 1px solid $color-turquoise;
+  }
+}
+
+@mixin event-border($type) {
+  border: 1px solid $type;
+}

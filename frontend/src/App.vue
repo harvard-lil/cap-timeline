@@ -9,6 +9,12 @@
       <nav class="sidebar d-none d-md-block col-md-1">
         <div class="sidebar-sticky">
           <ul class="year-list">
+            <li class="year">
+              <span @click="setCurrentYear(undefined)"
+                    :class="currentYear === undefined ? 'active selected' :  'active'">
+                ALL
+              </span>
+            </li>
             <li v-for="year in years" :key="year" class="year">
               <span v-if="currentYear === year" class="active selected">
                 {{ year }}
@@ -66,13 +72,16 @@
       },
       getYear(date) {
         return Number(date.split('-')[0])
-
       },
       setCurrentYear(year) {
         this.currentYear = year;
+        if (year)
+          this.$router.push({name: 'events', query: {year: year}});
+        else {
+          this.$router.push({name: 'events'})
+        }
       }
-    }
-    ,
+    },
     data() {
       return {
         events: {},
@@ -80,13 +89,13 @@
         maxYear: 0,
         activeYears: [],
         years: [],
-        currentYear: undefined,
+        currentYear: Number(this.$route.query.year),
       }
     },
+
     created() {
       this.getData();
-      this.getActiveYears()
+      this.getActiveYears();
     },
-  }
-  ;
+  };
 </script>

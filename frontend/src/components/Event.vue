@@ -21,13 +21,17 @@
       getYear() {
         return Number(this.data.start_date.split('-')[0])
       },
-    },
-    watch: {
-      currentYear() {
+      hideOrShow() {
         this.hide = this.currentYear && this.year !== this.currentYear;
       }
     },
+    watch: {
+      currentYear() {
+        this.hideOrShow();
+      }
+    },
     beforeMount() {
+      this.hideOrShow();
       let date = new Date(this.data.start_date);
       return "" + date.getMonth()
     }
