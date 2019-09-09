@@ -25,5 +25,10 @@ def event(request, event_id):
 
 def years(request):
     all_events = Event.objects.filter(hide=False).order_by('start_date')
-    all_years = [event_instance.start_date.year for event_instance in all_events]
-    return HttpResponse(json.dumps(sorted(set(all_years))), content_type='application/json')
+    all_years = set()
+    for event_instance in all_events:
+        if event_instance.end_date:
+            years = range(event_instance.start_date.year, event_instance.end_date.year)
+            all_years = all_years.union(set(years))
+
+    return HttpResponse(json.dumps(sorted(all_years)), content_type='application/json')

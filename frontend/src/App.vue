@@ -1,44 +1,44 @@
 <template>
-  <div class="container-fluid">
-    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">
-        Immigration in U.S.
-      </a>
+  <div class="app-container">
+    <nav class="navbar navbar-dark fixed-top">
+      <div class="navbar-brand">
+        <a href="#">
+          Immigration in U.S.
+        </a>
+      </div>
     </nav>
-    <div clss="row">
-      <nav class="sidebar d-none d-md-block col-md-1">
-        <div class="sidebar-sticky">
-          <ul class="year-list">
-            <li class="year">
+    <nav class="sidebar">
+      <div class="sidebar-sticky">
+        <ul class="year-list">
+          <li class="year">
               <span @click="setCurrentYear(undefined)"
                     :class="currentYear === undefined ? 'active selected' :  'active'">
                 ALL
               </span>
-            </li>
-            <li v-for="year in years" :key="year" class="year">
+          </li>
+          <li v-for="year in years" :key="year" class="year">
               <span v-if="currentYear === year" class="active selected">
                 {{ year }}
               </span>
-              <span v-else-if="activeYears.includes(year)"
-                    @click="setCurrentYear(year)"
-                    class="active">{{ year }}</span>
-              <span v-else>{{ year }}</span>
-            </li>
-          </ul>
-        </div>
-      </nav>
-      <main class="col-md-10 ml-sm-auto col-lg-10">
-        <ul class="event-list">
-          <li class="event"
-              v-for="eventObj in events"
-              :key="eventObj.id">
-            <event :currentYear="currentYear"
-                   :data="eventObj">
-            </event>
+            <span v-else-if="activeYears.includes(year)"
+                  @click="setCurrentYear(year)"
+                  class="active">{{ year }}</span>
+            <span v-else>{{ year }}</span>
           </li>
         </ul>
-      </main>
-    </div>
+      </div>
+    </nav>
+    <main class="main">
+      <ul class="event-list">
+        <li class="event"
+            v-for="eventObj in events"
+            :key="eventObj.id">
+          <event :currentYear="currentYear"
+                 :data="eventObj">
+          </event>
+        </li>
+      </ul>
+    </main>
   </div>
 </template>
 <script>

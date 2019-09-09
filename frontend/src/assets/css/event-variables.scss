@@ -1,17 +1,24 @@
-// define colors
-$event-types: 'legislation', 'caselaw', 'world-event', 'us-event';
+$event-types: 'legislation', 'caselaw', 'world', 'us';
 
+// define colors
 $event-colors: (
         'legislation': $color-purple,
         'caselaw': $color-turquoise,
-        'world-event': $color-green,
-        'us-event': $color-red
+        'world': $color-green,
+        'us': $color-red
 );
 
-
+// event border colors
 @each $event-name, $event-color-value in $event-colors {
   .event-container.event-type-#{$event-name} {
     border: 1px solid #{$event-color-value};
   }
 }
 
+// symbol colors
+@each $event-name, $event-color-value in $event-colors {
+  .event-symbol.event-type-#{$event-name} {
+    fill: $event-color-value;
+    margin-bottom: -3px;
+  }
+}

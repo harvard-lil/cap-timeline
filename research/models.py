@@ -90,8 +90,8 @@ class Event(models.Model):
     relationships = models.ManyToManyField(Relationship, blank=True)
     hide = models.BooleanField(default=False)
     type = models.CharField(blank=True, null=True, max_length=100,
-                            choices=(("us_event", "us_event"),
-                                     ("international_event", "international_event"),
+                            choices=(("us", "us"),
+                                     ("world", "world"),
                                      ("legislation", "legislation"),
                                      ("caselaw", "caselaw")))
 
@@ -99,12 +99,18 @@ class Event(models.Model):
         return self.name
 
     def as_json(self):
+        citation = self.citation.as_json() if self.citation else None
+        end_date = str(self.end_date) if self.end_date else None
+        end_date_parsed = self.end_date.strftime("%B %d, %Y") if end_date else None
+
         return dict(
             id=self.id,
             name=self.name,
             start_date=str(self.start_date),
             start_date_parsed=self.start_date.strftime("%B %d, %Y"),
-            citation=self.citation.as_json(),
+            end_date=end_date,
+            end_date_parsed=end_date_parsed,
+            citation=citation,
             type=self.type,
             hide=self.hide,
             description_long=self.description_long,
