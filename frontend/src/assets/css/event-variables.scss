@@ -1,17 +1,17 @@
-$legislation: $color-purple;
-$caselaw: $color-navy;
-$world-event: $color-green;
-$us-event: $color-red;
+// define colors
+$event-types: 'legislation', 'caselaw', 'world-event', 'us-event';
 
-.event-container {
-  &.event-type-legislation {
-    border: 1px solid $color-red;
-  }
-  &.event-type-caselaw {
-    border: 1px solid $color-turquoise;
+$event-colors: (
+        'legislation': $color-purple,
+        'caselaw': $color-turquoise,
+        'world-event': $color-green,
+        'us-event': $color-red
+);
+
+
+@each $event-name, $event-color-value in $event-colors {
+  .event-container.event-type-#{$event-name} {
+    border: 1px solid #{$event-color-value};
   }
 }
 
-@mixin event-border($type) {
-  border: 1px solid $type;
-}
