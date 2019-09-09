@@ -1,11 +1,13 @@
 import Vue from 'vue'
-import App from './App.vue'
+import VueSVGIcon from 'vue-svgicon'
 import Resource from 'vue-resource';
-import './assets/css/styles.scss';
+import App from './App.vue'
 import router from '../router';
+import './assets/css/styles.scss';
 
 
 Vue.use(Resource);
+Vue.use(VueSVGIcon);
 Vue.config.productionTip = false;
 
 new Vue({
