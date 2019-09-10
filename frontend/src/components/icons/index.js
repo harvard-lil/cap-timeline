@@ -1,7 +1,11 @@
 /* eslint-disable */
 require('./circle')
 require('./diamond')
+require('./hexagon')
+require('./key')
 require('./polygon')
 require('./square')
 require('./star')
+require('./star5')
+require('./star8')
 require('./triangle')
