@@ -29,24 +29,13 @@
       </div>
     </nav>
     <main class="main">
-      <ul class="event-list">
-        <li class="event"
-            v-for="eventObj in events"
-            :key="eventObj.id">
-          <event :currentYear="currentYear"
-                 :data="eventObj">
-          </event>
-        </li>
-      </ul>
+      <router-view></router-view>
     </main>
   </div>
 </template>
 <script>
-  import Event from "./components/Event"
-
   export default {
     name: 'App',
-    components: {Event,},
     methods: {
       getData() {
         this.$http.get('http://localhost:8000/events')

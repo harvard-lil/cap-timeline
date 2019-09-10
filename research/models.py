@@ -100,19 +100,30 @@ class Event(models.Model):
 
     def as_json(self):
         citation = self.citation.as_json() if self.citation else None
+
+        start_date = str(self.start_date)
+        start_date_parsed = self.start_date.strftime("%B %d, %Y") if self.start_date else None
+
         end_date = str(self.end_date) if self.end_date else None
-        end_date_parsed = self.end_date.strftime("%B %d, %Y") if end_date else None
+        end_date_parsed = self.end_date.strftime("%B %d, %Y") if self.end_date else None
+
+        relationships = []
+        if self.relationships.count():
+            for relationship in self.relationships.all():
+                rel = relationship.tail if relationship.head.id == self.id else relationship.head
+                relationships.append([rel.id, rel.type])
 
         return dict(
             id=self.id,
             name=self.name,
-            start_date=str(self.start_date),
-            start_date_parsed=self.start_date.strftime("%B %d, %Y"),
+            start_date=start_date,
+            start_date_parsed=start_date_parsed,
             end_date=end_date,
             end_date_parsed=end_date_parsed,
             citation=citation,
             type=self.type,
             hide=self.hide,
+            relationships=relationships,
             description_long=self.description_long,
             description_short=self.description_short,
             tags=[tag.as_json() for tag in self.tags.all()],
