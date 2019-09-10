@@ -79,11 +79,13 @@
           this.endYear = Number(this.data.end_date.split('-')[0])
         }
       },
-      hideOrShow() {
+      hideByYear() {
+        // hides event if year selected is not event's year
         if (!this.currentYear) {
           this.hide = false;
           return
         }
+        this.zoomInEvent = false;
         if (this.endYear) {
           this.hide = !(this.currentYear >= this.startYear && this.currentYear <= this.endYear);
           return
@@ -94,11 +96,12 @@
     },
     watch: {
       currentYear() {
-        this.hideOrShow();
+        this.hideByYear();
       },
       zoomInEvent() {
         if (!this.zoomInEvent) {
           this.hide = false;
+          this.hideByYear();
           return
         }
         if (this.zoomInEvent.id === this.data.id) {
@@ -117,7 +120,7 @@
     },
     beforeMount() {
       this.getYears();
-      this.hideOrShow();
+      this.hideByYear();
       let date = new Date(this.data.start_date);
       return "" + date.getMonth()
     }
