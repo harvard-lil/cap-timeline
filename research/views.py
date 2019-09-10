@@ -3,7 +3,7 @@ import json
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from research.models import Event
+from research.models import Event, Group
 from timeline import settings
 
 
@@ -38,3 +38,8 @@ def years(request):
             all_years.add(event_instance.start_date.year)
 
     return HttpResponse(json.dumps(sorted(all_years)), content_type='application/json')
+
+
+def groups(request):
+    groups = Group.objects.values_list('name', flat=True)
+    return HttpResponse(json.dumps(list(groups)), content_type='application/json')

@@ -128,3 +128,58 @@ main {
   list-style: none;
   margin: 2em;
 }
+
+.key-container {
+  position: fixed;
+  right: 0;
+}
+
+.key-container {
+  cursor: pointer;
+  padding: 0.5em;
+
+  .key-icon {
+    position: fixed;
+    margin-top: -1em;
+    right: 1em;
+    .inner-circle, .outer-circle {
+      fill: $color-black;
+    }
+    .key {
+      fill: $color-white;
+    }
+  }
+  &.open {
+    background-color: $color-black;
+    color: $color-white;
+    right: 40px;
+    .key-icon {
+      transform: rotate(180deg);
+      margin-left: 50px;
+    }
+    .key {
+      fill: $color-yellow;
+    }
+  }
+}
+
+.key-container > .key-content {
+  padding: 0.8em 0.8em 0;
+  ul {
+    padding: 0;
+    li {
+      list-style: none;
+      line-height: 2em;
+      font-weight: $font-weight-semibold;
+    }
+  }
+}
+
+.selectable-group {
+  .group-name {
+    color: red;
+    &.active {
+      color: white;
+    }
+  }
+}

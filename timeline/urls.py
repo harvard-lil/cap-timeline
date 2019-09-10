@@ -9,4 +9,5 @@ urlpatterns = [
     path('events', views.events),
     path('events/<int:event_id>', views.event),
     path('years', views.years),
+    path('groups', views.groups),
 ]

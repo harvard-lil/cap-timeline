@@ -1,5 +1,5 @@
 from django.contrib import admin
-from research.models import Event, Finding, Weight, Image, Citation, Tag, Relationship
+from research.models import Event, Finding, Weight, Image, Citation, Group, Relationship
 
 
 @admin.register(Event)
@@ -12,4 +12,4 @@ admin.site.register(Relationship)
 admin.site.register(Weight)
 admin.site.register(Image)
 admin.site.register(Citation)
-admin.site.register(Tag)
+admin.site.register(Group)

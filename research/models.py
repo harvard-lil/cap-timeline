@@ -5,8 +5,8 @@ from django.db import models
 from timeline.settings import PERMA_KEY, PERMA_FOLDER, STORAGES
 
 
-class Tag(models.Model):
-    name = models.CharField(max_length=1000)
+class Group(models.Model):
+    name = models.CharField(max_length=1000, unique=True)
     description = models.TextField(blank=True)
     date_start = models.DateTimeField(null=True, blank=True)
     date_end = models.DateTimeField(null=True, blank=True)
@@ -86,7 +86,7 @@ class Event(models.Model):
     image = models.ForeignKey('Image', null=True, blank=True, related_name='events', on_delete=models.DO_NOTHING)
     description_long = models.TextField(blank=True)
     description_short = models.CharField(max_length=800, blank=True)
-    tags = models.ManyToManyField(Tag, blank=True)
+    groups = models.ManyToManyField(Group, blank=True)
     relationships = models.ManyToManyField(Relationship, blank=True)
     hide = models.BooleanField(default=False)
     type = models.CharField(blank=True, null=True, max_length=100,
@@ -126,7 +126,7 @@ class Event(models.Model):
             relationships=relationships,
             description_long=self.description_long,
             description_short=self.description_short,
-            tags=[tag.as_json() for tag in self.tags.all()],
+            groups_affected=[group.as_json() for group in self.groups.all()],
         )
 
 

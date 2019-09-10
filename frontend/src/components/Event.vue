@@ -70,9 +70,6 @@
       }
     },
     methods: {
-      getDetailsOfEvent() {
-        console.log("getDetailsOfEvent")
-      },
       getYears() {
         this.startYear = Number(this.data.start_date.split('-')[0]);
         if (this.data.end_date) {
@@ -92,13 +89,8 @@
         }
         this.hide = this.startYear !== this.currentYear;
       },
-
-    },
-    watch: {
-      currentYear() {
-        this.hideByYear();
-      },
-      zoomInEvent() {
+      updateIfZoomedIn() {
+        console.log("zoomed in?", this.zoomInEvent);
         if (!this.zoomInEvent) {
           this.hide = false;
           this.hideByYear();
@@ -108,7 +100,7 @@
           this.hide = false;
           return
         }
-        let relationships = this.zoomInEvent.relationships
+        let relationships = this.zoomInEvent.relationships;
         for (let i = 0; i < relationships.length; i++) {
           if (relationships[i][0] === this.data.id) {
             this.hide = false;
@@ -117,10 +109,21 @@
         }
         this.hide = true;
       }
+
+    },
+    watch: {
+      currentYear() {
+        this.hideByYear();
+      },
+      zoomInEvent() {
+        this.updateIfZoomedIn();
+      },
     },
     beforeMount() {
       this.getYears();
       this.hideByYear();
+      this.updateIfZoomedIn();
+
       let date = new Date(this.data.start_date);
       return "" + date.getMonth()
     }
