@@ -38,6 +38,13 @@
       },
     },
     methods: {
+       getGroups() {
+        let url = 'http://localhost:8000/groups';
+        this.$http.get(url)
+            .then((response) => {
+              this.groups = response.body;
+            })
+      },
       getDetails(event) {
         this.zoomInEvent = event;
         this.$router.push({name: 'events', query: {event: event.id}});
@@ -58,7 +65,6 @@
               }
             }
           }
-
         })
 
       },
@@ -68,6 +74,7 @@
     },
     beforeMount() {
       this.getData();
+      this.getGroups();
     },
   }
 </script>

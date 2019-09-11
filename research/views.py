@@ -41,5 +41,5 @@ def years(request):
 
 
 def groups(request):
-    groups = Group.objects.values_list('name', flat=True)
-    return HttpResponse(json.dumps(list(groups)), content_type='application/json')
+    all_groups = Group.objects.values_list('slug', flat=True)
+    return HttpResponse(json.dumps(list(all_groups)), content_type='application/json')

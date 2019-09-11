@@ -1,6 +1,5 @@
 <template>
   <div v-show=!hide
-       @click="getDetailsOfEvent()"
        class="event-container"
        :class="'event-type-' + data.type">
     <div class="row">
@@ -36,6 +35,7 @@
           </li>
         </ul>
       </div>
+      <div class>{{data.groups}}</div>
 
     </div>
   </div>
@@ -55,6 +55,7 @@
         startYear: null,
         endYear: null,
         hide: false,
+        groups: [],
         symbolTranslation: {
           legislation: 'diamond',
           caselaw: 'triangle',
@@ -90,7 +91,6 @@
         this.hide = this.startYear !== this.currentYear;
       },
       updateIfZoomedIn() {
-        console.log("zoomed in?", this.zoomInEvent);
         if (!this.zoomInEvent) {
           this.hide = false;
           this.hideByYear();
@@ -118,12 +118,26 @@
       zoomInEvent() {
         this.updateIfZoomedIn();
       },
+      '$route'(to) {
+        if (!this.groups.length) {
+
+          return;
+        }
+        for (let i = 0; i < this.groups.length; i++) {
+          if (this.groups[i] in to.query) {
+            this.hide = true;
+            break;
+          } else {
+            this.hide = false;
+          }
+        }
+      }
     },
     beforeMount() {
       this.getYears();
       this.hideByYear();
       this.updateIfZoomedIn();
-
+      this.groups = this.data.groups;
       let date = new Date(this.data.start_date);
       return "" + date.getMonth()
     }

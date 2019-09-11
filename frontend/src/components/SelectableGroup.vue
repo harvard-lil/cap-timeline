@@ -17,10 +17,17 @@
     methods: {
       toggleOn() {
         this.toggledOn = !this.toggledOn;
-        this.$router.push({
+        let newQuery = {};
+        if (this.toggledOn) {
           // making new copy of query because mutating is not allowed
-          query: Object.assign({}, this.$route.query, {[this.name]: this.toggledOn}),
-        });
+          newQuery = Object.assign({}, this.$route.query);
+          delete newQuery[this.name]
+        }
+        else {
+          newQuery = Object.assign({}, this.$route.query, {[this.name]: this.toggledOn})
+        }
+        this.$router.push({query: newQuery});
+
       }
     }
   }

@@ -1,12 +1,13 @@
 import json
 import requests
 from django.db import models
-
+from django.utils.text import slugify
 from timeline.settings import PERMA_KEY, PERMA_FOLDER, STORAGES
 
 
 class Group(models.Model):
     name = models.CharField(max_length=1000, unique=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
     description = models.TextField(blank=True)
     date_start = models.DateTimeField(null=True, blank=True)
     date_end = models.DateTimeField(null=True, blank=True)
@@ -15,7 +16,12 @@ class Group(models.Model):
         return self.name
 
     def as_json(self):
-        return self.name
+        return self.slug
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super(Group, self).save(*args, **kwargs)
 
 
 class Citation(models.Model):
@@ -33,7 +39,7 @@ class Citation(models.Model):
                                      ("book", "book")))
 
     def __str__(self):
-        return self.name
+        return self.slug
 
     def as_json(self):
         return dict(
@@ -126,7 +132,7 @@ class Event(models.Model):
             relationships=relationships,
             description_long=self.description_long,
             description_short=self.description_short,
-            groups_affected=[group.as_json() for group in self.groups.all()],
+            groups=[group.as_json() for group in self.groups.all()],
         )
 
 
