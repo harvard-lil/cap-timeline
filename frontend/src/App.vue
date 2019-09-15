@@ -12,7 +12,7 @@
         <ul class="year-list">
           <li class="year">
               <span @click="setCurrentYear(undefined)"
-                    :class="currentYear === undefined ? 'active selected' :  'active'">
+                    :class="currentYear ? 'active' : 'active selected'">
                 ALL
               </span>
           </li>

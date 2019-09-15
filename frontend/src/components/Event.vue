@@ -1,5 +1,5 @@
 <template>
-  <div v-show=!hide
+  <div v-if="!hide"
        class="event-container"
        :class="'event-type-' + data.type">
     <div class="row">
@@ -9,7 +9,8 @@
       </div>
       <div class="col-12">
         <p class="text-semibold">
-          <span>{{ data.start_date_parsed }}</span><span v-if="this.endYear">&ndash;{{ data.end_date_parsed}}</span></p>
+          <span>{{ data.start_date_parsed }}</span>
+          <span v-if="this.endYear">&ndash;{{ data.end_date_parsed}}</span></p>
         <p>{{ data.description_short }}</p>
 
       </div>
@@ -108,6 +109,20 @@
           }
         }
         this.hide = true;
+      },
+      hideByGroups(to) {
+        if (!this.groups.length) {
+          return;
+        }
+        for (let i = 0; i < this.groups.length + 1; i++) {
+          if (this.groups[i] in to.query) {
+            this.hide = true;
+            break;
+          } else {
+            this.hideByYear()
+          }
+        }
+
       }
 
     },
@@ -119,18 +134,7 @@
         this.updateIfZoomedIn();
       },
       '$route'(to) {
-        if (!this.groups.length) {
-
-          return;
-        }
-        for (let i = 0; i < this.groups.length; i++) {
-          if (this.groups[i] in to.query) {
-            this.hide = true;
-            break;
-          } else {
-            this.hide = false;
-          }
-        }
+        this.hideByGroups(to);
       }
     },
     beforeMount() {
