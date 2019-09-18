@@ -1,7 +1,6 @@
 import json
 import requests
 from django.db import models
-from django.utils.text import slugify
 from timeline.settings import PERMA_KEY, PERMA_FOLDER, STORAGES
 
 
@@ -20,7 +19,9 @@ class Group(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = self.name.lower()
+            self.slug = self.slug.replace(' ', '_')
+
         super(Group, self).save(*args, **kwargs)
 
 
@@ -39,7 +40,7 @@ class Citation(models.Model):
                                      ("book", "book")))
 
     def __str__(self):
-        return self.slug
+        return self.name
 
     def as_json(self):
         return dict(
