@@ -36,7 +36,13 @@
           </li>
         </ul>
       </div>
-      <div class>{{data.groups}}</div>
+      <div class="group-relationships">
+        <ul>
+          <li v-for="(val, group) in groupStatus" :key="group">
+            <span v-show="val === true">{{group}}</span>
+          </li>
+        </ul>
+      </div>
 
     </div>
   </div>
@@ -47,6 +53,7 @@
   import './icons/circle';
   import './icons/triangle';
   import './icons/polygon';
+  import Vue from 'vue'
 
   export default {
     name: "event",
@@ -57,6 +64,7 @@
         endYear: null,
         hide: false,
         groups: [],
+        groupStatus: {},
         symbolTranslation: {
           legislation: 'diamond',
           caselaw: 'triangle',
@@ -111,18 +119,36 @@
         this.hide = true;
       },
       hideByGroups(to) {
+        if (this.zoomInEvent) {
+          return
+        }
         if (!this.groups.length) {
           return;
         }
-        for (let i = 0; i < this.groups.length + 1; i++) {
-          if (this.groups[i] in to.query) {
-            this.hide = true;
-            break;
-          } else {
-            this.hideByYear()
-          }
-        }
+        if (!to.query.groups)
+          return;
 
+        let showEvent = false;
+        for (let group in this.groupStatus) {
+          if (this.groupStatus[group])
+            showEvent = true;
+        }
+        this.hide = !showEvent;
+
+      },
+      updateGroupStatus() {
+
+        if (!this.$route.query.groups) {
+          for (let i = 0; i < this.groups.length; i++) {
+            this.groupStatus[this.groups[i]] = false
+          }
+          return;
+        }
+        let queryGroups = this.$route.query.groups.split(',');
+        for (let i = 0; i < this.groups.length; i++) {
+          // make obj key reactive
+          Vue.set(this.groupStatus, this.groups[i], queryGroups.indexOf(this.groups[i]) > -1);
+        }
       }
 
     },
@@ -134,6 +160,7 @@
         this.updateIfZoomedIn();
       },
       '$route'(to) {
+        this.updateGroupStatus();
         this.hideByGroups(to);
       }
     },
@@ -142,6 +169,8 @@
       this.hideByYear();
       this.updateIfZoomedIn();
       this.groups = this.data.groups;
+      this.updateGroupStatus();
+
       let date = new Date(this.data.start_date);
       return "" + date.getMonth()
     }

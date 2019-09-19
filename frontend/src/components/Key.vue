@@ -5,7 +5,7 @@
              class="key-icon"
              width="45" height="45">
     </svgicon>
-    <div class="key-content" v-if="toggledOpen">
+    <div class="key-content">
       <b>Key: </b><span>toggle filters on or off</span>
       <ul>
         <li v-for="group in groups">
