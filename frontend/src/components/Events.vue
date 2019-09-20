@@ -2,7 +2,7 @@
   <div class="event-list-container">
     <key></key>
     <ul class="event-list">
-      <li class="event"
+      <li class="event-list-item"
           v-for="eventObj in events"
           @click="getDetails(eventObj)"
           :key="eventObj.id">

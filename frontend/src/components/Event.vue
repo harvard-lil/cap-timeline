@@ -2,49 +2,46 @@
   <div v-if="!hide"
        class="event-container"
        :class="'event-type-' + data.type">
-    <div class="row">
-      <div class="col-12">
-        <h3>{{ data.name }}</h3>
-
-      </div>
-      <div class="col-12">
-        <p class="text-semibold">
-          <span>{{ data.start_date_parsed }}</span>
-          <span v-if="this.endYear">&ndash;{{ data.end_date_parsed}}</span></p>
-        <p>{{ data.description_short }}</p>
-
-      </div>
-      <div class="col-6">
-        <p>
-          <svgicon :icon="symbolTranslation[data.type]"
-                   :class="'event-symbol event-type-' + data.type + ' symbol-' + symbolTranslation[data.type]"
-                   width="18" height="18"></svgicon>
-          {{ eventTranslation[data.type] }}
-        </p>
-
-      </div>
-      <div class="col-6" v-if="data.relationships.length > 0">
-        <ul>
-          <li v-for="relationship in data.relationships">
-            <a href="">
-              <!--TODO: link to specific event!-->
-              <svgicon :icon="symbolTranslation[relationship[1]]"
-                       :class="'event-symbol event-type-' + relationship[1] + ' symbol-' + symbolTranslation[relationship[1]]"
-                       width="18" height="18">
-              </svgicon>
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div class="group-relationships">
-        <ul>
-          <li v-for="(val, group) in groupStatus" :key="group">
-            <span v-show="val === true">{{group}}</span>
-          </li>
-        </ul>
-      </div>
+    <div class="event-title">
+      <h3>{{ data.name }}</h3>
 
     </div>
+    <div class="event-date">
+      <p class="text-semibold">
+        <span>{{ data.start_date_parsed }}</span>
+        <span v-if="this.endYear">&ndash;{{ data.end_date_parsed}}</span></p>
+      <p>{{ data.description_short }}</p>
+
+    </div>
+    <div class="event-type">
+
+      <svgicon :icon="symbolTranslation[data.type]"
+               :class="'event-symbol event-type-' + data.type + ' symbol-' + symbolTranslation[data.type]"
+               width="18" height="18"></svgicon>
+      {{ eventTranslation[data.type] }}
+
+    </div>
+    <div class="event-relationships" v-if="data.relationships.length > 0">
+      <ul>
+        <li v-for="relationship in data.relationships">
+          <a href="">
+            <!--TODO: link to specific event!-->
+            <svgicon :icon="symbolTranslation[relationship[1]]"
+                     :class="'event-symbol event-type-' + relationship[1] + ' symbol-' + symbolTranslation[relationship[1]]"
+                     width="18" height="18">
+            </svgicon>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="group-relationships">
+      <ul class="group-list">
+        <li v-for="(val, group) in groupStatus" :key="group">
+          <span v-show="val === true">{{group}}</span>
+        </li>
+      </ul>
+    </div>
+
   </div>
 </template>
 
