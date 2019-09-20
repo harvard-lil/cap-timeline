@@ -60,6 +60,9 @@
         startYear: null,
         endYear: null,
         hide: false,
+        hidingByGroups: false,
+        hidingByYear: false,
+        hidingByZoom: false,
         groups: [],
         groupStatus: {},
         symbolTranslation: {
@@ -85,6 +88,8 @@
       },
       hideByYear() {
         // hides event if year selected is not event's year
+        if (this.hidingByGroups)
+          return;
         if (!this.currentYear) {
           this.hide = false;
           return
@@ -131,10 +136,10 @@
             showEvent = true;
         }
         this.hide = !showEvent;
+        this.hidingByGroups = this.hide;
 
       },
       updateGroupStatus() {
-
         if (!this.$route.query.groups) {
           for (let i = 0; i < this.groups.length; i++) {
             this.groupStatus[this.groups[i]] = false
@@ -159,14 +164,15 @@
       '$route'(to) {
         this.updateGroupStatus();
         this.hideByGroups(to);
+        this.hideByYear();
       }
     },
     beforeMount() {
       this.getYears();
-      this.hideByYear();
       this.updateIfZoomedIn();
       this.groups = this.data.groups;
       this.updateGroupStatus();
+      this.hideByYear();
 
       let date = new Date(this.data.start_date);
       return "" + date.getMonth()
