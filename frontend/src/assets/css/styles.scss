@@ -205,6 +205,18 @@ main {
   }
 }
 
+.key-container.open {
+  .key-content {
+    visibility: visible;
+  }
+}
+
+.key-container.closed {
+  .key-content {
+    visibility: hidden;
+  }
+}
+
 .selectable-group {
   .group-name {
     color: red;
