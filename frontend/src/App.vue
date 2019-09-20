@@ -64,10 +64,14 @@
       },
       setCurrentYear(year) {
         this.currentYear = year;
-        if (year)
-          this.$router.push({name: 'events', query: {year: year}});
-        else {
-          this.$router.push({name: 'events'})
+        let newQuery = Object.assign({}, this.$route.query);
+
+        if (year) {
+          newQuery.year = year;
+          this.$router.push({name: 'events', query: newQuery});
+        } else {
+          delete newQuery.year;
+          this.$router.push({name: 'events', query: newQuery});
         }
       }
     },
