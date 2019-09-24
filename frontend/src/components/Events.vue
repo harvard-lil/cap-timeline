@@ -52,7 +52,9 @@
       },
       getDetails(event) {
         this.zoomInEvent = event;
-        this.$router.push({name: 'events', query: {event: event.id}});
+        let newQuery = Object.assign({}, this.$route.query);
+        newQuery.event = event.id;
+        this.$router.push({name: 'events', query: newQuery});
       },
       getData() {
         let url = 'http://localhost:8000/events';
