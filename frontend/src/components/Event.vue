@@ -106,7 +106,6 @@
         this.hide = this.startYear !== this.currentYear;
       },
       updateIfZoomedIn() {
-
         if (!this.$route.query.event) {
           this.hidingByZoom = false;
           return;

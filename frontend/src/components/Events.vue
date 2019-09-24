@@ -68,6 +68,7 @@
         })
       },
       getZoomInEvent(eventId) {
+        eventId = Number(eventId)
         for (let i = 0; i < this.events.length; i++) {
           if (eventId === this.events[i].id) {
             this.zoomedInEventObj = this.events[i];
