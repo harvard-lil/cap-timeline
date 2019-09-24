@@ -1,5 +1,6 @@
 <template>
-  <div class="key-container" :class="toggledOpen ? 'open' : 'closed'">
+  <div class="key-container"
+       :class="{open: toggledOpen, disabled: showingEvent}">
     <svgicon icon="key"
              @click="toggleOpen()"
              class="key-icon"
@@ -27,9 +28,21 @@
     data() {
       return {
         toggledOpen: false,
-        groups: []
+        groups: [],
+        showingEvent: false,
       }
     },
+    watch: {
+      '$route'(to) {
+        if (to.query.event) {
+          this.toggledOpen = false;
+          this.showingEvent = true;
+        } else {
+          this.showingEvent = false;
+        }
+      }
+    },
+
     methods: {
       toggleOpen() {
         this.toggledOpen = !this.toggledOpen;

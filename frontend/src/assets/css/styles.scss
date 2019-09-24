@@ -159,15 +159,12 @@ main {
   }
 }
 
-.key-container {
-  position: fixed;
-  right: 0;
-}
 
 .key-container {
   cursor: pointer;
   padding: 0.5em;
-
+  position: fixed;
+  right: 0;
   .key-icon {
     position: fixed;
     margin-top: -1em;
@@ -179,21 +176,10 @@ main {
       fill: $color-white;
     }
   }
-  &.open {
-    background-color: $color-black;
-    color: $color-white;
-    right: 40px;
-    .key-icon {
-      transform: rotate(180deg);
-      margin-left: 50px;
-    }
-    .key {
-      fill: $color-yellow;
-    }
-  }
 }
 
 .key-container > .key-content {
+  visibility: hidden;
   padding: 0.8em 0.8em 0;
   ul {
     padding: 0;
@@ -206,16 +192,21 @@ main {
 }
 
 .key-container.open {
+  background-color: $color-black;
+  color: $color-white;
+  right: 40px;
+  .key-icon {
+    transform: rotate(180deg);
+    margin-left: 50px;
+  }
+  .key {
+    fill: $color-yellow;
+  }
   .key-content {
     visibility: visible;
   }
 }
 
-.key-container.closed {
-  .key-content {
-    visibility: hidden;
-  }
-}
 
 .selectable-group {
   .group-name {

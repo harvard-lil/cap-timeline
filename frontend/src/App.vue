@@ -11,8 +11,8 @@
       <div class="sidebar-sticky">
         <ul class="year-list">
           <li class="year">
-              <span @click="setCurrentYear(undefined)"
-                    :class="currentYear ? 'active' : 'active selected'">
+              <span @click="setCurrentYear('all')"
+                    :class="currentYear === 'all' ? 'active selected' : 'active'">
                 ALL
               </span>
           </li>
@@ -68,6 +68,7 @@
 
         if (year) {
           newQuery.year = year;
+          delete newQuery.event;
           this.$router.push({name: 'events', query: newQuery});
         } else {
           delete newQuery.year;

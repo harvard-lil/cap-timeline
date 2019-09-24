@@ -36,6 +36,7 @@
     </div>
     <div class="group-relationships">
       <ul class="group-list">
+        {{groupStatus}}
         <li v-for="(val, group) in groupStatus" :key="group">
           <span v-show="val === true">{{group}}</span>
         </li>
@@ -54,7 +55,7 @@
 
   export default {
     name: "event",
-    props: ["data", "currentYear", "zoomInEvent"],
+    props: ["data", "currentYear", "zoomedIn"],
     data() {
       return {
         startYear: null,
@@ -65,6 +66,7 @@
         hidingByZoom: false,
         groups: [],
         groupStatus: {},
+        zoomInEvent: false,
         symbolTranslation: {
           legislation: 'diamond',
           caselaw: 'triangle',
@@ -90,6 +92,8 @@
         // hides event if year selected is not event's year
         if (this.hidingByGroups)
           return;
+        if (this.hidingByZoom)
+          return;
         if (!this.currentYear) {
           this.hide = false;
           return
@@ -102,26 +106,43 @@
         this.hide = this.startYear !== this.currentYear;
       },
       updateIfZoomedIn() {
+
+        if (!this.$route.query.event) {
+          this.hidingByZoom = false;
+          return;
+        }
+        this.hidingByZoom = true;
+        this.zoomInEvent = this.$parent.zoomedInEventObj;
         if (!this.zoomInEvent) {
-          this.hide = false;
-          this.hideByYear();
+          return;
+        }
+        if (this.zoomInEvent.id !== this.data.id) {
+          this.hide = true;
           return
         }
-        if (this.zoomInEvent.id === this.data.id) {
-          this.hide = false;
-          return
-        }
-        let relationships = this.zoomInEvent.relationships;
-        for (let i = 0; i < relationships.length; i++) {
-          if (relationships[i][0] === this.data.id) {
-            this.hide = false;
-            return
-          }
-        }
-        this.hide = true;
+        this.hide = false;
+        // TODO: add relationships
+        // for (let e = 0; e < this.$parent.events.length; e++) {
+        //   if (this.$parent.events[e].id === this.zoomInEvent) {
+        //     zoomedInEventObj = this.$parent.events[e];
+        //     break;
+        //   }
+        // }
+        // if (!zoomedInEventObj) {
+        //   return;
+        // }
+        // let relationships = zoomedInEventObj.relationships;
+        // for (let i = 0; i < relationships.length; i++) {
+        //   if (relationships[i][0] === this.data.id) {
+        //     this.hide = false;
+        //     this.hidingByZoom = this.hide;
+        //     return
+        //   }
+        // }
+        // this.hide = true;
       },
       hideByGroups(to) {
-        if (this.zoomInEvent) {
+        if (this.hidingByZoom) {
           return
         }
         if (!this.groups.length) {
@@ -142,14 +163,16 @@
       updateGroupStatus() {
         if (!this.$route.query.groups) {
           for (let i = 0; i < this.groups.length; i++) {
-            this.groupStatus[this.groups[i]] = false
+            this.groupStatus[this.groups[i]] = false;
+            // Vue.set(this.groupStatus, this.groups[i], false);
           }
           return;
         }
         let queryGroups = this.$route.query.groups.split(',');
-        for (let i = 0; i < this.groups.length; i++) {
+        for (let x = 0; x < this.groups.length; x++) {
           // make obj key reactive
-          Vue.set(this.groupStatus, this.groups[i], queryGroups.indexOf(this.groups[i]) > -1);
+          // this.groupStatus[this.groups[x]] = queryGroups.indexOf(this.groups[x]) > -1;
+          Vue.set(this.groupStatus, this.groups[x], queryGroups.indexOf(this.groups[x]) > -1);
         }
       }
 
@@ -158,10 +181,13 @@
       currentYear() {
         this.hideByYear();
       },
-      zoomInEvent() {
-        this.updateIfZoomedIn();
+      zoomedIn() {
+        if (this.zoomedIn) {
+          this.updateIfZoomedIn()
+        }
       },
       '$route'(to) {
+        this.updateIfZoomedIn();
         this.updateGroupStatus();
         this.hideByGroups(to);
         this.hideByYear();
@@ -169,13 +195,12 @@
     },
     beforeMount() {
       this.getYears();
-      this.updateIfZoomedIn();
       this.groups = this.data.groups;
       this.updateGroupStatus();
       this.hideByYear();
 
       let date = new Date(this.data.start_date);
       return "" + date.getMonth()
-    }
+    },
   }
 </script>

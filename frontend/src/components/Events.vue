@@ -7,7 +7,7 @@
           @click="getDetails(eventObj)"
           :key="eventObj.id">
         <event :currentYear="currentYear"
-               :zoomInEvent="zoomInEvent"
+               :zoomedIn="zoomedIn"
                :data="eventObj">
         </event>
       </li>
@@ -26,19 +26,24 @@
       return {
         events: [],
         currentYear: Number(this.$route.query.year),
-        zoomInEvent: false,
+        zoomedInEventObj: null,
+        zoomedIn: false,
       }
     },
     watch: {
       '$route'(to) {
         this.currentYear = Number(to.query.year);
         if (!to.query.event) {
-          this.zoomInEvent = false;
+          this.zoomedInEventObj = false;
+          this.zoomedIn = false;
+        } else {
+          this.getZoomInEvent(to.query.event)
         }
+
       },
     },
     methods: {
-       getGroups() {
+      getGroups() {
         let url = 'http://localhost:8000/groups';
         this.$http.get(url)
             .then((response) => {
@@ -58,23 +63,27 @@
               })
             }).then(() => {
           if (this.$route.query.event) {
-            for (let i = 0; i < this.events.length; i++) {
-              if (this.events[i].id === this.$route.query.event) {
-                this.zoomInEvent = this.events[i];
-                break;
-              }
-            }
+            this.getZoomInEvent(this.$route.query.event)
           }
         })
-
+      },
+      getZoomInEvent(eventId) {
+        for (let i = 0; i < this.events.length; i++) {
+          if (eventId === this.events[i].id) {
+            this.zoomedInEventObj = this.events[i];
+            this.zoomedIn = true;
+            break;
+          }
+        }
       },
       getYear(date) {
         return Number(date.split('-')[0])
       },
     },
-    beforeMount() {
+    created() {
       this.getData();
       this.getGroups();
+
     },
   }
 </script>
