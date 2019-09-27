@@ -86,7 +86,10 @@
         currentYear: Number(this.$route.query.year),
       }
     },
+    beforeMount() {
+      this.$store.dispatch('loadGroups')
 
+    },
     created() {
       this.getData();
       this.getActiveYears();
