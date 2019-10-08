@@ -9,8 +9,9 @@
     <div class="key-content">
       <b>Key: </b><span>toggle filters on or off</span>
       <ul>
-        <li v-for="group in groups">
-          <selectable-group :name="group"></selectable-group>
+        <li v-for="(status, group) in groups">
+          <selectable-group :name="group">
+          </selectable-group>
         </li>
       </ul>
     </div>
@@ -21,14 +22,14 @@
   import './icons/key';
   import './icons/star8';
   import SelectableGroup from './SelectableGroup'
-
+  import store from '../store'
   export default {
     name: "key",
     components: {SelectableGroup},
     data() {
       return {
         toggledOpen: false,
-        groups: [],
+        groups: {},
         showingEvent: false,
       }
     },
@@ -49,13 +50,7 @@
       }
     },
     beforeMount() {
-      let url = 'http://localhost:8000/groups';
-      this.$http.get(url)
-          .then((response) => {
-            this.groups = response.body;
-          })
-
-
+      this.groups = store.getters.getGroups
     }
   }
 </script>
