@@ -1,52 +1,34 @@
 <template>
   <div class="selectable-group"
        @click="toggleOn()">
-    <span class="group-name" :class="{active: toggledOn}">{{name}}</span>
+    <span class="group-name" :class="{active: status}">
+      {{name}}
+    </span>
   </div>
 </template>
 
 <script>
+  import store from '../store'
   export default {
     name: "SelectableGroup",
     props: ["name"],
     data() {
       return {
-        toggledOn: true,
-        queryName: "groups"
+        queryName: "groups",
+        status: true,
       }
     },
     methods: {
       toggleOn() {
-        this.toggledOn = !this.toggledOn;
-        this.updateQuery();
-      },
-      updateQuery() {
-        let newQuery = {};
-        let groups = [];
-        // making new copy of query because mutating is not allowed
-        newQuery = Object.assign({}, this.$route.query);
-        if (this.queryName in newQuery) {
-          groups = newQuery[this.queryName].split(',');
-          this.toggledOn ? groups.push(this.name) : groups.splice(groups.indexOf(this.name), 1);
-        } else {
-          groups = this.toggledOn ? [this.name] : [];
-        }
-        if (groups.length > 0) {
-          groups = Array.from(new Set(groups)); // make sure no duplicates
-          newQuery[this.queryName] = groups.join(',');
-        } else {
-          delete newQuery[this.queryName];
-        }
-        if (Object.keys(newQuery).length > 0) {
-          this.$router.push({query: newQuery});
-        } else {
-          this.$router.push({});
-        }
+        this.status = !this.status;
+        let data = {name: this.name, status: this.status};
+        store.commit('setGroupStatus', data);
 
       },
     },
     beforeMount() {
-      this.updateQuery();
+      let data = {name: this.name, status: true};
+      store.commit('setGroupStatus', data);
     }
   }
 </script>

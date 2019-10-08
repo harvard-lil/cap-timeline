@@ -34,6 +34,8 @@
   </div>
 </template>
 <script>
+  import store from './store';
+
   export default {
     name: 'App',
     methods: {
@@ -86,9 +88,31 @@
         currentYear: Number(this.$route.query.year),
       }
     },
-    beforeMount() {
-      this.$store.dispatch('loadGroups')
+    computed: {
+      activeGroups() {
+        return store.getters.getActiveGroups
+      }
+    },
+    watch: {
+      activeGroups(newGroups) {
+        // updating route to match active groups
+        let newQuery = {};
+        newQuery = Object.assign({}, this.$route.query);
+        if (newGroups.length > 0) {
+          newQuery['groups'] = newGroups.join(',')
+        } else {
+          delete newQuery['groups']
+        }
 
+        if (Object.keys(newQuery).length > 0) {
+          this.$router.push({query: newQuery});
+        } else {
+          this.$router.push({});
+        }
+      }
+    },
+    beforeCreate() {
+      this.$store.dispatch('loadGroups')
     },
     created() {
       this.getData();
