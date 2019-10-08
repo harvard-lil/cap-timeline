@@ -4,10 +4,10 @@
     <ul class="event-list">
       <li class="event-list-item"
           v-for="eventObj in events"
-          @click="getDetails(eventObj)"
+          @click="getDetails(eventObj.id)"
           :key="eventObj.id">
         <event :currentYear="currentYear"
-               :zoomedIn="zoomedIn"
+               :selectedEvent="selectedEvent"
                :data="eventObj">
         </event>
       </li>
@@ -18,29 +18,32 @@
 <script>
   import Event from "./Event"
   import Key from "./Key"
+  import store from '../store';
 
   export default {
     name: "events",
     components: {Event, Key},
+    // props: ["currentYear"],
     data() {
       return {
         events: [],
-        currentYear: Number(this.$route.query.year),
-        zoomedInEventObj: null,
-        zoomedIn: false,
+        // currentYear: store.getters.getSelectedYear,
+        selectedEventObj: null,
+        selectedEvent: false,
+      }
+    },
+    computed: {
+      storedSelectedEvent() {
+        return store.state.event;
+      },
+      currentYear() {
+        return store.getters.getSelectedYear;
       }
     },
     watch: {
-      '$route'(to) {
-        this.currentYear = Number(to.query.year);
-        if (!to.query.event) {
-          this.zoomedInEventObj = false;
-          this.zoomedIn = false;
-        } else {
-          this.getZoomInEvent(to.query.event)
-        }
-
-      },
+      storedSelectedEvent(newEvent) {
+        this.getDetails(newEvent)
+      }
     },
     methods: {
       getGroups() {
@@ -51,10 +54,9 @@
             })
       },
       getDetails(event) {
-        this.zoomInEvent = event;
-        let newQuery = Object.assign({}, this.$route.query);
-        newQuery.event = event.id;
-        this.$router.push({name: 'events', query: newQuery});
+        if (event !== store.state.event)
+          store.commit('setSelectedEvent', event);
+        this.selectedEvent = Number(event);
       },
       getData() {
         let url = 'http://localhost:8000/events';
@@ -63,22 +65,9 @@
               this.events = response.body.sort((a, b) => {
                 return this.getYear(a.start_date) - this.getYear(b.start_date)
               })
-            }).then(() => {
-          if (this.$route.query.event) {
-            this.getZoomInEvent(this.$route.query.event)
-          }
-        })
+            })
       },
-      getZoomInEvent(eventId) {
-        eventId = Number(eventId)
-        for (let i = 0; i < this.events.length; i++) {
-          if (eventId === this.events[i].id) {
-            this.zoomedInEventObj = this.events[i];
-            this.zoomedIn = true;
-            break;
-          }
-        }
-      },
+
       getYear(date) {
         return Number(date.split('-')[0])
       },
@@ -86,7 +75,6 @@
     created() {
       this.getData();
       this.getGroups();
-
     },
   }
 </script>

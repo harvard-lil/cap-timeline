@@ -11,8 +11,8 @@
       <div class="sidebar-sticky">
         <ul class="year-list">
           <li class="year">
-              <span @click="setCurrentYear('all')"
-                    :class="currentYear === 'all' ? 'active selected' : 'active'">
+              <span @click="setCurrentYear()"
+                    :class="currentYear ? 'active' : 'active selected'">
                 ALL
               </span>
           </li>
@@ -29,12 +29,14 @@
       </div>
     </nav>
     <main class="main">
-      <router-view></router-view>
+      <router-view currentYear="currentYear"></router-view>
     </main>
   </div>
 </template>
 <script>
   import store from './store';
+
+  let _ = require('lodash');
 
   export default {
     name: 'App',
@@ -66,16 +68,9 @@
       },
       setCurrentYear(year) {
         this.currentYear = year;
-        let newQuery = Object.assign({}, this.$route.query);
-
-        if (year) {
-          newQuery.year = year;
-          delete newQuery.event;
-          this.$router.push({name: 'events', query: newQuery});
-        } else {
-          delete newQuery.year;
-          this.$router.push({name: 'events', query: newQuery});
-        }
+        store.commit('setSelectedYear', year);
+        // TODO: is this right???
+        store.commit('setSelectedEvent', null);
       }
     },
     data() {
@@ -90,7 +85,13 @@
     },
     computed: {
       activeGroups() {
-        return store.getters.getActiveGroups
+        return store.getters.getActiveGroups;
+      },
+      eventSelected() {
+        return store.getters.getSelectedEvent;
+      },
+      yearSelected() {
+        return store.getters.getSelectedYear;
       }
     },
     watch: {
@@ -103,16 +104,37 @@
         } else {
           delete newQuery['groups']
         }
+        Object.keys(newQuery).length ?
+            this.$router.push({query: newQuery}) : this.$router.push({});
 
-        if (Object.keys(newQuery).length > 0) {
-          this.$router.push({query: newQuery});
+      },
+      eventSelected(newEvent) {
+        let newQuery = Object.assign({}, this.$route.query);
+        if (newEvent) {
+          newQuery.event = newEvent;
         } else {
-          this.$router.push({});
+          delete newQuery['event']
         }
+        Object.keys(newQuery).length ?
+            this.$router.push({query: newQuery}) : this.$router.push({});
+      },
+      yearSelected(year) {
+        let newQuery = Object.assign({}, this.$route.query);
+        if (year) {
+          newQuery.year = year;
+        } else {
+          delete newQuery['year']
+        }
+        Object.keys(newQuery).length ?
+            this.$router.push({query: newQuery}) : this.$router.push({});
       }
     },
     beforeCreate() {
-      this.$store.dispatch('loadGroups')
+      this.$store.dispatch('loadGroups');
+      if (this.$route.query.event)
+        this.$store.commit('setSelectedEvent', Number(this.$route.query.event));
+      if (this.$route.query.year)
+        this.$store.commit('setSelectedYear', Number(this.$route.query.year))
     },
     created() {
       this.getData();
