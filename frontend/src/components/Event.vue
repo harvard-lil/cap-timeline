@@ -62,9 +62,11 @@
         startYear: null,
         endYear: null,
         hide: false,
-        hidingByGroups: false,
-        hidingByYear: false,
-        hidingBySelectedEvent: false,
+        hideStatus: {
+          byGroups: false,
+          byYear: false,
+          bySelectedEvent: false,
+        },
         groups: [],
         activeGroups: new Set(),
         symbolTranslation: {
@@ -82,42 +84,40 @@
       }
     },
     methods: {
+      updateHide() {
+        // Complicated logic about when to hide event
+        // Hiding depends on year, groups, and event selected
+        this.hideStatus.bySelectedEvent = !!(this.selectedEvent) && this.selectedEvent !== this.data.id;
+        if (this.endYear) {
+          this.hideStatus.byYear = !(this.currentYear >= this.startYear && this.currentYear <= this.endYear);
+        } else {
+          this.hideStatus.byYear = this.currentYear && this.currentYear !== this.startYear;
+        }
+        this.hideStatus.byGroups = this.activeGroups.size === 0 && this.groups.length > 0;
+
+        if (this.hideStatus.byGroups) {
+          this.hide = true;
+          return;
+        }
+        if (this.hideStatus.byYear) {
+          this.hide = true;
+          return
+        }
+        if (this.hideStatus.bySelectedEvent) {
+          this.hide = true;
+          return
+        }
+        this.hide = false
+
+      },
       getYears() {
         this.startYear = Number(this.data.start_date.split('-')[0]);
         if (this.data.end_date) {
           this.endYear = Number(this.data.end_date.split('-')[0])
         }
       },
-      hideByYear() {
-        // hides event if year selected is not event's year
-        if (this.hidingByGroups)
-          return;
-        if (this.hidingBySelectedEvent)
-          return;
-        if (!this.currentYear) {
-          this.hide = false;
-          return
-        }
 
-        if (this.endYear) {
-          this.hide = !(this.currentYear >= this.startYear && this.currentYear <= this.endYear);
-          return
-        }
-
-        this.hide = this.currentYear === 'all' || this.startYear !== this.currentYear;
-      },
       updateIfSelectedEvent() {
-        if (!this.selectedEvent) {
-          this.hidingBySelectedEvent = false;
-          return;
-        }
-        this.hidingBySelectedEvent = true;
-
-        if (this.selectedEvent !== this.data.id) {
-          this.hide = true;
-          return
-        }
-        this.hide = false;
         // TODO: add relationships
         // for (let e = 0; e < this.$parent.events.length; e++) {
         //   if (this.$parent.events[e].id === this.zoomInEvent) {
@@ -138,17 +138,7 @@
         // }
         // this.hide = true;
       },
-      hideByGroups() {
-        if (this.activeGroups.size === 0) {
-          this.hide = true;
-          this.hidingByGroups = this.hide;
-        } else {
-          this.hidingByGroups = false;
-          if (!this.hidingBySelectedEvent)
-            this.hide = false;
-        }
 
-      },
       updateActiveGroups() {
         let topLevelGroups = store.getters.getGroups;
         for (let i = 0; i < this.groups.length; i++) {
@@ -156,24 +146,23 @@
           topLevelGroups[group] ?
               this.activeGroups.add(group) : this.activeGroups.delete(group);
         }
-        this.hideByGroups();
+        this.updateHide();
       },
 
     },
     watch: {
       currentYear() {
-        this.hideByYear();
+        this.updateHide();
       },
       selectedEvent() {
-        this.hide = this.selectedEvent && this.selectedEvent !== this.data.id;
-        this.updateIfSelectedEvent()
+        this.updateHide();
       },
     },
     beforeMount() {
       this.getYears();
       this.groups = this.data.groups;
       this.updateActiveGroups();
-      this.hideByYear();
+
 
       let date = new Date(this.data.start_date);
       return "" + date.getMonth()
