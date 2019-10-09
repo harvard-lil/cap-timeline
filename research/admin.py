@@ -4,7 +4,7 @@ from research.models import Event, Finding, Weight, Image, Citation, Group, Rela
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    list_display = ['name', 'start_date', 'type', 'id', 'hide']
+    list_display = ['name', 'start_date', 'type', 'id', 'hide', 'weight']
 
 
 admin.site.register(Finding)

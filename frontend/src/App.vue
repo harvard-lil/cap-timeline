@@ -2,9 +2,11 @@
   <div class="app-container">
     <nav class="navbar navbar-dark fixed-top">
       <div class="navbar-brand">
-        <a href="#">
+        <span class="nav-title"><a href="#">
           Immigration in U.S.
-        </a>
+        </a></span>
+        <span class="nav-title-blue" v-if="currentYear">{{currentYear}}</span>
+
       </div>
     </nav>
     <nav class="sidebar">
