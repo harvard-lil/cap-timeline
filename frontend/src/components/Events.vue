@@ -23,26 +23,10 @@
   export default {
     name: "events",
     components: {Event, Key},
-    // props: ["currentYear"],
+    props: ["currentYear", "selectedEvent"],
     data() {
       return {
         events: [],
-        // currentYear: store.getters.getSelectedYear,
-        selectedEventObj: null,
-        selectedEvent: false,
-      }
-    },
-    computed: {
-      storedSelectedEvent() {
-        return store.state.event;
-      },
-      currentYear() {
-        return store.getters.getSelectedYear;
-      }
-    },
-    watch: {
-      storedSelectedEvent(newEvent) {
-        this.getDetails(newEvent)
       }
     },
     methods: {
@@ -56,7 +40,6 @@
       getDetails(event) {
         if (event !== store.state.event)
           store.commit('setSelectedEvent', event);
-        this.selectedEvent = Number(event);
       },
       getData() {
         let url = 'http://localhost:8000/events';

@@ -29,14 +29,13 @@
       </div>
     </nav>
     <main class="main">
-      <router-view currentYear="currentYear"></router-view>
+      <router-view :currentYear="currentYear" :selectedEvent="eventSelected">
+      </router-view>
     </main>
   </div>
 </template>
 <script>
   import store from './store';
-
-  let _ = require('lodash');
 
   export default {
     name: 'App',
