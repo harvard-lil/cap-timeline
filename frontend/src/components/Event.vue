@@ -89,12 +89,11 @@
         // Hiding depends on year, groups, and event selected
         this.hideStatus.bySelectedEvent = !!(this.selectedEvent) && this.selectedEvent !== this.data.id;
         if (this.endYear) {
-          this.hideStatus.byYear = !(this.currentYear >= this.startYear && this.currentYear <= this.endYear);
+          this.hideStatus.byYear = this.currentYear && !(this.currentYear >= this.startYear && this.currentYear <= this.endYear);
         } else {
           this.hideStatus.byYear = this.currentYear && this.currentYear !== this.startYear;
         }
         this.hideStatus.byGroups = this.activeGroups.size === 0 && this.groups.length > 0;
-
         if (this.hideStatus.byGroups) {
           this.hide = true;
           return;
