@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="app-container" :class="eventSelected ? 'event-selected event-selected-'+eventSelected : ''">
     <nav class="navbar navbar-dark fixed-top">
       <div class="navbar-brand">
         <span class="nav-title"><a href="#">
@@ -31,7 +31,8 @@
       </div>
     </nav>
     <main class="main">
-      <router-view :currentYear="currentYear" :selectedEvent="eventSelected">
+      <router-view :currentYear="currentYear"
+                   :selectedEvent="eventSelected">
       </router-view>
     </main>
   </div>
