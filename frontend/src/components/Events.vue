@@ -1,9 +1,9 @@
 <template>
   <div class="event-list-container">
-    <key></key>
     <ul class="event-list">
       <li class="event-list-item"
           v-for="eventObj in events"
+          :class="'event-type-' + eventObj.type"
           @click="getDetails(eventObj.id)"
           :key="eventObj.id">
         <event :currentYear="currentYear"
@@ -17,12 +17,11 @@
 
 <script>
   import Event from "./Event"
-  import Key from "./Key"
   import store from '../store';
 
   export default {
     name: "events",
-    components: {Event, Key},
+    components: {Event},
     props: ["currentYear", "selectedEvent"],
     data() {
       return {

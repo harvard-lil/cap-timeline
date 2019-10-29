@@ -10,7 +10,7 @@
       <b>Key: </b><span>toggle filters on or off</span>
       <ul>
         <li v-for="(status, group) in groups">
-          <selectable-group :name="group">
+          <selectable-group :name="group" :translated="groupTranslation[group]">
           </selectable-group>
         </li>
       </ul>
@@ -31,6 +31,7 @@
         toggledOpen: false,
         groups: {},
         showingEvent: false,
+        groupTranslation: {}
       }
     },
     watch: {
@@ -49,8 +50,6 @@
         this.toggledOpen = !this.toggledOpen;
       }
     },
-    beforeMount() {
-      this.groups = store.getters.getGroups
-    }
+
   }
 </script>

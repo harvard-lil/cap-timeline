@@ -1,7 +1,11 @@
 <template>
   <div v-show="!hide"
        class="event-container"
-       :class="'event-type-' + data.type">
+       :class="['event-type-' + data.type, {expanded: this.selectedEvent === this.data.id}]">
+    <div class="event-type" :class="'event-type-'+data.type">
+      {{ eventTranslation[data.type] }}
+
+    </div>
     <div class="event-title">
       <h3>{{ data.name }}</h3>
 
@@ -13,27 +17,20 @@
       <p>{{ data.description_short }}</p>
 
     </div>
-    <div class="event-type">
 
-      <svgicon :icon="symbolTranslation[data.type]"
-               :class="'event-symbol event-type-' + data.type + ' symbol-' + symbolTranslation[data.type]"
-               width="18" height="18"></svgicon>
-      {{ eventTranslation[data.type] }}
-
-    </div>
-    <div class="event-relationships" v-if="data.relationships.length > 0">
-      <ul>
-        <li v-for="relationship in data.relationships">
-          <a href="">
-            <!--TODO: link to specific event!-->
-            <svgicon :icon="symbolTranslation[relationship[1]]"
-                     :class="'event-symbol event-type-' + relationship[1] + ' symbol-' + symbolTranslation[relationship[1]]"
-                     width="18" height="18">
-            </svgicon>
-          </a>
-        </li>
-      </ul>
-    </div>
+    <!--<div class="event-relationships" v-if="data.relationships.length > 0">-->
+      <!--<ul>-->
+        <!--<li v-for="relationship in data.relationships">-->
+          <!--<a href="">-->
+            <!--&lt;!&ndash;TODO: link to specific event!&ndash;&gt;-->
+            <!--&lt;!&ndash;<svgicon :icon="symbolTranslation[relationship[1]]"&ndash;&gt;-->
+                     <!--&lt;!&ndash;:class="'event-symbol event-type-' + relationship[1] + ' symbol-' + symbolTranslation[relationship[1]]"&ndash;&gt;-->
+                     <!--&lt;!&ndash;width="18" height="18">&ndash;&gt;-->
+            <!--&lt;!&ndash;</svgicon>&ndash;&gt;-->
+          <!--</a>-->
+        <!--</li>-->
+      <!--</ul>-->
+    <!--</div>-->
     <div class="group-relationships">
       <ul class="group-list">
         <li v-for="name in groups" :key="name">
@@ -46,10 +43,6 @@
 </template>
 
 <script>
-  import './icons/diamond';
-  import './icons/circle';
-  import './icons/triangle';
-  import './icons/polygon';
   import Group from "./Group"
   import store from '../store'
 
@@ -69,12 +62,6 @@
         },
         groups: [],
         activeGroups: new Set(),
-        symbolTranslation: {
-          legislation: 'diamond',
-          caselaw: 'triangle',
-          world: 'circle',
-          us: 'polygon'
-        },
         eventTranslation: {
           legislation: 'legislation',
           caselaw: 'caselaw',
@@ -83,6 +70,7 @@
         }
       }
     },
+
     methods: {
       updateHide() {
         // Complicated logic about when to hide event
@@ -161,8 +149,6 @@
       this.getYears();
       this.groups = this.data.groups;
       this.updateActiveGroups();
-
-
       let date = new Date(this.data.start_date);
       return "" + date.getMonth()
 

@@ -3,32 +3,32 @@
     <nav class="navbar navbar-dark fixed-top">
       <div class="navbar-brand">
         <span class="nav-title"><a href="#">
-          Immigration in U.S.
+          U.S. IMMIGRATION TIMELINE
         </a></span>
         <span class="nav-title-blue" v-if="currentYear">{{currentYear}}</span>
 
       </div>
     </nav>
+    <div class="subtitle-bar"></div>
     <nav class="sidebar">
-      <div class="sidebar-sticky">
-        <ul class="year-list">
-          <li class="year">
+      <toggles></toggles>
+      <ul class="year-list">
+        <li class="year">
               <span @click="setCurrentYear()"
-                    :class="currentYear ? 'active' : 'active selected'">
+                    :class="currentYear || eventSelected ? 'active' : 'active selected'">
                 ALL
               </span>
-          </li>
-          <li v-for="year in years" :key="year" class="year">
+        </li>
+        <li v-for="year in years" :key="year" class="year">
               <span v-if="currentYear === year" class="active selected">
                 {{ year }}
               </span>
-            <span v-else-if="activeYears.includes(year)"
-                  @click="setCurrentYear(year)"
-                  class="active">{{ year }}</span>
-            <span v-else>{{ year }}</span>
-          </li>
-        </ul>
-      </div>
+          <span v-else-if="activeYears.includes(year)"
+                @click="setCurrentYear(year)"
+                class="active">{{ year }}</span>
+          <span v-else>{{ year }}</span>
+        </li>
+      </ul>
     </nav>
     <main class="main">
       <router-view :currentYear="currentYear"
@@ -39,9 +39,11 @@
 </template>
 <script>
   import store from './store';
+  import Toggles from './components/Toggles';
 
   export default {
     name: 'App',
+    components: {Toggles},
     methods: {
       getData() {
         this.$http.get('http://localhost:8000/events')

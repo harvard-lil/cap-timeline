@@ -1,7 +1,8 @@
 @import "_normalize";
 @import "_fonts";
 @import "_variables";
-@import "event-variables";
+@import "toggles";
+@import "event";
 
 // fonts
 
@@ -13,9 +14,6 @@
   font-weight: 600;
 }
 
-.app-container {
-  display: grid
-}
 
 nav {
   justify-items: center;
@@ -31,7 +29,7 @@ nav {
 
   }
   &.navbar-dark {
-    background-color: $color-black;
+    background-color: $color-blue;
     color: $color-gray-light;
     a {
       text-decoration: none;
@@ -43,6 +41,10 @@ nav {
   }
   .navbar-brand {
     padding: 1rem 2rem;
+  }
+  .nav-title {
+    font-weight: $font-weight-semibold;
+    letter-spacing: 0.08em;
   }
   .nav-title-blue {
     color: $color-green;
@@ -67,12 +69,15 @@ body {
 }
 
 main {
-  grid-column: 2;
+  display: grid;
   padding-top: 4em;
+  grid-auto-flow: column;
 }
 
 .app-container {
   width: 100%;
+  display: grid;
+  grid-template-columns: 100px 1fr;
 }
 
 .row {
@@ -84,7 +89,8 @@ main {
   padding-top: 4em;
   grid-column: 1 ;
   grid-row: 1 / 2;
-  //position: fixed;
+  position: fixed;
+  width: 10em;
   top: 0;
   bottom: 0;
   left: 0;
@@ -92,7 +98,7 @@ main {
   background-color: $color-gray-light;
   border-right: 1px solid $color-gray-medium;
   ul {
-    padding-left: 1em;
+    padding-left: 0;
   }
   li {
     list-style: none;
@@ -131,41 +137,6 @@ main {
   }
 }
 
-.event-container {
-  border: 1px solid $color-black;
-  padding: 1em;
-  list-style: none;
-  margin: 2em;
-  display: grid;
-  grid-row-gap: 0.1em;
-}
-
-.event-container {
-  .event-title,
-  .event-date,
-  .event-type {
-    grid-column-start: 1;
-    grid-column-end: 4;
-  }
-  ul {
-    padding: 0;
-  }
-  .group-relationships {
-    float: right;
-    li {
-      float: left;
-      margin: 0.2em;
-    }
-  }
-  .event-relationships {
-    grid-column-start: 1;
-    grid-column-end: 2;
-  }
-  .group-relationships {
-    grid-column-start: 2;
-    grid-column-end: 3;
-  }
-}
 
 .key-container {
   cursor: pointer;
@@ -179,9 +150,7 @@ main {
     .inner-circle, .outer-circle {
       fill: $color-black;
     }
-    .key {
-      fill: $color-white;
-    }
+
   }
 }
 
@@ -200,7 +169,6 @@ main {
 
 .key-container.open {
   background-color: $color-black;
-  color: $color-white;
   right: 40px;
   .key-icon {
     transform: rotate(180deg);
@@ -218,7 +186,7 @@ main {
   .group-name {
     color: red;
     &.active {
-      color: white;
+      color: $color-black;
     }
   }
 }

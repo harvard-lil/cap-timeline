@@ -1,0 +1,48 @@
+.toggles-menu {
+  padding: 0 0.6em;
+  h3 {
+    font-size: 1.2em;
+    font-weight: normal;
+    color: $color-blue-bright;
+  }
+  ul {
+    li {
+      line-height: 2em;
+      font-size: 0.8em;
+    }
+  }
+  svg {
+    position: relative;
+    top: 4px;
+  }
+  .event-types > li, .group-types > li {
+    cursor: pointer;
+  }
+}
+
+svg.checked {
+  circle {
+    fill: $color-blue-bright;
+  }
+  path {
+    stroke: $color-white;
+    fill: transparent;
+  }
+}
+
+svg.unchecked {
+  circle {
+    fill: $color-gray-medium;
+  }
+  path {
+    stroke: $color-white;
+    fill: transparent;
+  }
+}
+
+svg.unchecked, svg.checked {
+  margin-right: 0.3em;
+}
+.unchecked > span {
+  color: $color-gray-medium;
+}

@@ -5,7 +5,18 @@ $event-colors: (
         'legislation': $color-purple,
         'caselaw': $color-turquoise,
         'world': $color-green,
-        'us': $color-red
+        'us': $color-navy
+);
+
+$group-colors: (
+      'mexican': $color-purple,
+      'eastern_european': $color-pink,
+      'jewish': $color-red,
+      'japanese': $color-turquoise,
+      'indian': $color-navy,
+      'chinese': $color-green,
+      'western_european': $color-gold,
+      'dissidents': $color-blue
 );
 
 // event border colors
@@ -13,12 +24,67 @@ $event-colors: (
   .event-container.event-type-#{$event-name} {
     border: 1px solid #{$event-color-value};
   }
+  .event-type.event-type-#{$event-name} {
+    color: $event-color-value;
+  }
 }
 
-// symbol colors
-@each $event-name, $event-color-value in $event-colors {
-  .event-symbol.event-type-#{$event-name} {
-    fill: $event-color-value;
-    margin-bottom: -3px;
+// group colors
+@each $group-name, $group-color-value in $group-colors {
+  .group-symbol.group-name-#{$group-name} {
+    fill: $group-color-value;
+  }
+}
+
+ul.event-list {
+  display: grid;
+  grid-column-gap: 1em;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.event-list-item {
+  grid-area: auto;
+  &.event-type-world, &.event-type-us {
+    grid-column: span 2;
+  }
+}
+
+
+.event-container {
+  border: 1px solid $color-black;
+  padding: 1em;
+  list-style: none;
+  cursor: pointer;
+}
+
+.event-container {
+  .event-title,
+  .event-date,
+  .event-type {
+    grid-column-start: 1;
+    grid-column-end: 4;
+  }
+  ul {
+    padding: 0;
+  }
+  .group-relationships {
+    float: right;
+    li {
+      float: left;
+      margin: 0.2em;
+    }
+  }
+  .event-relationships {
+    grid-column-start: 1;
+    grid-column-end: 2;
+  }
+  .group-relationships {
+    grid-column-start: 2;
+    grid-column-end: 3;
+  }
+  .event-type {
+    text-transform: uppercase;
+    font-size: 1.2em;
+    font-weight: 600;
   }
 }

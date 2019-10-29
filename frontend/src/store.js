@@ -12,7 +12,38 @@ const store = new Vuex.Store({
       japanese: true,
       jewish: true,
       eastern_european: true,
+      western_european: true,
       dissidents: true,
+    },
+    groupTranslation: {
+      mexican: "Mexican migrants",
+      chinese: "Chinese migrants",
+      japanese: "Japanese migrants",
+      jewish: "Jewish migrants",
+      eastern_european: "Eastern European migrants",
+      western_european: "Western European migrants",
+      dissidents: "Political dissidents",
+    },
+    symbolTranslation: {
+      jewish: 'diamond',
+      indian: 'triangle',
+      eastern_european: 'circle',
+      chinese: 'polygon',
+      japanese: 'square',
+      western_european: 'oval',
+      mexican: 'triangle_right',
+    },
+    eventTypes: {
+      us: true,
+      world: true,
+      legislation: true,
+      caselaw: true,
+    },
+    eventTranslation: {
+      us: "U.S. Event",
+      world: "World Event",
+      legislation: "Legislation",
+      caselaw: "Case Law"
     },
     event: null,
     year: null,
@@ -25,8 +56,6 @@ const store = new Vuex.Store({
             context.commit('loadGroups', response.data)
           })
     },
-
-
   },
   mutations: {
     loadGroups(state, groups) {
@@ -52,11 +81,23 @@ const store = new Vuex.Store({
       // TODO: this is done for every event. Come up with a better soluton.
       return Object.keys(state.groups).filter(group => state.groups[group])
     },
+    getGroupTranslation(state) {
+      return state.groupTranslation
+    },
     getSelectedEvent(state) {
       return state.event;
     },
     getSelectedYear(state) {
       return state.year
+    },
+    getSymbolTranslation(state) {
+      return state.symbolTranslation
+    },
+    getEventTypes(state) {
+      return state.eventTypes
+    },
+    getEventTranslation(state) {
+      return state.getEventTranslation
     }
   },
   modules: {}
