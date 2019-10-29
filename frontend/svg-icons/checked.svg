@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="15px" height="15px" viewBox="0 0 15 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>Misc/Rounded Checkbox Copy 3</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-HD-Copy-19" transform="translate(-20.000000, -677.000000)">
+            <g id="Group-3" transform="translate(20.000000, 676.000000)">
+                <g id="Misc/Rounded-Checkbox" transform="translate(0.000000, 1.000000)">
+                    <circle id="Background" fill="#007AFF" fill-rule="evenodd" cx="7.5" cy="7.5" r="7.5"></circle>
+                    <polyline id="Check" stroke="#FFFFFF" stroke-width="1" points="3.40909091 7.84090909 5.79545455 10.2272727 11.25 4.77272727"></polyline>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

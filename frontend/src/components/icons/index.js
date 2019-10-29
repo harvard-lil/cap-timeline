@@ -1,4 +1,5 @@
 /* eslint-disable */
+require('./checked')
 require('./circle')
 require('./diamond')
 require('./hexagon')
@@ -9,3 +10,4 @@ require('./star')
 require('./star5')
 require('./star8')
 require('./triangle')
+require('./unchecked')
