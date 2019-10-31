@@ -1,22 +1,20 @@
 <template>
-  <div v-show="!hide"
-       class="event-container"
-       :class="['event-type-' + data.type, {expanded: this.selectedEvent === this.data.id}]">
+  <li v-show="!hide"
+      class="event-container"
+      :class="[{expanded: this.selectedEvent === this.data.id}]"
+      @click="getDetails()">
     <div class="event-type" :class="'event-type-'+data.type">
       {{ eventTranslation[data.type] }}
-
     </div>
     <div class="event-title">
       <h3>{{ data.name }}</h3>
 
     </div>
     <div class="event-date">
-      <p class="text-semibold">
-        <span>{{ data.start_date_parsed }}</span>
-        <span v-if="this.endYear">&ndash;{{ data.end_date_parsed}}</span></p>
-      <p>{{ data.description_short }}</p>
-
+        {{ data.start_date_parsed }}
+         <span v-if="this.endYear">&ndash;{{ data.end_date_parsed}}</span>
     </div>
+    <div class="event-description-short">{{ data.description_short }}</div>
 
     <!--<div class="event-relationships" v-if="data.relationships.length > 0">-->
       <!--<ul>-->
@@ -33,13 +31,12 @@
     <!--</div>-->
     <div class="group-relationships">
       <ul class="group-list">
-        <li v-for="name in groups" :key="name">
-          <group :name="name"></group>
-        </li>
+        <group v-for="name in groups"
+               :key="name" :name="name">
+        </group>
       </ul>
     </div>
-
-  </div>
+  </li>
 </template>
 
 <script>
@@ -49,7 +46,7 @@
   export default {
     name: "event",
     components: {Group},
-    props: ["data", "currentYear", "selectedEvent"],
+    props: ["data", "currentYear", "selectedEvent", "minYear", "maxYear"],
     data() {
       return {
         startYear: null,
@@ -59,6 +56,7 @@
           byGroups: false,
           byYear: false,
           bySelectedEvent: false,
+          byEventType: false,
         },
         groups: [],
         activeGroups: new Set(),
@@ -77,10 +75,19 @@
         // Hiding depends on year, groups, and event selected
         this.hideStatus.bySelectedEvent = !!(this.selectedEvent) && this.selectedEvent !== this.data.id;
         if (this.endYear) {
-          this.hideStatus.byYear = this.currentYear && !(this.currentYear >= this.startYear && this.currentYear <= this.endYear);
+          // this.hideStatus.byYear = this.currentYear && !(this.currentYear >= this.startYear && this.currentYear <= this.endYear);
+          this.hideStatus.byYear = this.startYear < this.minYear || this.startYear > this.maxYear || this.endYear > this.maxYear || this.endYear < this.minYear;
         } else {
-          this.hideStatus.byYear = this.currentYear && this.currentYear !== this.startYear;
+          // this.hideStatus.byYear = this.currentYear && this.currentYear !== this.startYear;
+          this.hideStatus.byYear = this.startYear < this.minYear || this.startYear > this.maxYear;
         }
+
+        this.hideStatus.byEventType = this.eventTypeStatus;
+        if (!this.hideStatus.byEventType) {
+          this.hide = true;
+          return;
+        }
+
         this.hideStatus.byGroups = this.activeGroups.size === 0 && this.groups.length > 0;
         if (this.hideStatus.byGroups) {
           this.hide = true;
@@ -95,7 +102,6 @@
           return
         }
         this.hide = false
-
       },
       getYears() {
         this.startYear = Number(this.data.start_date.split('-')[0]);
@@ -103,29 +109,10 @@
           this.endYear = Number(this.data.end_date.split('-')[0])
         }
       },
-
-      updateIfSelectedEvent() {
-        // TODO: add relationships
-        // for (let e = 0; e < this.$parent.events.length; e++) {
-        //   if (this.$parent.events[e].id === this.zoomInEvent) {
-        //     selectedEventEventObj = this.$parent.events[e];
-        //     break;
-        //   }
-        // }
-        // if (!selectedEventEventObj) {
-        //   return;
-        // }
-        // let relationships = selectedEventEventObj.relationships;
-        // for (let i = 0; i < relationships.length; i++) {
-        //   if (relationships[i][0] === this.data.id) {
-        //     this.hide = false;
-        //     this.hidingBySelectedEvent = this.hide;
-        //     return
-        //   }
-        // }
-        // this.hide = true;
+      getDetails() {
+        // this.$parent.selectedEvent = this.data.id;
+        this.$store.commit('setSelectedEvent', this.data.id);
       },
-
       updateActiveGroups() {
         let topLevelGroups = store.getters.getGroups;
         for (let i = 0; i < this.groups.length; i++) {
@@ -137,6 +124,11 @@
       },
 
     },
+    computed: {
+      eventTypeStatus() {
+        return this.$store.getters.getEventTypes[this.data.type];
+      }
+    },
     watch: {
       currentYear() {
         this.updateHide();
@@ -144,6 +136,15 @@
       selectedEvent() {
         this.updateHide();
       },
+      minYear() {
+        this.updateHide();
+      },
+      maxYear() {
+        this.updateHide();
+      },
+      eventTypeStatus() {
+        this.updateHide();
+      }
     },
     beforeMount() {
       this.getYears();
@@ -151,7 +152,6 @@
       this.updateActiveGroups();
       let date = new Date(this.data.start_date);
       return "" + date.getMonth()
-
     }
   }
 </script>

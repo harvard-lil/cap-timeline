@@ -9,20 +9,32 @@ $event-colors: (
 );
 
 $group-colors: (
-      'mexican': $color-purple,
-      'eastern_european': $color-pink,
-      'jewish': $color-red,
-      'japanese': $color-turquoise,
-      'indian': $color-navy,
-      'chinese': $color-green,
-      'western_european': $color-gold,
-      'dissidents': $color-blue
+        'mexican': $color-purple,
+        'eastern_european': $color-pink,
+        'jewish': $color-red,
+        'japanese': $color-turquoise,
+        'indian': $color-navy,
+        'chinese': $color-green,
+        'western_european': $color-gold,
+        'dissidents': $color-blue
+);
+
+$group-colors: (
+        'mexican': $color-blue-bright,
+        'eastern_european': $color-blue-bright,
+        'jewish': $color-blue-bright,
+        'japanese': $color-blue-bright,
+        'indian': $color-blue-bright,
+        'chinese': $color-blue-bright,
+        'western_european': $color-blue-bright,
+        'dissidents': $color-blue-bright
 );
 
 // event border colors
 @each $event-name, $event-color-value in $event-colors {
   .event-container.event-type-#{$event-name} {
-    border: 1px solid #{$event-color-value};
+    border: 1px solid $color-gray-light-medium;
+    border-left: 10px solid #{$event-color-value};
   }
   .event-type.event-type-#{$event-name} {
     color: $event-color-value;
@@ -36,10 +48,15 @@ $group-colors: (
   }
 }
 
+p {
+  margin: 0;
+}
+
 ul.event-list {
   display: grid;
   grid-column-gap: 1em;
   grid-template-columns: repeat(3, 1fr);
+  grid-row-gap: 3em;
 }
 
 .event-list-item {
@@ -49,8 +66,8 @@ ul.event-list {
   }
 }
 
-
 .event-container {
+  display: grid;
   border: 1px solid $color-black;
   padding: 1em;
   list-style: none;
@@ -58,9 +75,12 @@ ul.event-list {
 }
 
 .event-container {
+  height: 100%;
   .event-title,
   .event-date,
-  .event-type {
+  .event-type,
+  .event-description-short,
+  .group-relationships {
     grid-column-start: 1;
     grid-column-end: 4;
   }
@@ -68,23 +88,19 @@ ul.event-list {
     padding: 0;
   }
   .group-relationships {
-    float: right;
     li {
       float: left;
       margin: 0.2em;
     }
   }
-  .event-relationships {
-    grid-column-start: 1;
-    grid-column-end: 2;
-  }
-  .group-relationships {
-    grid-column-start: 2;
-    grid-column-end: 3;
-  }
   .event-type {
     text-transform: uppercase;
-    font-size: 1.2em;
+    font-size: 0.9em;
     font-weight: 600;
+    opacity: 0.6;
   }
+}
+
+.event-description-short {
+  font-size: 0.9em;
 }

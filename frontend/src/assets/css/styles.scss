@@ -14,7 +14,6 @@
   font-weight: 600;
 }
 
-
 nav {
   justify-items: center;
   &.navbar {
@@ -72,12 +71,13 @@ main {
   display: grid;
   padding-top: 4em;
   grid-auto-flow: column;
+  //margin-left: 2em;
 }
 
 .app-container {
   width: 100%;
   display: grid;
-  grid-template-columns: 100px 1fr;
+  grid-template-columns: 8em 1fr;
 }
 
 .row {
@@ -87,7 +87,7 @@ main {
 
 .sidebar {
   padding-top: 4em;
-  grid-column: 1 ;
+  grid-column: 1;
   grid-row: 1 / 2;
   position: fixed;
   width: 10em;
@@ -137,7 +137,6 @@ main {
   }
 }
 
-
 .key-container {
   cursor: pointer;
   padding: 0.5em;
@@ -183,10 +182,8 @@ main {
 }
 
 .selectable-group {
-  .group-name {
-    color: red;
-    &.active {
-      color: $color-black;
-    }
+  color: $color-gray-medium;
+  &.active {
+    color: $color-black;
   }
 }

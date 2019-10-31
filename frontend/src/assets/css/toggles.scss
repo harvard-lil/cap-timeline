@@ -1,3 +1,5 @@
+
+
 .toggles-menu {
   padding: 0 0.6em;
   h3 {
@@ -43,6 +45,21 @@ svg.unchecked {
 svg.unchecked, svg.checked {
   margin-right: 0.3em;
 }
+
 .unchecked > span {
   color: $color-gray-medium;
 }
+
+.symbol-square, .symbol-circle {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+.symbol-diamond, .symbol-oval, .symbol-polygon {
+  margin-left: -1px;
+}
+
+.symbol-square {
+  margin-left: 1px;
+}
+

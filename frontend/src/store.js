@@ -31,7 +31,8 @@ const store = new Vuex.Store({
       chinese: 'polygon',
       japanese: 'square',
       western_european: 'oval',
-      mexican: 'triangle_right',
+      mexican: 'star5',
+      dissidents: 'heptagon'
     },
     eventTypes: {
       us: true,
@@ -47,6 +48,8 @@ const store = new Vuex.Store({
     },
     event: null,
     year: null,
+    minYear: 1800,
+    maxYear: 1930
   },
   actions: {
     loadGroups: function (context) {
@@ -56,6 +59,9 @@ const store = new Vuex.Store({
             context.commit('loadGroups', response.data)
           })
     },
+    getYears: function () {
+     // todo
+    }
   },
   mutations: {
     loadGroups(state, groups) {
@@ -71,7 +77,16 @@ const store = new Vuex.Store({
     },
     setSelectedYear(state, year) {
       state.year = year;
-    }
+    },
+    setMinYear(state, year) {
+      state.minYear = year;
+    },
+    setMaxYear(state, year) {
+      state.maxYear = year;
+    },
+    setEventStatus(state, eventData) {
+      state.eventTypes[eventData.name] = eventData.status;
+    },
   },
   getters: {
     getGroups(state) {
@@ -90,6 +105,12 @@ const store = new Vuex.Store({
     getSelectedYear(state) {
       return state.year
     },
+    getMinYear(state) {
+      return state.minYear
+    },
+    getMaxYear(state) {
+      return state.maxYear
+    },
     getSymbolTranslation(state) {
       return state.symbolTranslation
     },
@@ -97,8 +118,11 @@ const store = new Vuex.Store({
       return state.eventTypes
     },
     getEventTranslation(state) {
-      return state.getEventTranslation
-    }
+      return state.eventTranslation
+    },
+    getActiveEvents(state) {
+      return Object.keys(state.eventTypes).filter(event => state.events[event])
+    },
   },
   modules: {}
 });

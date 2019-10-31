@@ -1,16 +1,15 @@
 <template>
   <div class="event-list-container">
     <ul class="event-list">
-      <li class="event-list-item"
-          v-for="eventObj in events"
-          :class="'event-type-' + eventObj.type"
-          @click="getDetails(eventObj.id)"
-          :key="eventObj.id">
-        <event :currentYear="currentYear"
-               :selectedEvent="selectedEvent"
-               :data="eventObj">
-        </event>
-      </li>
+      <event :class="'event-list-item event-type-' + eventObj.type"
+             v-for="eventObj in events"
+             :key="eventObj.id"
+             :currentYear="currentYear"
+             :minYear="minYear"
+             :maxYear="maxYear"
+             :selectedEvent="selectedEvent"
+             :data="eventObj">
+      </event>
     </ul>
   </div>
 </template>
@@ -36,10 +35,7 @@
               this.groups = response.body;
             })
       },
-      getDetails(event) {
-        if (event !== store.state.event)
-          store.commit('setSelectedEvent', event);
-      },
+
       getData() {
         let url = 'http://localhost:8000/events';
         this.$http.get(url)
@@ -53,6 +49,14 @@
       getYear(date) {
         return Number(date.split('-')[0])
       },
+    },
+    computed: {
+      minYear() {
+        return store.getters.getMinYear;
+      },
+      maxYear() {
+        return store.getters.getMaxYear;
+      }
     },
     created() {
       this.getData();

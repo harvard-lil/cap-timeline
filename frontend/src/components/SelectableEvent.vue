@@ -1,23 +1,29 @@
 <template>
-  <div :class="status ? 'checked' : 'unchecked'" @click="status=!status">
+  <li class="list-item" :class="status ? 'checked' : 'unchecked'" @click="changeStatus()">
     <svgicon :icon="status ? 'checked' : 'unchecked'"
              :class="status ? 'checked' : 'unchecked'"
              width="18" height="18">
     </svgicon>
 
-    <span>{{name}}</span>
-  </div>
+    <span>{{fullname}}</span>
+  </li>
 </template>
 
 <script>
-  import './icons/checked';
   import './icons/unchecked';
+  import './icons/checked';
   export default {
     name: "SelectableEvent",
-    props: ["name"],
+    props: ["name", "fullname"],
     data() {
       return {
         status: true
+      }
+    },
+    methods: {
+      changeStatus() {
+        this.status = !this.status;
+        this.$store.commit("setEventStatus", {name: this.name, status: this.status})
       }
     }
   }
