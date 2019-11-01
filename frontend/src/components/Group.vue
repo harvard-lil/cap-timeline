@@ -13,7 +13,7 @@
 
   export default {
     name: "Group",
-    props: ["name"],
+    props: ["name", "showName"],
     computed: {
       groupStatus() {
         return store.getters.getGroups[this.name]

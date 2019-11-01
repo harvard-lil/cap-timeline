@@ -21,7 +21,7 @@ def events(request):
 def event(request, event_id):
     event_obj = Event.objects.get(id=event_id)
     one_event = json.dumps(event_obj.as_json())
-
+    # TODO: get all relationships
     return HttpResponse(one_event, content_type='application/json')
 
 

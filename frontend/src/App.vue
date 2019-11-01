@@ -2,9 +2,11 @@
   <div class="app-container" :class="eventSelected ? 'event-selected event-selected-'+eventSelected : ''">
     <nav class="navbar navbar-dark fixed-top">
       <div class="navbar-brand">
-        <span class="nav-title"><a href="#">
+        <span class="nav-title">
+          <router-link to="/">
           U.S. IMMIGRATION TIMELINE
-        </a></span>
+        </router-link>
+        </span>
         <span class="nav-title-blue" v-if="currentYear">{{currentYear}}</span>
 
       </div>
@@ -112,16 +114,16 @@
             this.$router.push({query: newQuery}) : this.$router.push({});
 
       },
-      eventSelected(newEvent) {
-        let newQuery = Object.assign({}, this.$route.query);
-        if (newEvent) {
-          newQuery.event = newEvent;
-        } else {
-          delete newQuery['event']
-        }
-        Object.keys(newQuery).length ?
-            this.$router.push({query: newQuery}) : this.$router.push({});
-      },
+      // eventSelected(newEvent) {
+      //   let newQuery = Object.assign({}, this.$route.params);
+      //   if (newEvent) {
+      //     newQuery.event_id = newEvent;
+      //   } else {
+      //     delete newQuery.event_id['event']
+      //   }
+      //   Object.keys(newQuery).length ?
+      //       this.$router.push({params: newQuery}) : this.$router.push({});
+      // },
       yearSelected(year) {
         let newQuery = Object.assign({}, this.$route.query);
         if (year) {

@@ -36,6 +36,13 @@ $group-colors: (
     border: 1px solid $color-gray-light-medium;
     border-left: 10px solid #{$event-color-value};
   }
+  .event-details-container.event-type-#{$event-name} {
+    border: 1px solid $color-gray-light-medium;
+    border-left: 10px solid #{$event-color-value};
+    .small-title, .event-type {
+      color: #{$event-color-value};
+    }
+  }
   .event-type.event-type-#{$event-name} {
     color: $event-color-value;
   }
@@ -74,6 +81,13 @@ ul.event-list {
   cursor: pointer;
 }
 
+.event-type {
+  text-transform: uppercase;
+  font-size: 0.9em;
+  font-weight: 600;
+  opacity: 0.6;
+}
+
 .event-container {
   height: 100%;
   .event-title,
@@ -93,14 +107,37 @@ ul.event-list {
       margin: 0.2em;
     }
   }
-  .event-type {
-    text-transform: uppercase;
-    font-size: 0.9em;
-    font-weight: 600;
-    opacity: 0.6;
-  }
 }
 
 .event-description-short {
   font-size: 0.9em;
+}
+
+// detail view
+.detail-view {
+  //todo: add @media
+  width: 80%;
+  margin: 0 auto;
+}
+.event-details-container {
+  background-color: $color-white;
+  display: grid;
+  grid-template-columns: 12em 1fr;
+  .col-1 {
+    padding: 1em;
+    border-right: 1px solid $color-gray-medium;
+  }
+  .col-2 {
+    padding: 1em;
+  }
+  .small-title {
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  ul.group-list {
+    padding-left: 0;
+  }
+  li {
+    list-style: none;
+  }
 }
