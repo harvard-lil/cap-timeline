@@ -11,6 +11,7 @@ class EventAdmin(admin.ModelAdmin):
 class CitationAdmin(admin.ModelAdmin):
     list_display = ["title", "type", "publication_title"]
 
+
 admin.site.register(Finding)
 admin.site.register(Relationship)
 admin.site.register(Weight)

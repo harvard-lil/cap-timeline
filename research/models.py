@@ -75,16 +75,16 @@ class Citation(models.Model):
 
 
 class Relationship(models.Model):
-    head = models.ForeignKey('Event', on_delete=models.DO_NOTHING, related_name='heads')
-    tail = models.ForeignKey('Event', on_delete=models.DO_NOTHING, related_name='tails')
+    preceding_event = models.ForeignKey('Event', on_delete=models.DO_NOTHING, related_name='heads')
+    succeeding_event = models.ForeignKey('Event', on_delete=models.DO_NOTHING, related_name='tails')
     description = models.TextField(blank=True)
 
     def __str__(self):
-        return "%s related to %s" % (self.head.name, self.tail.name)
+        return "%s is directly related to %s" % (self.succeeding_event.name, self.preceding_event.name, )
 
     def post_save(self, *args, **kwargs):
-        self.head.relationships.add(self.id)
-        self.tail.relationships.add(self.id)
+        self.preceding_event.relationships.add(self.id)
+        self.succeeding_event.relationships.add(self.id)
         return super(Relationship, self).save(*args, **kwargs)
 
 
