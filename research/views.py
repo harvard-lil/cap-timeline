@@ -20,9 +20,16 @@ def events(request):
 
 def event(request, event_id):
     event_obj = Event.objects.get(id=event_id)
-    one_event = json.dumps(event_obj.as_json())
-    # TODO: get all relationships
-    return HttpResponse(one_event, content_type='application/json')
+    related_events = []
+    for relationship in event_obj.relationships.all():
+        rel = relationship.preceding_event if relationship.succeeding_event == event_obj.id else relationship.succeeding_event
+        related_events.append(rel.as_json())
+
+    context = {
+        'event': event_obj.as_json(),
+        'related_events': related_events
+    }
+    return HttpResponse(json.dumps(context), content_type='application/json')
 
 
 def years(request):

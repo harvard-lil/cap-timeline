@@ -145,7 +145,7 @@ class Event(models.Model):
         relationships = []
         if self.relationships.count():
             for relationship in self.relationships.all():
-                rel = relationship.tail if relationship.head.id == self.id else relationship.head
+                rel = relationship.succeeding_event if relationship.preceding_event.id == self.id else relationship.succeeding_event
                 relationships.append([rel.id, rel.type])
 
         return dict(
