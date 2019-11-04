@@ -19,16 +19,6 @@ $group-colors: (
         'dissidents': $color-blue
 );
 
-$group-colors: (
-        'mexican': $color-blue-bright,
-        'eastern_european': $color-blue-bright,
-        'jewish': $color-blue-bright,
-        'japanese': $color-blue-bright,
-        'indian': $color-blue-bright,
-        'chinese': $color-blue-bright,
-        'western_european': $color-blue-bright,
-        'dissidents': $color-blue-bright
-);
 
 // event border colors
 @each $event-name, $event-color-value in $event-colors {
@@ -90,6 +80,7 @@ ul.event-list {
 
 .event-container {
   height: 100%;
+  background-color: $color-white;
   .event-title,
   .event-date,
   .event-type,
@@ -125,7 +116,7 @@ ul.event-list {
   grid-template-columns: 12em 1fr;
   .col-1 {
     padding: 1em;
-    border-right: 1px solid $color-gray-medium;
+    border-right: 1px solid $color-gray-light-medium;
   }
   .col-2 {
     padding: 1em;

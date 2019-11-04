@@ -6,6 +6,7 @@
                width="18" height="18">
       </svgicon>
     </span>
+    <span v-if="showName" class="group-name">{{nameTranslation}}</span>
   </li>
 </template>
 <script>
@@ -20,7 +21,11 @@
       },
       symbolTranslation() {
         return store.getters.getSymbolTranslation
+      },
+      nameTranslation() {
+        return store.getters.getGroupTranslation[this.name]
       }
+
     },
     watch: {
       groupStatus() {

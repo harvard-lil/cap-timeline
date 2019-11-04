@@ -70,8 +70,10 @@ body {
 main {
   display: grid;
   padding-top: 4em;
+  padding-bottom: 4em;
   grid-auto-flow: column;
   margin-left: 2em;
+  background-color: $color-gray-light;
 }
 
 .app-container {
