@@ -3,6 +3,25 @@ import requests
 from django.db import models
 from timeline.settings import PERMA_KEY, PERMA_FOLDER, STORAGES
 
+class Region(models.Model):
+    name = models.CharField(max_length=1000, unique=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
+    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def as_json(self):
+        return self.slug
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self.name.lower()
+            self.slug = self.slug.replace(' ', '_')
+
+        super(Region, self).save(*args, **kwargs)
+
+
 
 class Group(models.Model):
     name = models.CharField(max_length=1000, unique=True)
@@ -10,6 +29,7 @@ class Group(models.Model):
     description = models.TextField(blank=True)
     date_start = models.DateTimeField(null=True, blank=True)
     date_end = models.DateTimeField(null=True, blank=True)
+    region = models.ForeignKey('Region', blank=True, null=True, on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return self.name
