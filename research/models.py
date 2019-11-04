@@ -26,12 +26,16 @@ class Group(models.Model):
 
 
 class Citation(models.Model):
-    name = models.CharField(max_length=800)
-    cite = models.CharField(max_length=800, blank=True, null=True)
+    title = models.CharField(max_length=800)
+    caselaw_citation = models.CharField(max_length=800, blank=True, null=True)
     url = models.URLField(blank=True, null=True)
-    book_or_article = models.CharField(blank=True, null=True, max_length=2000)
+    publication_title = models.CharField(blank=True, null=True, max_length=2000)
+    author_name = models.CharField(blank=True, null=True, max_length=1000)
+    volume_number = models.IntegerField(blank=True, null=True)
+    issue_number = models.IntegerField(blank=True, null=True)
     archived_url = models.URLField(blank=True, null=True)
     archived_date = models.DateTimeField(blank=True, null=True)
+    publication_date = models.DateField(null=True, blank=True)
     type = models.CharField(max_length=100, blank=True, null=True,
                             choices=(("image", "image"),
                                      ("caselaw", "caselaw"),
@@ -40,14 +44,14 @@ class Citation(models.Model):
                                      ("book", "book")))
 
     def __str__(self):
-        return self.name
+        return self.title
 
     def as_json(self):
         return dict(
-            name=self.name,
-            cite=self.cite,
+            title=self.title,
+            cite=self.caselaw_citation,
             url=self.url,
-            book_or_article=self.book_or_article,
+            publication_title=self.publication_title,
             archived_url=self.archived_url,
             archived_date=str(self.archived_date),
             type=self.type
@@ -88,7 +92,7 @@ class Event(models.Model):
     name = models.CharField(max_length=1000)
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
-    citation = models.ForeignKey('Citation', null=True, blank=True, related_name='events', on_delete=models.DO_NOTHING)
+    citation = models.ManyToManyField(Citation, blank=True, related_name='events')
     weight = models.ForeignKey('Weight', null=True, blank=True, related_name='events', on_delete=models.DO_NOTHING)
     image = models.ForeignKey('Image', null=True, blank=True, related_name='events', on_delete=models.DO_NOTHING)
     description_long = models.TextField(blank=True)
@@ -106,7 +110,11 @@ class Event(models.Model):
         return self.name
 
     def as_json(self):
-        citation = self.citation.as_json() if self.citation else None
+        citations = []
+        for cite in self.citation.all():
+            c = cite.as_json() if self.citation else None
+            if c:
+                citations.append(c)
 
         start_date = str(self.start_date)
         start_date_parsed = self.start_date.strftime("%B %d, %Y") if self.start_date else None
@@ -127,7 +135,7 @@ class Event(models.Model):
             start_date_parsed=start_date_parsed,
             end_date=end_date,
             end_date_parsed=end_date_parsed,
-            citation=citation,
+            citation=citations,
             type=self.type,
             hide=self.hide,
             relationships=relationships,
@@ -162,7 +170,7 @@ class Image(models.Model):
     src = models.ForeignKey('Citation', null=True, related_name='images', on_delete=models.DO_NOTHING)
 
     def __str__(self):
-        return "%s %s" % (str(self.id), str(self.src.name))
+        return "%s %s" % (str(self.id), str(self.src.title))
 
     def save(self, *args, **kwargs):
         self.src.type = 'image'
