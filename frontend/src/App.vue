@@ -1,36 +1,17 @@
 <template>
   <div class="app-container" :class="eventSelected ? 'event-selected event-selected-'+eventSelected : ''">
-    <nav class="navbar navbar-dark fixed-top">
+    <nav class="navbar main-nav fixed-top">
       <div class="navbar-brand">
         <span class="nav-title">
           <router-link to="/">
           U.S. IMMIGRATION TIMELINE
         </router-link>
         </span>
-        <span class="nav-title-blue" v-if="currentYear">{{currentYear}}</span>
-
       </div>
     </nav>
     <div class="subtitle-bar"></div>
     <nav class="sidebar">
       <toggles></toggles>
-      <ul class="year-list">
-        <li class="year">
-              <span @click="setCurrentYear()"
-                    :class="currentYear || eventSelected ? 'active' : 'active selected'">
-                ALL
-              </span>
-        </li>
-        <li v-for="year in years" :key="year" class="year">
-              <span v-if="currentYear === year" class="active selected">
-                {{ year }}
-              </span>
-          <span v-else-if="activeYears.includes(year)"
-                @click="setCurrentYear(year)"
-                class="active">{{ year }}</span>
-          <span v-else>{{ year }}</span>
-        </li>
-      </ul>
     </nav>
     <main class="main">
       <router-view :currentYear="currentYear"
@@ -55,20 +36,6 @@
               });
             })
       },
-      getActiveYears() {
-        this.$http.get('http://localhost:8000/years')
-            .then((response) => {
-              this.activeYears = response.body;
-              this.minYear = this.activeYears[0];
-              this.maxYear = this.activeYears[this.activeYears.length - 1];
-              this.backfillYears();
-            })
-      },
-      backfillYears() {
-        for (let i = 0; i < this.maxYear - this.minYear + 1; i++) {
-          this.years.push(this.minYear + i)
-        }
-      },
       getYear(date) {
         return Number(date.split('-')[0])
       },
@@ -82,8 +49,6 @@
     data() {
       return {
         events: {},
-        minYear: 9999,
-        maxYear: 0,
         activeYears: [],
         years: [],
         currentYear: Number(this.$route.query.year),
@@ -96,9 +61,13 @@
       eventSelected() {
         return store.getters.getSelectedEvent;
       },
-      yearSelected() {
-        return store.getters.getSelectedYear;
+      minYear() {
+        return store.getters.getMinYear;
+      },
+      maxYear() {
+        return store.getters.getMaxYear;
       }
+
     },
     watch: {
       activeGroups(newGroups) {
@@ -124,16 +93,27 @@
       //   Object.keys(newQuery).length ?
       //       this.$router.push({params: newQuery}) : this.$router.push({});
       // },
-      yearSelected(year) {
+      minYear(year) {
         let newQuery = Object.assign({}, this.$route.query);
         if (year) {
-          newQuery.year = year;
+          newQuery.minyear = year;
         } else {
-          delete newQuery['year']
+          delete newQuery['minyear']
+        }
+        Object.keys(newQuery).length ?
+            this.$router.push({query: newQuery}) : this.$router.push({});
+      },
+      maxYear(year) {
+        let newQuery = Object.assign({}, this.$route.query);
+        if (year) {
+          newQuery.maxyear = year;
+        } else {
+          delete newQuery['maxyear']
         }
         Object.keys(newQuery).length ?
             this.$router.push({query: newQuery}) : this.$router.push({});
       }
+
     },
     beforeCreate() {
       this.$store.dispatch('loadGroups');
@@ -144,7 +124,6 @@
     },
     created() {
       this.getData();
-      this.getActiveYears();
     },
   };
 </script>

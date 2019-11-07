@@ -3,6 +3,7 @@ import json
 from django.shortcuts import render
 from django.http import HttpResponse
 
+from django.conf import settings
 from research.models import Event, Group, Region
 from timeline import settings
 
@@ -64,3 +65,6 @@ def groups_by_region(request):
         }
         rg_list.append(rgn_obj)
     return HttpResponse(json.dumps(rg_list), content_type='application/json')
+
+def year_settings(request):
+    return HttpResponse(json.dumps(settings.TOGGLES['years']), content_type='application/json')

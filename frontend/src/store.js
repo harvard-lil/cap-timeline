@@ -49,11 +49,13 @@ const store = new Vuex.Store({
           .then((response) => {
             context.commit('loadGroupsByRegion', response.data)
           })
-
     },
-
-    getYears: function () {
-     // todo
+    loadYears (context) {
+      let url = "http://localhost:8000/year-settings";
+      axios.get(url)
+          .then((response) => {
+            context.commit('loadYears', response.data)
+          })
     }
   },
   mutations: {
@@ -64,6 +66,10 @@ const store = new Vuex.Store({
     },
     loadGroupsByRegion(state, groupsByRegion) {
       state.groupsByRegion = groupsByRegion;
+    },
+    loadYears(state, years) {
+      state.minYear = years.min;
+      state.maxYear = years.max;
     },
     setGroupStatus(state, groupData) {
       state.groups[groupData.slug].status = groupData.status;

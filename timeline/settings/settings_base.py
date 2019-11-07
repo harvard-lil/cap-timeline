@@ -158,3 +158,11 @@ STORAGES = {
 # PERMA
 PERMA_KEY = "claim your perma key: https://perma.cc/settings/tools"
 PERMA_FOLDER = "0"
+
+# TOGGLE KEYS
+TOGGLES = {
+    'years': {
+        'min': 1800,
+        'max': 1930
+    }
+}

@@ -3,10 +3,14 @@
     <!--year slider-->
     <h3>Years</h3>
     <vue-slider v-model="yearValue"
-                :min="yearMin"
-                :max="yearMax"
+                :min="minSliderYear"
+                :max="maxSliderYear"
+                :silent="true"
                 :enable-cross="false">
     </vue-slider>
+    <div class="year-values">
+      <span>{{yearValue[0]}}</span>&nbsp; &nbsp; <span>{{yearValue[1]}}</span>
+    </div>
     <hr/>
     <!--Groups-->
     <h3>Groups</h3>
@@ -60,9 +64,9 @@
     data() {
       return {
         showingEvent: false,
-        yearMin: 1800,
-        yearMax: 1930,
-        yearValue: [1800, 1930],
+        minSliderYear: 0,
+        maxSliderYear: 100,
+        yearValue: [0, 100],
       }
     },
     computed: {
@@ -80,13 +84,26 @@
       },
       symbolTranslation() {
         return store.getters.getSymbolTranslation
-      }
+      },
+      minYear() {
+        return store.getters.getMinYear;
+      },
+      maxYear() {
+        return store.getters.getMaxYear;
+      },
     },
     watch: {
       yearValue(newYearValue) {
-        store.commit('setMinYear', Number(newYearValue[0]));
-        store.commit('setMaxYear', Number(newYearValue[1]));
+        store.commit('setMinYear',   Number(newYearValue[0]));
+        store.commit('setMaxYear',   Number(newYearValue[1]));
+
       }
+    },
+    mounted() {
+      this.maxSliderYear = this.maxYear;
+      this.minSliderYear = this.minYear;
+      this.yearValue = [this.minSliderYear, this.maxSliderYear]
+
     }
 
   }

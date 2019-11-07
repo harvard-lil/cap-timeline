@@ -6,9 +6,11 @@ from research import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
-    path('events', views.events),
+    path('events/', views.events),
     path('events/<int:event_id>', views.event),
-    path('years', views.years),
-    path('groups', views.groups),
-    path('groups-by-region', views.groups_by_region),
+    path('years/', views.years),
+    path('groups/', views.groups),
+    path('groups-by-region/', views.groups_by_region),
+    path('toggle-settings/', views.toggle_settings),
+    path('year-settings/', views.year_settings),
 ]
