@@ -95,6 +95,9 @@ const store = new Vuex.Store({
     getGroup: (state) => (slug) => {
       return state.groups[slug]
     },
+    getGroupName: (state) => (slug) => {
+      return state.groups[slug].name
+    },
     getSelectedEvent(state) {
       return state.event;
     },

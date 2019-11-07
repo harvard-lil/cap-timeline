@@ -28,10 +28,14 @@
         return store.getters.getSymbolTranslation
       },
       fullName() {
-        return store.getters.getGroup(this.slug).name
+        let groupObj = store.getters.getGroup(this.slug);
+        if (groupObj) {
+          return groupObj.name
+        }
       }
 
     },
+
     methods: {
       toggleOn() {
         this.status = !this.status;
