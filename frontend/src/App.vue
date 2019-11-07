@@ -14,8 +14,7 @@
       <toggles></toggles>
     </nav>
     <main class="main">
-      <router-view :currentYear="currentYear"
-                   :selectedEvent="eventSelected">
+      <router-view :selectedEvent="eventSelected">
       </router-view>
     </main>
   </div>
@@ -39,19 +38,12 @@
       getYear(date) {
         return Number(date.split('-')[0])
       },
-      setCurrentYear(year) {
-        this.currentYear = year;
-        store.commit('setSelectedYear', year);
-        // TODO: is this right???
-        store.commit('setSelectedEvent', null);
-      }
     },
     data() {
       return {
         events: {},
         activeYears: [],
         years: [],
-        currentYear: Number(this.$route.query.year),
       }
     },
     computed: {

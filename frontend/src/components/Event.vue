@@ -41,7 +41,6 @@
 
 <script>
   import Group from "./Group"
-  import store from '../store'
 
   export default {
     name: "event",

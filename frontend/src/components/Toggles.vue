@@ -8,10 +8,11 @@
                 :silent="true"
                 :enable-cross="false">
     </vue-slider>
-    <div class="year-values">
-      <span>{{yearValue[0]}}</span>&nbsp; &nbsp; <span>{{yearValue[1]}}</span>
-    </div>
-    <hr/>
+    <ul class="year-values list-inline">
+      <li class="list-inline-item">{{yearValue[0]}}</li>
+      <li class="list-inline-item">{{yearValue[1]}}</li>
+    </ul>
+    <br/>
     <!--Groups-->
     <h3>Groups</h3>
     <ul class="group-types list-group">
@@ -52,7 +53,7 @@
   import './icons/square';
   import './icons/heptagon';
   import VueSlider from 'vue-slider-component';
-  import 'vue-slider-component/theme/default.css';
+  import 'vue-slider-component/theme/antd.css';
 
   import SelectableGroup from './SelectableGroup';
   import SelectableEvent from './SelectableEvent';
@@ -109,11 +110,7 @@
   }
 </script>
 <style>
-  .vue-slider-process,
-  .vue-slider-dot-handle,
-  .vue-slider-dot-tooltip-inner {
-    background-color: #007AFF;
-  }
+
 
   .vue-slider.vue-slider-ltr {
     padding: 0 0.5em !important;

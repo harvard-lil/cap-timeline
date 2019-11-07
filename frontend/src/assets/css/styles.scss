@@ -27,14 +27,14 @@ nav {
     width: 100vw;
 
   }
-  &.navbar-dark {
+  &.main-nav {
     background-color: $color-blue;
     color: $color-gray-light;
     a {
       text-decoration: none;
       color: $color-gray-light;
       &:hover {
-        color: $color-pink;
+        color: $color-navy;
       }
     }
   }
@@ -187,5 +187,16 @@ main {
   color: $color-gray-medium;
   &.active {
     color: $color-black;
+  }
+}
+
+.toggles-menu {
+  .year-values {
+    li {
+      float: left;
+      &:last-child {
+        float: right
+      }
+    }
   }
 }

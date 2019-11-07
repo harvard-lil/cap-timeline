@@ -33,9 +33,7 @@
           return groupObj.name
         }
       }
-
     },
-
     methods: {
       toggleOn() {
         this.status = !this.status;
