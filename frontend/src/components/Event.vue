@@ -1,7 +1,7 @@
 <template>
   <li v-show="!hide"
       class="event-container"
-      :class="[{expanded: this.selectedEvent === this.data.id}]"
+      :class="['event-type-'+data.type, {expanded: this.selectedEvent === data.id}]"
       @click="getDetails()">
     <div class="event-type" :class="'event-type-'+data.type">
       {{ eventTranslation[data.type] }}

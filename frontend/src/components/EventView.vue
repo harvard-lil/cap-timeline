@@ -35,10 +35,9 @@
         </div>
       </div>
     </div>
-    <ul class="event-list">
+    <ul class="event-list event-list-detail-view">
       <template v-for="related_event in relationships">
-        <event class="event-container"
-               :key="related_event.id"
+        <event :key="related_event.id"
                :data="related_event">
 
         </event>

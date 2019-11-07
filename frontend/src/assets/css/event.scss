@@ -62,10 +62,12 @@ ul.event-list {
     grid-column: span 2;
   }
 }
+.event-list-detail-view {
+   padding-left: 0;
+}
 
 .event-container {
   display: grid;
-  border: 1px solid $color-black;
   padding: 1em;
   list-style: none;
   cursor: pointer;
