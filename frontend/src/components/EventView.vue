@@ -18,10 +18,10 @@
         <h4 class="small-title">Groups affected</h4>
         <div class="group-relationships">
           <ul class="group-list">
-            <group v-for="name in event.groups"
-                   :key="name"
+            <group v-for="slug in event.groups"
+                   :key="slug"
                    :showName="true"
-                   :name="name">
+                   :slug="slug">
             </group>
           </ul>
         </div>

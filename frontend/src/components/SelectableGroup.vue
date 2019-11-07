@@ -1,12 +1,12 @@
 <template>
-  <div class="selectable-group" :class="[name, {active: status}]"
+  <div class="selectable-group" :class="[slug, {active: status}]"
        @click="toggleOn()">
     <span class="group-name">
-      <svgicon :icon="symbolTranslation[name]"
-               :class="'group-symbol group-name-' + name + ' symbol-' + symbolTranslation[name]"
+      <svgicon :icon="symbolTranslation[slug]"
+               :class="'group-symbol group-name-' + slug + ' symbol-' + symbolTranslation[slug]"
                width="18" height="18">
       </svgicon>
-     {{translated}}
+     {{fullName}}
     </span>
   </div>
 </template>
@@ -16,7 +16,7 @@
 
   export default {
     name: "SelectableGroup",
-    props: ["name", "translated"],
+    props: ["slug"],
     data() {
       return {
         queryName: "groups",
@@ -26,18 +26,18 @@
     computed: {
       symbolTranslation() {
         return store.getters.getSymbolTranslation
+      },
+      fullName() {
+        return store.getters.getGroup(this.slug).name
       }
+
     },
     methods: {
       toggleOn() {
         this.status = !this.status;
-        let data = {name: this.name, status: this.status};
+        let data = {slug: this.slug, status: this.status};
         store.commit('setGroupStatus', data);
       },
     },
-    beforeMount() {
-      let data = {name: this.name, status: true};
-      store.commit('setGroupStatus', data);
-    }
   }
 </script>

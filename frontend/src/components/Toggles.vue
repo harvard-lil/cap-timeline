@@ -12,9 +12,8 @@
     <h3>Groups</h3>
     <ul class="group-types list-group">
       <li class="list-item" v-for="(status, group) in groups" v-bind:key="group">
-        <selectable-group :name="group"
-                          :icon=symbolTranslation[group]
-                          :translated="groupTranslation[group]">
+        <selectable-group :slug="group"
+                          :icon=symbolTranslation[group]>
         </selectable-group>
       </li>
     </ul>

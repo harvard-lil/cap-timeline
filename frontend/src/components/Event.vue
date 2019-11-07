@@ -31,8 +31,8 @@
     <!--</div>-->
     <div class="group-relationships">
       <ul class="group-list">
-        <group v-for="name in groups"
-               :key="name" :name="name">
+        <group v-for="slug in groups"
+               :key="slug" :slug="slug">
         </group>
       </ul>
     </div>

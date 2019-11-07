@@ -7,15 +7,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     groups: {},
-    groupTranslation: {
-      mexican: "Mexican migrants",
-      chinese: "Chinese migrants",
-      japanese: "Japanese migrants",
-      jewish: "Jewish migrants",
-      eastern_european: "Eastern European migrants",
-      western_european: "Western European migrants",
-      dissidents: "Political dissidents",
-    },
+    groupTranslation: {},
     symbolTranslation: {
       jewish: 'diamond',
       indian: 'triangle',
@@ -62,7 +54,7 @@ const store = new Vuex.Store({
       }
     },
     setGroupStatus(state, groupData) {
-      state.groups[groupData.name].status = groupData.status;
+      state.groups[groupData.slug].status = groupData.status;
     },
     setSelectedEvent(state, event) {
       state.event = event;
@@ -87,6 +79,9 @@ const store = new Vuex.Store({
     getActiveGroups(state) {
       // TODO: this is done for every event. Come up with a better soluton.
       return Object.keys(state.groups).filter(group => state.groups[group].status).map(group => group)
+    },
+    getGroup: (state) => (slug) => {
+      return state.groups[slug]
     },
     getGroupTranslation(state) {
       return state.groupTranslation
