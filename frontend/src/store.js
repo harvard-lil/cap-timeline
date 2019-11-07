@@ -7,7 +7,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     groups: {},
-    groupTranslation: {},
+    groupsByRegion: [],
     symbolTranslation: {
       jewish: 'diamond',
       indian: 'triangle',
@@ -36,13 +36,22 @@ const store = new Vuex.Store({
     maxYear: 1930
   },
   actions: {
-    loadGroups: function (context) {
+    loadGroups (context) {
       let url = 'http://localhost:8000/groups';
       axios.get(url)
           .then((response) => {
             context.commit('loadGroups', response.data)
           })
     },
+    loadGroupsByRegion(context) {
+      let url = 'http://localhost:8000/groups-by-region';
+      axios.get(url)
+          .then((response) => {
+            context.commit('loadGroupsByRegion', response.data)
+          })
+
+    },
+
     getYears: function () {
      // todo
     }
@@ -52,6 +61,9 @@ const store = new Vuex.Store({
       for (let i = 0; i < groups.length; i++) {
         Vue.set(state.groups, groups[i][0], {status: true, name: groups[i][1]});
       }
+    },
+    loadGroupsByRegion(state, groupsByRegion) {
+      state.groupsByRegion = groupsByRegion;
     },
     setGroupStatus(state, groupData) {
       state.groups[groupData.slug].status = groupData.status;
@@ -83,9 +95,6 @@ const store = new Vuex.Store({
     getGroup: (state) => (slug) => {
       return state.groups[slug]
     },
-    getGroupTranslation(state) {
-      return state.groupTranslation
-    },
     getSelectedEvent(state) {
       return state.event;
     },
@@ -110,6 +119,9 @@ const store = new Vuex.Store({
     getActiveEvents(state) {
       return Object.keys(state.eventTypes).filter(event => state.events[event])
     },
+    getGroupsByRegion(state) {
+      return state.groupsByRegion;
+    }
   },
   modules: {}
 });

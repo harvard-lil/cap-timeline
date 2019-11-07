@@ -11,10 +11,15 @@
     <!--Groups-->
     <h3>Groups</h3>
     <ul class="group-types list-group">
-      <li class="list-item" v-for="(status, group) in groups" v-bind:key="group">
-        <selectable-group :slug="group"
-                          :icon=symbolTranslation[group]>
-        </selectable-group>
+      <li class="list-item" v-for="region in groupsByRegion" v-bind:key="region.slug">
+        {{region.name}}
+        <ul>
+          <li v-for="group in region.groups" v-bind:key="group.slug">
+            <selectable-group :slug="group.slug"
+                              :icon=symbolTranslation[group]>
+            </selectable-group>
+          </li>
+        </ul>
       </li>
     </ul>
     <hr/>
@@ -70,8 +75,8 @@
       groups() {
         return store.getters.getGroups;
       },
-      groupTranslation() {
-        return store.getters.getGroupTranslation;
+      groupsByRegion() {
+        return store.getters.getGroupsByRegion;
       },
       symbolTranslation() {
         return store.getters.getSymbolTranslation
@@ -92,6 +97,7 @@
   .vue-slider-dot-tooltip-inner {
     background-color: #007AFF;
   }
+
   .vue-slider.vue-slider-ltr {
     padding: 0 0.5em !important;
   }

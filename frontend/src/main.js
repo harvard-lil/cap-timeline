@@ -15,4 +15,5 @@ new Vue({
   render: h => h(App),
   store
 }).$mount("#app");
-store.dispatch('loadGroups')
+store.dispatch('loadGroups');
+store.dispatch('loadGroupsByRegion');

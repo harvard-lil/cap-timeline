@@ -3,7 +3,7 @@ import json
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from research.models import Event, Group
+from research.models import Event, Group, Region
 from timeline import settings
 
 
@@ -50,3 +50,17 @@ def years(request):
 def groups(request):
     all_groups = Group.objects.values_list('slug', 'name').order_by('region__slug')
     return HttpResponse(json.dumps(list(all_groups)), content_type='application/json')
+
+
+def groups_by_region(request):
+    rgns = Region.objects.all().order_by('name')
+    rg_list = []
+    for rgn in rgns:
+        grps = list(Group.objects.filter(region=rgn.id).order_by('region__slug').values('slug', 'name', 'region__name', 'region__slug'))
+        rgn_obj = {
+            'slug': rgn.slug,
+            'name': rgn.name,
+            'groups': grps
+        }
+        rg_list.append(rgn_obj)
+    return HttpResponse(json.dumps(rg_list), content_type='application/json')

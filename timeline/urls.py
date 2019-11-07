@@ -10,4 +10,5 @@ urlpatterns = [
     path('events/<int:event_id>', views.event),
     path('years', views.years),
     path('groups', views.groups),
+    path('groups-by-region', views.groups_by_region),
 ]
