@@ -115,11 +115,9 @@
         this.$router.push({ name: 'eventview', params: { event_id: this.data.id } })
       },
       updateActiveGroups() {
-        let topLevelGroups = store.getters.getGroups;
         for (let i = 0; i < this.groups.length; i++) {
           let group = this.groups[i];
-          topLevelGroups[group] ?
-              this.activeGroups.add(group) : this.activeGroups.delete(group);
+          this.topLevelActiveGroups.indexOf(group) > -1 ? this.activeGroups.add(group) : this.activeGroups.delete(group);
         }
         this.updateHide();
       },
@@ -128,6 +126,9 @@
     computed: {
       eventTypeStatus() {
         return this.$store.getters.getEventTypes[this.data.type];
+      },
+      topLevelActiveGroups() {
+        return this.$store.getters.getActiveGroups;
       }
     },
     watch: {
@@ -145,6 +146,9 @@
       },
       eventTypeStatus() {
         this.updateHide();
+      },
+      topLevelActiveGroups() {
+        this.updateActiveGroups();
       }
     },
     beforeMount() {

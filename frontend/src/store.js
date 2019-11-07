@@ -6,15 +6,7 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    groups: {
-      mexican: true,
-      chinese: true,
-      japanese: true,
-      jewish: true,
-      eastern_european: true,
-      western_european: true,
-      dissidents: true,
-    },
+    groups: {},
     groupTranslation: {
       mexican: "Mexican migrants",
       chinese: "Chinese migrants",
@@ -66,11 +58,11 @@ const store = new Vuex.Store({
   mutations: {
     loadGroups(state, groups) {
       for (let i = 0; i < groups.length; i++) {
-        state.groups[groups[i]] = true;
+        Vue.set(state.groups, groups[i][0], {status: true, name: groups[i][1]});
       }
     },
     setGroupStatus(state, groupData) {
-      state.groups[groupData.name] = groupData.status;
+      state.groups[groupData.name].status = groupData.status;
     },
     setSelectedEvent(state, event) {
       state.event = event;
@@ -94,7 +86,7 @@ const store = new Vuex.Store({
     },
     getActiveGroups(state) {
       // TODO: this is done for every event. Come up with a better soluton.
-      return Object.keys(state.groups).filter(group => state.groups[group])
+      return Object.keys(state.groups).filter(group => state.groups[group].status).map(group => group)
     },
     getGroupTranslation(state) {
       return state.groupTranslation
