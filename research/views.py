@@ -23,7 +23,7 @@ def event(request, event_id):
     event_obj = Event.objects.get(id=event_id)
     related_events = []
     for relationship in event_obj.relationships.all():
-        rel = relationship.preceding_event if relationship.succeeding_event == event_obj.id else relationship.succeeding_event
+        rel = relationship.preceding_event if relationship.succeeding_event.id == event_obj.id else relationship.succeeding_event
         related_events.append(rel.as_json())
 
     context = {

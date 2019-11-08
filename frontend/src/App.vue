@@ -67,6 +67,9 @@
         let newQuery = {};
         newQuery = Object.assign({}, this.$route.query);
         if (newGroups.length > 0) {
+          // TODO: check if newgroups are same as old groups
+          if (this.$route.query.groups && newGroups.length === this.$route.query.groups.split(',').length)
+            return;
           newQuery['groups'] = newGroups.join(',')
         } else {
           delete newQuery['groups']
@@ -108,7 +111,6 @@
 
     },
     beforeCreate() {
-      this.$store.dispatch('loadGroups');
       if (this.$route.query.event)
         this.$store.commit('setSelectedEvent', Number(this.$route.query.event));
       if (this.$route.query.year)

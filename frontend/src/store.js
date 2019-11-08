@@ -11,12 +11,9 @@ const store = new Vuex.Store({
     symbolTranslation: {
       jewish: 'diamond',
       indian: 'triangle',
-      eastern_european: 'circle',
       chinese: 'polygon',
       japanese: 'square',
-      western_european: 'oval',
       mexican: 'star5',
-      dissidents: 'heptagon'
     },
     eventTypes: {
       us: true,

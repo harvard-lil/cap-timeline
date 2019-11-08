@@ -71,8 +71,7 @@
     methods: {
       updateHide() {
         // Complicated logic about when to hide event
-        // Hiding depends on year, groups, and event selected
-        // this.hideStatus.bySelectedEvent = !!(this.selectedEvent) && this.selectedEvent !== this.data.id;
+        // Hiding depends on year, event types, and groups
         if (this.endYear) {
           // this.hideStatus.byYear = this.currentYear && !(this.currentYear >= this.startYear && this.currentYear <= this.endYear);
           this.hideStatus.byYear = this.startYear < this.minYear || this.startYear > this.maxYear || this.endYear > this.maxYear || this.endYear < this.minYear;
@@ -96,10 +95,6 @@
           this.hide = true;
           return
         }
-        // if (this.hideStatus.bySelectedEvent) {
-        //   this.hide = true;
-        //   return
-        // }
         this.hide = false
       },
       getYears() {
@@ -111,7 +106,8 @@
       getDetails() {
         // this.$parent.selectedEvent = this.data.id;
         this.$store.commit('setSelectedEvent', this.data.id);
-        this.$router.push({ name: 'eventview', params: { event_id: this.data.id } })
+        this.$router.push({ name: 'eventview', params: { event_id: this.data.id } });
+        this.$router.go();
       },
       updateActiveGroups() {
         for (let i = 0; i < this.groups.length; i++) {

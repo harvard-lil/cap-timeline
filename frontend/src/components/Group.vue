@@ -1,7 +1,8 @@
 <template>
-  <li class="list-inline-item group">
+  <li class="list-inline-item group" :title="fullName + ' migrants'">
     <span class="group-name" :class="{active: status}">
       <svgicon :icon="symbolTranslation[slug]"
+               :title="fullName + ' migrants'"
                :class="'group-symbol group-name-' + slug + ' symbol-' + symbolTranslation[slug]"
                width="18" height="18">
       </svgicon>
@@ -20,7 +21,10 @@
         return store.getters.getSymbolTranslation
       },
       fullName() {
-        return store.getters.getGroup(this.slug).name
+        let groupObj = store.getters.getGroup(this.slug);
+        if (groupObj) {
+          return groupObj.name
+        }
       }
     },
     data() {
