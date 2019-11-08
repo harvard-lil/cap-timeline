@@ -24,7 +24,6 @@ class Region(models.Model):
         super(Region, self).save(*args, **kwargs)
 
 
-
 class Group(models.Model):
     name = models.CharField(max_length=1000, unique=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
@@ -102,7 +101,7 @@ class Relationship(models.Model):
     description = models.TextField(blank=True)
 
     def __str__(self):
-        return "%s is directly related to %s" % (self.succeeding_event.name, self.preceding_event.name, )
+        return "%s is directly related to %s" % (self.succeeding_event.name, self.preceding_event.name,)
 
     def post_save(self, *args, **kwargs):
         self.preceding_event.relationships.add(self.id)

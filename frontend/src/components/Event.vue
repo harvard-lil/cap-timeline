@@ -17,19 +17,6 @@
     <div class="event-description-short"
          v-html="data.description_short"></div>
 
-    <!--<div class="event-relationships" v-if="data.relationships.length > 0">-->
-      <!--<ul>-->
-        <!--<li v-for="relationship in data.relationships">-->
-          <!--<a href="">-->
-            <!--&lt;!&ndash;TODO: link to specific event!&ndash;&gt;-->
-            <!--&lt;!&ndash;<svgicon :icon="symbolTranslation[relationship[1]]"&ndash;&gt;-->
-                     <!--&lt;!&ndash;:class="'event-symbol event-type-' + relationship[1] + ' symbol-' + symbolTranslation[relationship[1]]"&ndash;&gt;-->
-                     <!--&lt;!&ndash;width="18" height="18">&ndash;&gt;-->
-            <!--&lt;!&ndash;</svgicon>&ndash;&gt;-->
-          <!--</a>-->
-        <!--</li>-->
-      <!--</ul>-->
-    <!--</div>-->
     <div class="group-relationships">
       <ul class="group-list">
         <group v-for="slug in groups"

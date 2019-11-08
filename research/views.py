@@ -21,14 +21,26 @@ def events(request):
 
 def event(request, event_id):
     event_obj = Event.objects.get(id=event_id)
-    related_events = []
+    relationships = {
+        "preceding": [],
+        "succeeding": []
+    }
     for relationship in event_obj.relationships.all():
-        rel = relationship.preceding_event if relationship.succeeding_event.id == event_obj.id else relationship.succeeding_event
-        related_events.append(rel.as_json())
+        if relationship.preceding_event.id == event_obj.id:
+            rel = relationship.succeeding_event
+            relationships['succeeding'].append(rel.as_json())
+        else:
+            rel = relationship.preceding_event
+            relationships['preceding'].append(rel.as_json())
 
+    def sort_by_date(e):
+        return e['start_date']
+
+    relationships['preceding'].sort(key=sort_by_date)
+    relationships['succeeding'].sort(key=sort_by_date)
     context = {
         'event': event_obj.as_json(),
-        'related_events': related_events
+        'related_events': relationships
     }
     return HttpResponse(json.dumps(context), content_type='application/json')
 

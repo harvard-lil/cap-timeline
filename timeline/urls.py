@@ -11,6 +11,6 @@ urlpatterns = [
     path('years/', views.years),
     path('groups/', views.groups),
     path('groups-by-region/', views.groups_by_region),
-    path('toggle-settings/', views.toggle_settings),
+    # path('toggle-settings/', views.toggle_settings),
     path('year-settings/', views.year_settings),
 ]

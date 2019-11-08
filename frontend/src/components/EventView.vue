@@ -5,14 +5,13 @@
       <div class="col-1">
         <h4 class="small-title">Date</h4>
         {{event.start_date}}
-
-        <h4 v-if="event.citation" class="small-title">Source</h4>
-        <template  v-if="event.citation">
-          <a v-for="citation in event.citation"
+        <h4 v-if="event.citations && event.citations.length" class="small-title">Sources</h4>
+        <template v-if="event.citations">
+          <a v-for="citation in event.citations"
              :href="citation.url"
              target="_blank"
              :key="citation.id">
-              {{citation.title}}
+            {{citation.title}}
           </a>
         </template>
         <h4 class="small-title">Groups affected</h4>
@@ -25,6 +24,22 @@
             </group>
           </ul>
         </div>
+        <h4 class="small-title" v-if="relationships.preceding && relationships.preceding.length>0">Related,
+          preceding</h4>
+        <div v-for="preceding in relationships.preceding">
+          <router-link :to="'events/' + preceding.id">
+            {{preceding.name}}
+          </router-link>
+          ({{preceding.type}}, {{preceding.start_date.split('-')[0]}})
+        </div>
+        <h4 class="small-title" v-if="relationships.succeeding && relationships.succeeding.length>0">Related,
+          succeeding</h4>
+        <div v-for="succeeding in relationships.succeeding">
+          <router-link :to="'events/' + succeeding.id">
+            {{succeeding.name}}
+          </router-link>
+          ({{succeeding.type}}, {{succeeding.start_date.split('-')[0]}})
+        </div>
       </div>
       <div class="col-2">
         <div class="event-type">{{event.type}}</div>
@@ -36,13 +51,19 @@
         </div>
       </div>
     </div>
+    <h2 v-if="relationships.preceding && relationships.preceding.length>0">Preceding</h2>
     <ul class="event-list event-list-detail-view">
-      <template v-for="related_event in relationships">
-        <event :key="related_event.id"
-               :data="related_event">
-
-        </event>
-      </template>
+      <event v-for="related_event in relationships.preceding"
+             :key="related_event.id"
+             :data="related_event">
+      </event>
+    </ul>
+    <h2 v-if="relationships.succeeding && relationships.succeeding.length>0">Succeeding</h2>
+    <ul class="event-list event-list-detail-view">
+      <event v-for="related_event in relationships.succeeding"
+             :key="related_event.id"
+             :data="related_event">
+      </event>
     </ul>
   </div>
 </template>
@@ -70,9 +91,8 @@
         let url = 'http://localhost:8000/events/' + store.getters.getSelectedEvent;
         this.$http.get(url)
             .then((response) => {
-
               this.event = response.body['event'];
-              this.relationships = response.body['related_events'];
+              this.relationships = response.body.related_events;
               this.year = Number(this.event.start_date.substring(0, 4));
             })
       },

@@ -78,16 +78,6 @@
             this.$router.push({query: newQuery}) : this.$router.push({});
 
       },
-      // eventSelected(newEvent) {
-      //   let newQuery = Object.assign({}, this.$route.params);
-      //   if (newEvent) {
-      //     newQuery.event_id = newEvent;
-      //   } else {
-      //     delete newQuery.event_id['event']
-      //   }
-      //   Object.keys(newQuery).length ?
-      //       this.$router.push({params: newQuery}) : this.$router.push({});
-      // },
       minYear(year) {
         let newQuery = Object.assign({}, this.$route.query);
         if (year) {
