@@ -1,7 +1,9 @@
 import json
 import requests
+import markdown
 from django.db import models
 from timeline.settings import PERMA_KEY, PERMA_FOLDER, STORAGES
+
 
 class Region(models.Model):
     name = models.CharField(max_length=1000, unique=True)
@@ -155,12 +157,12 @@ class Event(models.Model):
             start_date_parsed=start_date_parsed,
             end_date=end_date,
             end_date_parsed=end_date_parsed,
-            citation=citations,
+            citations=citations,
             type=self.type,
             hide=self.hide,
             relationships=relationships,
-            description_long=self.description_long,
-            description_short=self.description_short,
+            description_long=markdown.markdown(self.description_long),
+            description_short=markdown.markdown(self.description_short),
             groups=[group.as_json() for group in self.groups.all()],
         )
 

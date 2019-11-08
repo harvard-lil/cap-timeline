@@ -31,7 +31,8 @@
         <h1>{{event.name}}</h1>
         <div class="event-description-long">
           <h4 class="small-title">Description</h4>
-          {{event.description_long}}
+
+          <span v-html="event.description_long"></span>
         </div>
       </div>
     </div>

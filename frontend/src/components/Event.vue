@@ -14,7 +14,8 @@
         {{ data.start_date_parsed }}
          <span v-if="this.endYear">&ndash;{{ data.end_date_parsed}}</span>
     </div>
-    <div class="event-description-short">{{ data.description_short }}</div>
+    <div class="event-description-short"
+         v-html="data.description_short"></div>
 
     <!--<div class="event-relationships" v-if="data.relationships.length > 0">-->
       <!--<ul>-->
