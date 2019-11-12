@@ -95,18 +95,24 @@
     },
     watch: {
       yearValue(newYearValue) {
-        store.commit('setMinYear',   Number(newYearValue[0]));
-        store.commit('setMaxYear',   Number(newYearValue[1]));
+        store.commit('setMinYear', Number(newYearValue[0]));
+        store.commit('setMaxYear', Number(newYearValue[1]));
 
       }
     },
     mounted() {
       this.maxSliderYear = this.maxYear;
       this.minSliderYear = this.minYear;
-      this.yearValue = [this.minSliderYear, this.maxSliderYear]
+
+      // check on params in route
+      // if minyear and maxyear exist,
+      // these overwrite the selected range
+      let startingMinYear = this.$route.query.minyear ? Number(this.$route.query.minyear) : this.minSliderYear;
+      let startingMaxYear = this.$route.query.maxyear ? Number(this.$route.query.maxyear) : this.maxSliderYear;
+
+      this.yearValue = [startingMinYear, startingMaxYear];
 
     }
-
   }
 </script>
 <style>
