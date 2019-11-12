@@ -58,8 +58,10 @@
       },
       maxYear() {
         return store.getters.getMaxYear;
-      }
-
+      },
+      activeEvents() {
+        return store.getters.getActiveEvents;
+      },
     },
     watch: {
       activeGroups(newGroups) {
@@ -76,7 +78,6 @@
         }
         Object.keys(newQuery).length ?
             this.$router.push({query: newQuery}) : this.$router.push({});
-
       },
       minYear(year) {
         let newQuery = Object.assign({}, this.$route.query);
@@ -97,14 +98,40 @@
         }
         Object.keys(newQuery).length ?
             this.$router.push({query: newQuery}) : this.$router.push({});
+      },
+      activeEvents(newEvents) {
+        // updating route to match active groups
+        let newQuery = {};
+        newQuery = Object.assign({}, this.$route.query);
+        if (newEvents.length > 0) {
+          // TODO: check if newgroups are same as old groups
+          if (this.$route.query.events && newEvents.length === this.$route.query.events.split(',').length)
+            return;
+          newQuery['events'] = newEvents.join(',')
+        } else {
+          delete newQuery['events']
+        }
+        Object.keys(newQuery).length ?
+            this.$router.push({query: newQuery}) : this.$router.push({});
       }
-
     },
     beforeCreate() {
       if (this.$route.query.event)
         this.$store.commit('setSelectedEvent', Number(this.$route.query.event));
       if (this.$route.query.year)
         this.$store.commit('setSelectedYear', Number(this.$route.query.year))
+
+      // if specific events are mentioned, activate those
+      if (this.$route.query.events) {
+        let startingActiveEvents = this.$route.query.events.split(',');
+        for (let i = 0; i < startingActiveEvents.length; i++) {
+          this.$store.commit("setEventStatus", {name: startingActiveEvents[i], status: true})
+        }
+        // otherwise activate all events
+      } else {
+        this.$store.commit("activateAllEvents")
+      }
+
     },
     created() {
       this.getData();

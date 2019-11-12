@@ -34,6 +34,7 @@
       <selectable-event v-for="(status, eventType) in eventTypes"
                         v-bind:key="eventType"
                         :name="eventType"
+                        :status="status"
                         :fullname="eventTranslation[eventType]">
       </selectable-event>
     </ul>
@@ -115,8 +116,8 @@
     }
   }
 </script>
-<style>
 
+<style>
 
   .vue-slider.vue-slider-ltr {
     padding: 0 0.5em !important;

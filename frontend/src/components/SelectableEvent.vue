@@ -14,16 +14,10 @@
   import './icons/checked';
   export default {
     name: "SelectableEvent",
-    props: ["name", "fullname"],
-    data() {
-      return {
-        status: true
-      }
-    },
+    props: ["name", "fullname", "status"],
     methods: {
       changeStatus() {
-        this.status = !this.status;
-        this.$store.commit("setEventStatus", {name: this.name, status: this.status})
+        this.$store.commit("setEventStatus", {name: this.name, status: !this.status})
       }
     }
   }

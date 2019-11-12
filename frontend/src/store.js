@@ -16,10 +16,10 @@ const store = new Vuex.Store({
       mexican: 'star5',
     },
     eventTypes: {
-      us: true,
-      world: true,
-      legislation: true,
-      caselaw: true,
+      us: false,
+      world: false,
+      legislation: false,
+      caselaw: false,
     },
     eventTranslation: {
       us: "U.S. Event",
@@ -86,6 +86,16 @@ const store = new Vuex.Store({
     setEventStatus(state, eventData) {
       state.eventTypes[eventData.name] = eventData.status;
     },
+    activateAllEvents(state) {
+      for (let event in state.eventTypes) {
+        state.eventTypes[event] = true;
+      }
+    },
+    activateAllGroups(state) {
+      for (let group in state.groups) {
+        state.groups[group].status = true;
+      }
+    },
   },
   getters: {
     getGroups(state) {
@@ -123,13 +133,15 @@ const store = new Vuex.Store({
       return state.eventTranslation
     },
     getActiveEvents(state) {
-      return Object.keys(state.eventTypes).filter(event => state.events[event])
+      return Object.keys(state.eventTypes).filter(event => state.eventTypes[event])
+    },
+    getEventStatus: (state) => (name) => {
+      return state.eventTypes[name]
     },
     getGroupsByRegion(state) {
       return state.groupsByRegion;
     }
   },
-  modules: {}
 });
 export default store
 
