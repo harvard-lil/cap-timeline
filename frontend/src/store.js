@@ -74,9 +74,6 @@ const store = new Vuex.Store({
     setSelectedEvent(state, event) {
       state.event = event;
     },
-    setSelectedYear(state, year) {
-      state.year = year;
-    },
     setMinYear(state, year) {
       state.minYear = year;
     },
@@ -113,9 +110,6 @@ const store = new Vuex.Store({
     },
     getSelectedEvent(state) {
       return state.event;
-    },
-    getSelectedYear(state) {
-      return state.year
     },
     getMinYear(state) {
       return state.minYear

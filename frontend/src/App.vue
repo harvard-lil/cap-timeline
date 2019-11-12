@@ -118,8 +118,6 @@
     beforeCreate() {
       if (this.$route.query.event)
         this.$store.commit('setSelectedEvent', Number(this.$route.query.event));
-      if (this.$route.query.year)
-        this.$store.commit('setSelectedYear', Number(this.$route.query.year))
 
       // if specific events are mentioned, activate those
       if (this.$route.query.events) {
