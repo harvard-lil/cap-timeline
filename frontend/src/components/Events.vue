@@ -77,8 +77,5 @@
       this.getData();
       this.getGroups();
     },
-    mounted() {
-      console.log("EVENTS", this.$parent.maxYear)
-    }
   }
 </script>
