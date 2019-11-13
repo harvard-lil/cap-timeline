@@ -21,7 +21,8 @@
         <ul>
           <li v-for="group in region.groups" v-bind:key="group.slug">
             <selectable-group :slug="group.slug"
-                              :icon=symbolTranslation[group]>
+                              :status="groups[group.slug]"
+                              :icon=symbolTranslation[group.slug]>
             </selectable-group>
           </li>
         </ul>

@@ -6,39 +6,34 @@
                :class="'group-symbol group-name-' + slug + ' symbol-' + symbolTranslation[slug]"
                width="18" height="18">
       </svgicon>
-     {{fullName}}
+     {{slug}}
     </span>
   </div>
 </template>
 
 <script>
-  import store from '../store'
-
   export default {
     name: "SelectableGroup",
-    props: ["slug"],
+    props: ["slug", "status"],
     data() {
       return {
         queryName: "groups",
-        status: true,
       }
     },
     computed: {
       symbolTranslation() {
-        return store.getters.getSymbolTranslation
+        return this.$store.getters.getSymbolTranslation
       },
-      fullName() {
-        let groupObj = store.getters.getGroup(this.slug);
-        if (groupObj) {
-          return groupObj.name
-        }
-      }
+      // fullName() {
+      //   let groupObj = this.$store.getters.getGroup(this.slug);
+      //   if (groupObj) {
+      //     return groupObj.name
+      //   }
+      // }
     },
     methods: {
       toggleOn() {
-        this.status = !this.status;
-        let data = {slug: this.slug, status: this.status};
-        store.commit('setGroupStatus', data);
+        this.$store.commit('setGroupStatus', {slug: this.slug, status: !this.status});
       },
     },
   }

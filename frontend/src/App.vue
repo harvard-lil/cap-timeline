@@ -74,6 +74,8 @@
             return;
           newQuery['groups'] = newGroups.join(',')
         } else {
+          if (!(this.$route.query.groups))
+            return;
           delete newQuery['groups']
         }
         Object.keys(newQuery).length ?
@@ -119,8 +121,8 @@
       if (this.$route.query.event)
         this.$store.commit('setSelectedEvent', Number(this.$route.query.event));
 
-      // if specific events are mentioned, activate those
       if (this.$route.query.events) {
+        // if specific events are mentioned, activate those
         let startingActiveEvents = this.$route.query.events.split(',');
         for (let i = 0; i < startingActiveEvents.length; i++) {
           this.$store.commit("setEventStatus", {name: startingActiveEvents[i], status: true})
@@ -130,9 +132,23 @@
         this.$store.commit("activateAllEvents")
       }
 
+
     },
     created() {
       this.getData();
     },
+    mounted() {
+      if (this.$route.query.groups) {
+        let startingGroups = this.$route.query.groups.split(',');
+
+        for (let i = 0; i < startingGroups.length; i++) {
+            this.$store.commit("setGroupStatus", {slug: startingGroups[i], status: true})
+        }
+        // otherwise activate all groups
+      } else {
+        this.$store.commit("activateAllGroups")
+      }
+
+    }
   };
 </script>
