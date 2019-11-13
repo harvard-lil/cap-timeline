@@ -55,9 +55,6 @@
                   Vue.set(this.events, year, [response.body[i]])
                 }
               }
-              // this.events = response.body.sort((a, b) => {
-              //   return this.getYear(a.start_date) - this.getYear(b.start_date)
-              // })
             })
       },
 

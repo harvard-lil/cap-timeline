@@ -132,23 +132,21 @@
         this.$store.commit("activateAllEvents")
       }
 
-
-    },
-    created() {
-      this.getData();
-    },
-    mounted() {
       if (this.$route.query.groups) {
         let startingGroups = this.$route.query.groups.split(',');
 
         for (let i = 0; i < startingGroups.length; i++) {
-            this.$store.commit("setGroupStatus", {slug: startingGroups[i], status: true})
+          this.$store.commit("setGroupStatus", {slug: startingGroups[i], status: true})
         }
         // otherwise activate all groups
       } else {
         this.$store.commit("activateAllGroups")
       }
 
+
+    },
+    created() {
+      this.getData();
     }
   };
 </script>
