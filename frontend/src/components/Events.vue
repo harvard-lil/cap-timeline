@@ -1,36 +1,30 @@
 <template>
   <div class="event-list-container">
-    <template v-for="(events_per_year, year) in events" v-if="(year >= $parent.minYear) && year <= ($parent.maxYear)">
-      <div class="event-year-section">
-        <h1 class="event-year">{{ year}}</h1>
-      </div>
-      <ul class="event-list">
-        <event :class="'event-list-item event-type-' + eventObj.type"
-               v-for="eventObj in events_per_year"
-               :key="eventObj.id"
-               :currentYear="currentYear"
-               :minYear="minYear"
-               :maxYear="maxYear"
-               :selectedEvent="selectedEvent"
-               :data="eventObj">
-        </event>
-      </ul>
+    <template v-for="(events_per_year, year) in events"
+              v-if="(year >= $parent.minYear) && year <= ($parent.maxYear)">
+      <year :value="year"
+            :events="events_per_year"
+            :minYear="minYear"
+            :maxYear="maxYear"
+            :selectedEvent="selectedEvent">
+      </year>
     </template>
   </div>
 </template>
 
 <script>
   import Vue from 'vue';
-  import Event from "./Event"
+  import Year from "./Year"
   import store from '../store';
 
   export default {
     name: "events",
-    components: {Event},
-    props: ["currentYear", "selectedEvent"],
+    components: {Year},
+    props: ["selectedEvent"],
     data() {
       return {
         events: {},
+        years: {}
       }
     },
     methods: {

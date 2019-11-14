@@ -29,6 +29,7 @@
 
 <script>
   import Group from "./Group"
+  import {EventBus} from '../event-bus.js';
 
   export default {
     name: "event",
@@ -127,6 +128,9 @@
       },
       topLevelActiveGroups() {
         this.updateActiveGroups();
+      },
+      hide() {
+        EventBus.$emit("updateHideStatus", {id: this.data.id, hide: this.hide})
       }
     },
     beforeMount() {
