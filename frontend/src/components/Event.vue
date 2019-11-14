@@ -33,7 +33,7 @@
   export default {
     name: "event",
     components: {Group},
-    props: ["data", "currentYear", "selectedEvent", "minYear", "maxYear"],
+    props: ["data","selectedEvent", "minYear", "maxYear"],
     data() {
       return {
         startYear: null,
@@ -61,10 +61,8 @@
         // Complicated logic about when to hide event
         // Hiding depends on year, event types, and groups
         if (this.endYear) {
-          // this.hideStatus.byYear = this.currentYear && !(this.currentYear >= this.startYear && this.currentYear <= this.endYear);
           this.hideStatus.byYear = this.startYear < this.minYear || this.startYear > this.maxYear || this.endYear > this.maxYear || this.endYear < this.minYear;
         } else {
-          // this.hideStatus.byYear = this.currentYear && this.currentYear !== this.startYear;
           this.hideStatus.byYear = this.startYear < this.minYear || this.startYear > this.maxYear;
         }
 
@@ -115,9 +113,6 @@
       }
     },
     watch: {
-      currentYear() {
-        this.updateHide();
-      },
       selectedEvent() {
         this.updateHide();
       },
