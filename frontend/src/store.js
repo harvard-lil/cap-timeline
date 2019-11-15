@@ -29,8 +29,10 @@ const store = new Vuex.Store({
     },
     event: null,
     year: null,
-    minYear: 1800,
-    maxYear: 1930,
+    absoluteMinYear: 1800,
+    absoluteMaxYear: 1930,
+    minYear: null,
+    maxYear: null,
     activateAllGroupsWhenLoaded: false,
   },
   actions: {
@@ -76,8 +78,8 @@ const store = new Vuex.Store({
       state.groupsByRegion = groupsByRegion;
     },
     loadYears(state, years) {
-      state.minYear = years.min;
-      state.maxYear = years.max;
+      state.absoluteMinYear = years.min;
+      state.absoluteMaxYear = years.max;
     },
     setGroupStatus(state, groupData) {
       if (Object.keys(state.groups).indexOf(groupData.slug) < 0) {
@@ -153,7 +155,14 @@ const store = new Vuex.Store({
     },
     getGroupsByRegion(state) {
       return state.groupsByRegion;
+    },
+    getAbsoluteMinYear(state) {
+      return state.absoluteMinYear;
+    },
+    getAbsoluteMaxYear(state) {
+      return state.absoluteMaxYear;
     }
+
   },
 });
 export default store

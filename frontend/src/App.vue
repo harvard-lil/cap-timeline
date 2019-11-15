@@ -84,6 +84,8 @@
       minYear(year) {
         let newQuery = Object.assign({}, this.$route.query);
         if (year) {
+          if (Number(this.$route.query.minyear) === Number(year))
+            return;
           newQuery.minyear = year;
         } else {
           delete newQuery['minyear']
@@ -94,6 +96,9 @@
       maxYear(year) {
         let newQuery = Object.assign({}, this.$route.query);
         if (year) {
+          if (Number(this.$route.query.maxyear) === Number(year))
+            return;
+
           newQuery.maxyear = year;
         } else {
           delete newQuery['maxyear']

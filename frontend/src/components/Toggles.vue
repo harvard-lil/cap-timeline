@@ -94,6 +94,12 @@
       maxYear() {
         return store.getters.getMaxYear;
       },
+      absoluteMinYear() {
+        return store.getters.getAbsoluteMinYear;
+      },
+      absoluteMaxYear() {
+        return store.getters.getAbsoluteMaxYear;
+      }
     },
     watch: {
       yearValue(newYearValue) {
@@ -103,8 +109,8 @@
       }
     },
     mounted() {
-      this.maxSliderYear = this.maxYear;
-      this.minSliderYear = this.minYear;
+      this.minSliderYear = this.absoluteMinYear;
+      this.maxSliderYear = this.absoluteMaxYear;
 
       // check on params in route
       // if minyear and maxyear exist,
