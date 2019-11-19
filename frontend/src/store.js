@@ -8,6 +8,7 @@ const store = new Vuex.Store({
   state: {
     groups: {},
     groupsByRegion: [],
+    groupNames: {},
     symbolTranslation: {
       jewish: 'diamond',
       indian: 'triangle',
@@ -71,6 +72,7 @@ const store = new Vuex.Store({
           } else {
             Vue.set(state.groups, groups[i][0], false);
           }
+          Vue.set(state.groupNames, groups[i][0], groups[i][1]);
       }
       state.activateAllGroupsWhenLoaded = false;
     },
@@ -127,7 +129,7 @@ const store = new Vuex.Store({
       return state.groups[slug]
     },
     getGroupName: (state) => (slug) => {
-      return state.groups[slug].name
+      return state.groupNames[slug]
     },
     getSelectedEvent(state) {
       return state.event;

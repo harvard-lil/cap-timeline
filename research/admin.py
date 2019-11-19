@@ -4,7 +4,7 @@ from research.models import Event, Finding, Weight, Image, Citation, Group, Rela
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    list_display = ['name', 'start_date', 'type', 'id', 'hide', 'weight']
+    list_display = ['name', 'start_date', 'description_short', 'type', 'id', 'hide', 'weight']
 
 
 @admin.register(Citation)
@@ -16,8 +16,13 @@ class CitationAdmin(admin.ModelAdmin):
 class GroupAdmin(admin.ModelAdmin):
     list_display = ["name", "slug", "region"]
 
+
+
+@admin.register(Relationship)
+class RelationshipAdmin(admin.ModelAdmin):
+    list_display = ["id", "preceding_event", "succeeding_event"]
+
 admin.site.register(Finding)
-admin.site.register(Relationship)
 admin.site.register(Weight)
 admin.site.register(Image)
 admin.site.register(Region)

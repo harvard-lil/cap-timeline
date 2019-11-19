@@ -4,7 +4,7 @@
     <div class="event-details-container" :class="'event-type-'+event.type">
       <div class="col-1">
         <h4 class="small-title">Date</h4>
-        {{event.start_date}}
+        {{event.start_date_parsed}}
         <h4 v-if="event.citations && event.citations.length" class="small-title">Sources</h4>
         <template v-if="event.citations">
           <a v-for="citation in event.citations"
@@ -27,17 +27,17 @@
         <h4 class="small-title" v-if="relationships.preceding && relationships.preceding.length>0">Related,
           preceding</h4>
         <div v-for="preceding in relationships.preceding">
-          <router-link :to="'events/' + preceding.id">
+          <a class="related-event" @click="goToRelatedEvent(preceding.id)">
             {{preceding.name}}
-          </router-link>
+          </a>
           ({{preceding.type}}, {{preceding.start_date.split('-')[0]}})
         </div>
         <h4 class="small-title" v-if="relationships.succeeding && relationships.succeeding.length>0">Related,
           succeeding</h4>
         <div v-for="succeeding in relationships.succeeding">
-          <router-link :to="'events/' + succeeding.id">
+          <a class="related-event" @click="goToRelatedEvent(succeeding.id)">
             {{succeeding.name}}
-          </router-link>
+          </a>
           ({{succeeding.type}}, {{succeeding.start_date.split('-')[0]}})
         </div>
       </div>
@@ -96,6 +96,10 @@
               this.year = Number(this.event.start_date.substring(0, 4));
             })
       },
+      goToRelatedEvent(id) {
+        this.$router.push({ name: 'eventview', params: { event_id: id }});
+        this.$router.go();
+      }
     },
     beforeMount() {
       this.getData();

@@ -3,7 +3,7 @@ import requests
 import markdown
 from django.db import models
 from timeline.settings import PERMA_KEY, PERMA_FOLDER, STORAGES
-
+from django.db.models import Q
 
 class Region(models.Model):
     name = models.CharField(max_length=1000, unique=True)
@@ -103,11 +103,6 @@ class Relationship(models.Model):
     def __str__(self):
         return "%s is directly related to %s" % (self.succeeding_event.name, self.preceding_event.name,)
 
-    def post_save(self, *args, **kwargs):
-        self.preceding_event.relationships.add(self.id)
-        self.succeeding_event.relationships.add(self.id)
-        return super(Relationship, self).save(*args, **kwargs)
-
 
 class Event(models.Model):
     name = models.CharField(max_length=1000)
@@ -119,7 +114,6 @@ class Event(models.Model):
     description_long = models.TextField(blank=True)
     description_short = models.CharField(max_length=800, blank=True)
     groups = models.ManyToManyField(Group, blank=True)
-    relationships = models.ManyToManyField(Relationship, blank=True)
     hide = models.BooleanField(default=False)
     type = models.CharField(blank=True, null=True, max_length=100,
                             choices=(("us", "us"),
@@ -144,10 +138,9 @@ class Event(models.Model):
         end_date_parsed = self.end_date.strftime("%B %d, %Y") if self.end_date else None
 
         relationships = []
-        if self.relationships.count():
-            for relationship in self.relationships.all():
-                rel = relationship.succeeding_event if relationship.preceding_event.id == self.id else relationship.succeeding_event
-                relationships.append([rel.id, rel.type])
+        for relationship in Relationship.objects.filter(Q(preceding_event__id=self.id) | Q(succeeding_event__id=self.id)):
+            rel = relationship.succeeding_event if relationship.preceding_event.id == self.id else relationship.preceding_event
+            relationships.append([rel.id, rel.type])
 
         return dict(
             id=self.id,

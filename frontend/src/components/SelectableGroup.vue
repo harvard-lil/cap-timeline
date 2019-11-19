@@ -6,7 +6,7 @@
                :class="'group-symbol group-name-' + slug + ' symbol-' + symbolTranslation[slug]"
                width="18" height="18">
       </svgicon>
-     {{slug}}
+     {{fullName}}
     </span>
   </div>
 </template>
@@ -14,7 +14,7 @@
 <script>
   export default {
     name: "SelectableGroup",
-    props: ["slug", "status"],
+    props: ["slug", "status", "fullName"],
     data() {
       return {
         queryName: "groups",

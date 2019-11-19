@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 from django.conf import settings
-from research.models import Event, Group, Region
+from research.models import Event, Group, Region, Relationship
 from timeline import settings
 
 
@@ -25,13 +25,13 @@ def event(request, event_id):
         "preceding": [],
         "succeeding": []
     }
-    for relationship in event_obj.relationships.all():
-        if relationship.preceding_event.id == event_obj.id:
-            rel = relationship.succeeding_event
-            relationships['succeeding'].append(rel.as_json())
-        else:
-            rel = relationship.preceding_event
-            relationships['preceding'].append(rel.as_json())
+    for relationship in Relationship.objects.filter(preceding_event__id=event_obj.id):
+        rel = relationship.succeeding_event
+        relationships['succeeding'].append(rel.as_json())
+    for relationship in Relationship.objects.filter(succeeding_event__id=event_obj.id):
+        rel = relationship.preceding_event
+        relationships['preceding'].append(rel.as_json())
+
 
     def sort_by_date(e):
         return e['start_date']
@@ -69,7 +69,8 @@ def groups_by_region(request):
     rgns = Region.objects.all().order_by('name')
     rg_list = []
     for rgn in rgns:
-        grps = list(Group.objects.filter(region=rgn.id).order_by('region__slug').values('slug', 'name', 'region__name', 'region__slug'))
+        grps = list(Group.objects.filter(region=rgn.id).order_by('region__slug').values('slug', 'name', 'region__name',
+                                                                                        'region__slug'))
         rgn_obj = {
             'slug': rgn.slug,
             'name': rgn.name,
@@ -77,6 +78,7 @@ def groups_by_region(request):
         }
         rg_list.append(rgn_obj)
     return HttpResponse(json.dumps(rg_list), content_type='application/json')
+
 
 def year_settings(request):
     return HttpResponse(json.dumps(settings.TOGGLES['years']), content_type='application/json')
