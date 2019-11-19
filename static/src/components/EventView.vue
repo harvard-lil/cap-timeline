@@ -26,7 +26,7 @@
         </div>
         <h4 class="small-title" v-if="relationships.preceding && relationships.preceding.length>0">Related,
           preceding</h4>
-        <div v-for="preceding in relationships.preceding">
+        <div v-for="preceding in relationships.preceding" v-bind:key="preceding.id">
           <a class="related-event" @click="goToRelatedEvent(preceding.id)">
             {{preceding.name}}
           </a>
@@ -34,7 +34,7 @@
         </div>
         <h4 class="small-title" v-if="relationships.succeeding && relationships.succeeding.length>0">Related,
           succeeding</h4>
-        <div v-for="succeeding in relationships.succeeding">
+        <div v-for="succeeding in relationships.succeeding" v-bind:key="succeeding.id">
           <a class="related-event" @click="goToRelatedEvent(succeeding.id)">
             {{succeeding.name}}
           </a>
@@ -88,7 +88,7 @@
         if (!store.getters.getSelectedEvent) {
           store.commit('setSelectedEvent', this.$route.params.event_id);
         }
-        let url = 'http://localhost:8000/events/' + store.getters.getSelectedEvent;
+        let url = 'http://localhost:8000/data/events/' + store.getters.getSelectedEvent;
         this.$http.get(url)
             .then((response) => {
               this.event = response.body['event'];
@@ -97,7 +97,7 @@
             })
       },
       goToRelatedEvent(id) {
-        this.$router.push({ name: 'eventview', params: { event_id: id }});
+        this.$router.push({params: { event_id: id }});
         this.$router.go();
       }
     },

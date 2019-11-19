@@ -2,14 +2,14 @@ import os
 import json
 from django.shortcuts import render
 from django.http import HttpResponse
-
+from django.views.generic.base import TemplateView
 from django.conf import settings
+
 from research.models import Event, Group, Region, Relationship
 from timeline import settings
 
 
 def index(request):
-    print("hello index.html")
     return render(request, "index.html")
 
 
@@ -31,7 +31,6 @@ def event(request, event_id):
     for relationship in Relationship.objects.filter(succeeding_event__id=event_obj.id):
         rel = relationship.preceding_event
         relationships['preceding'].append(rel.as_json())
-
 
     def sort_by_date(e):
         return e['start_date']

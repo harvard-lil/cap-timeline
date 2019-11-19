@@ -28,7 +28,7 @@
     components: {Toggles},
     methods: {
       getData() {
-        this.$http.get('http://localhost:8000/events')
+        this.$http.get('http://localhost:8000/data/events')
             .then((response) => {
               this.events = response.body.sort((a, b) => {
                 return this.getYear(a.start_date) - this.getYear(b.start_date)

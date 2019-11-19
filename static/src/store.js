@@ -38,21 +38,21 @@ const store = new Vuex.Store({
   },
   actions: {
     loadGroups(context) {
-      let url = 'http://localhost:8000/groups';
+      let url = 'http://localhost:8000/data/groups';
       axios.get(url)
           .then((response) => {
             context.commit('loadGroups', response.data)
           })
     },
     loadGroupsByRegion(context) {
-      let url = 'http://localhost:8000/groups-by-region';
+      let url = 'http://localhost:8000/data/groups-by-region';
       axios.get(url)
           .then((response) => {
             context.commit('loadGroupsByRegion', response.data)
           })
     },
     loadYears(context) {
-      let url = "http://localhost:8000/year-settings";
+      let url = "http://localhost:8000/data/year-settings";
       axios.get(url)
           .then((response) => {
             context.commit('loadYears', response.data)

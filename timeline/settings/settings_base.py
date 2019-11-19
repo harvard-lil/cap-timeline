@@ -54,8 +54,11 @@ ROOT_URLCONF = 'timeline.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [
+            os.path.join(BASE_DIR, '../dist'),
+            os.path.join(BASE_DIR, '../research', 'templates'),
+        ],
+        # 'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -68,7 +71,7 @@ TEMPLATES = [
 ]
 
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
-FRONTEND_DIR = os.path.join(BASE_DIR, 'frontend')
+FRONTEND_DIR = os.path.join(BASE_DIR, 'static')
 
 WSGI_APPLICATION = 'timeline.wsgi.application'
 
@@ -132,16 +135,22 @@ PIPELINE = {
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, "../static"),
-#     '/var/www/static/',
-# ]
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+    'pipeline.finders.PipelineFinder',
+)
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 WEBPACK_LOADER = {
     'DEFAULT': {
         'CACHE': DEBUG,
-        'BUNDLE_DIR_NAME': '/bundles/',  # must end with slash
-        'STATS_FILE': os.path.join(FRONTEND_DIR, 'webpack-stats.json'),
+        'BUNDLE_DIR_NAME': '/static/dist/',  # must end with slash
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
     }
 }
 

@@ -1,13 +1,25 @@
 let path = require('path');
 const BundleTracker = require("webpack-bundle-tracker");
-
+const devMode = process.env.NODE_ENV !== 'production';
 module.exports = {
-  publicPath: "http://0.0.0.0:8080/",
-  outputDir: path.resolve(__dirname, '../dist'),
+  publicPath: devMode ? 'http://localhost:8080' : './dist',
+  outputDir: path.resolve(__dirname, './dist'),
   runtimeCompiler: true,
   assetsDir: 'static',
   configureWebpack: {
-    devtool: 'source-map'
+    devtool: 'source-map',
+    resolve: {
+      alias: {
+        '@': path.join(__dirname, './static/src')
+      }
+    },
+    devServer: {
+      historyApiFallback: true,
+      // noInfo: true,
+    },
+    entry: {
+      app: path.join(__dirname, './static/src', 'main.js')
+    }
   },
   css: {
     loaderOptions: {
@@ -16,7 +28,7 @@ module.exports = {
       },
       sass: {
         indentWidth: 4,
-        includePaths: ['css/style.scss'],
+        includePaths: ['src/assets/css/style.scss'],
       }
     }
   },
@@ -26,7 +38,7 @@ module.exports = {
 
     config
         .plugin('BundleTracker')
-        .use(BundleTracker, [{filename: '../frontend/webpack-stats.json'}]);
+        .use(BundleTracker, [{filename: './webpack-stats.json'}]);
 
     config.resolve.alias
         .set('__STATIC__', 'static');
@@ -40,4 +52,5 @@ module.exports = {
         .https(false)
         .headers({"Access-Control-Allow-Origin": ["\*"]})
   }
-}
+};
+

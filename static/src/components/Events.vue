@@ -1,8 +1,9 @@
 <template>
   <div class="event-list-container">
-    <template v-for="(events_per_year, year) in events"
-              v-if="(year >= $parent.minYear) && year <= ($parent.maxYear)">
-      <year :value="year"
+    <template v-for="(events_per_year, year) in events">
+      <year v-if="(year >= $parent.minYear) && year <= ($parent.maxYear)"
+            v-bind:key="year"
+            :value="year"
             :events="events_per_year"
             :minYear="minYear"
             :maxYear="maxYear"
@@ -29,7 +30,7 @@
     },
     methods: {
       getGroups() {
-        let url = 'http://localhost:8000/groups';
+        let url = 'http://localhost:8000/data/groups';
         this.$http.get(url)
             .then((response) => {
               this.groups = response.body;
@@ -37,7 +38,7 @@
       },
 
       getData() {
-        let url = 'http://localhost:8000/events';
+        let url = 'http://localhost:8000/data/events';
         this.$http.get(url)
             .then((response) => {
               for (let i = 0; i < response.body.length; i++) {
