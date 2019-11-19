@@ -54,7 +54,6 @@ nav {
 @media (min-width: 30rem) {
   nav {
     justify-items: start;
-    border-bottom: 2px solid $color-gray-light;
   }
 
   hr {
@@ -72,8 +71,18 @@ main {
   padding-top: 4em;
   padding-bottom: 4em;
   grid-auto-flow: column;
-  margin-left: 2em;
+  margin-left: 6em;
   background-color: $color-gray-light;
+}
+
+a {
+  color: $color-blue-bright;
+  border-bottom: 0;
+  cursor: pointer;
+  text-decoration: none;
+  &:hover, &:focus, &:active {
+    color: $color-navy;
+  }
 }
 
 .app-container {
@@ -89,16 +98,14 @@ main {
 
 .sidebar {
   padding-top: 4em;
-  grid-column: 1;
-  grid-row: 1 / 2;
   position: fixed;
-  width: 10em;
+  width: 14em;
   top: 0;
   bottom: 0;
   left: 0;
-  //z-index: 1;
   background-color: $color-gray-light;
   border-right: 1px solid $color-gray-medium;
+  box-shadow: 1px 0px 6px $color-gray-medium;
   ul {
     padding-left: 0;
   }
@@ -115,6 +122,7 @@ main {
   padding-top: .5rem;
   overflow-x: hidden;
   overflow-y: auto;
+  padding-bottom: 6em;
 }
 
 .year-list {
@@ -187,16 +195,5 @@ main {
   color: $color-gray-medium;
   &.active {
     color: $color-black;
-  }
-}
-
-.toggles-menu {
-  .year-values {
-    li {
-      float: left;
-      &:last-child {
-        float: right
-      }
-    }
   }
 }

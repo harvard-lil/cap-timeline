@@ -61,7 +61,6 @@ ul.event-list {
 
 .event-year-section {
   width: 100%;
-  height: 2em;
   h1 {
     font-weight: 600;
     letter-spacing: 0.08em;
@@ -70,10 +69,15 @@ ul.event-list {
 
 .event-list-item {
   grid-area: auto;
+  h3 {
+    margin: 0;
+  }
   &.event-type-world, &.event-type-us {
-    grid-column: span 2;
+    background-color: $color-black;
+    color: $color-white;
   }
 }
+
 .event-list-detail-view {
    padding-left: 0;
 }

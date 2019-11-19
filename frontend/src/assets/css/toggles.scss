@@ -1,13 +1,21 @@
-
-
 .toggles-menu {
-  padding: 0 0.6em;
+  background-color: $color-white;
+  .year-values {
+    li {
+      float: left;
+      &:last-child {
+        float: right
+      }
+    }
+  }
   h3 {
-    font-size: 1.2em;
+    font-size: 1.5em;
     font-weight: normal;
     color: $color-blue-bright;
+    margin-bottom: 0.4em;
   }
   ul {
+    margin: 0;
     li {
       line-height: 2em;
       font-size: 0.8em;
@@ -20,6 +28,19 @@
   .event-types > li, .group-types > li {
     cursor: pointer;
   }
+  .toggle-group {
+    padding: 0 1.2em;
+    &:last-child {
+      padding-bottom: 4em;
+    }
+  }
+  hr {
+    display: inline-block;
+    width: 100%;
+    border-top: 0.5px solid $color-gray-light;
+    border-left: 0;
+    padding-top: 2.4em;
+  }
 }
 
 svg.checked {
@@ -30,36 +51,36 @@ svg.checked {
     stroke: $color-white;
     fill: transparent;
   }
-}
 
-svg.unchecked {
-  circle {
-    fill: $color-gray-medium;
+  svg.unchecked {
+    circle {
+      fill: $color-gray-medium;
+    }
+    path {
+      stroke: $color-white;
+      fill: transparent;
+    }
   }
-  path {
-    stroke: $color-white;
-    fill: transparent;
+
+  svg.unchecked, svg.checked {
+    margin-right: 0.3em;
   }
-}
 
-svg.unchecked, svg.checked {
-  margin-right: 0.3em;
-}
+  .unchecked > span {
+    color: $color-gray-medium;
+  }
 
-.unchecked > span {
-  color: $color-gray-medium;
-}
+  .symbol-square, .symbol-circle {
+    width: 14px !important;
+    height: 14px !important;
+  }
 
-.symbol-square, .symbol-circle {
-  width: 14px !important;
-  height: 14px !important;
-}
+  .symbol-diamond, .symbol-oval, .symbol-polygon {
+    margin-left: -1px;
+  }
 
-.symbol-diamond, .symbol-oval, .symbol-polygon {
-  margin-left: -1px;
-}
+  .symbol-square {
+    margin-left: 1px;
+  }
 
-.symbol-square {
-  margin-left: 1px;
 }
-
