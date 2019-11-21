@@ -3,6 +3,7 @@
 @import "_variables";
 @import "toggles";
 @import "event";
+@import "timeline";
 
 // fonts
 
@@ -30,6 +31,7 @@ nav {
   &.main-nav {
     background-color: $color-black;
     color: $color-gray-light;
+    z-index: 99999;
     a {
       text-decoration: none;
       color: $color-gray-light;
@@ -97,6 +99,7 @@ a {
 }
 
 .sidebar {
+  z-index: 999;
   padding-top: 4em;
   position: fixed;
   width: 14em;
@@ -191,9 +194,3 @@ a {
   }
 }
 
-.selectable-group {
-  color: $color-gray-medium;
-  &.active {
-    color: $color-black;
-  }
-}
