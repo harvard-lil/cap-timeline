@@ -2,49 +2,49 @@
   <div class="sidebar-sticky toggles-menu">
     <!--year slider-->
     <div class="toggle-group">
-    <h3>Years</h3>
-    <vue-slider v-model="yearValue"
-                :min="minSliderYear"
-                :max="maxSliderYear"
-                :silent="true"
-                :enable-cross="false">
-    </vue-slider>
-    <ul class="year-values list-inline">
-      <li class="list-inline-item">{{yearValue[0]}}</li>
-      <li class="list-inline-item">{{yearValue[1]}}</li>
-    </ul>
+      <h3>Years</h3>
+      <vue-slider v-model="yearValue"
+                  :min="minSliderYear"
+                  :max="maxSliderYear"
+                  :silent="true"
+                  :enable-cross="false">
+      </vue-slider>
+      <ul class="year-values list-inline">
+        <li class="list-inline-item">{{yearValue[0]}}</li>
+        <li class="list-inline-item">{{yearValue[1]}}</li>
+      </ul>
     </div>
     <hr/>
     <!--Groups-->
     <div class="toggle-group">
-    <h3>Groups</h3>
-    <ul class="group-types list-group">
-      <li class="list-item" v-for="region in groupsByRegion" v-bind:key="region.slug">
-        {{region.name}}
-        <ul>
-          <li v-for="group in region.groups" v-bind:key="group.slug">
-            <selectable-group :slug="group.slug"
-                              :status="groups[group.slug]"
-                              :fullName="group.name + ' migrants'"
-                              :icon=symbolTranslation[group.slug]>
-            </selectable-group>
-          </li>
-        </ul>
-      </li>
-    </ul>
+      <h3>Groups</h3>
+      <ul class="group-types list-group">
+        <li class="list-item" v-for="region in groupsByRegion" v-bind:key="region.slug">
+          {{region.name}}
+          <ul>
+            <li v-for="group in region.groups" v-bind:key="group.slug">
+              <selectable-group :slug="group.slug"
+                                :status="groups[group.slug]"
+                                :fullName="group.name + ' migrants'"
+                                :icon=symbolTranslation[group.slug]>
+              </selectable-group>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
     <hr/>
     <!--Event types-->
     <div class="toggle-group">
-    <h3>Event Types</h3>
-    <ul class="event-types list-group">
-      <selectable-event v-for="(status, eventType) in eventTypes"
-                        v-bind:key="eventType"
-                        :name="eventType"
-                        :status="status"
-                        :fullname="eventTranslation[eventType]">
-      </selectable-event>
-    </ul>
+      <h3>Event Types</h3>
+      <ul class="event-types list-group">
+        <selectable-event v-for="(status, eventType) in eventTypes"
+                          v-bind:key="eventType"
+                          :name="eventType"
+                          :status="status"
+                          :fullname="eventTranslation[eventType]">
+        </selectable-event>
+      </ul>
     </div>
     <!--Themes ? -->
 

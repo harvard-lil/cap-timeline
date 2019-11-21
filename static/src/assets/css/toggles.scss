@@ -1,5 +1,6 @@
 .toggles-menu {
   background-color: $color-white;
+  z-index: 8;
   .year-values {
     li {
       float: left;
@@ -41,46 +42,56 @@
     border-left: 0;
     padding-top: 2.4em;
   }
-}
 
-svg.checked {
-  circle {
-    fill: $color-blue-bright;
-  }
-  path {
-    stroke: $color-white;
-    fill: transparent;
-  }
-
-  svg.unchecked {
-    circle {
-      fill: $color-gray-medium;
-    }
-    path {
-      stroke: $color-white;
-      fill: transparent;
-    }
-  }
-
-  svg.unchecked, svg.checked {
+  .icon {
+    padding-right: 6px;
     margin-right: 0.3em;
-  }
+    &.selectable-event {
+      &.checked {
+        circle {
+          fill: $color-blue-bright;
+        }
+        path {
+          stroke: $color-white;
+          fill: transparent;
+        }
 
-  .unchecked > span {
+      }
+      &.unchecked {
+        circle {
+          fill: $color-gray-medium !important;
+        }
+        path {
+          stroke: $color-white;
+          fill: transparent;
+        }
+        span {
+          color: $color-gray-medium;
+        }
+
+        .symbol-square, .symbol-circle {
+          width: 14px !important;
+          height: 14px !important;
+        }
+
+        .symbol-diamond, .symbol-oval, .symbol-polygon {
+          margin-left: -1px;
+        }
+
+        .symbol-square {
+          margin-left: 1px;
+        }
+      }
+    }
+  }
+  .label {
+    font-size: 13px;
+  }
+  .selectable-group {
     color: $color-gray-medium;
-  }
-
-  .symbol-square, .symbol-circle {
-    width: 14px !important;
-    height: 14px !important;
-  }
-
-  .symbol-diamond, .symbol-oval, .symbol-polygon {
-    margin-left: -1px;
-  }
-
-  .symbol-square {
-    margin-left: 1px;
+    &.active {
+      color: $color-black;
+    }
   }
 
 }

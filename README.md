@@ -16,7 +16,6 @@ $ fab create_json
 
 To generate svg icons
 ```
-$ cd frontend
 $ npm run generate-icons 
 
 ```

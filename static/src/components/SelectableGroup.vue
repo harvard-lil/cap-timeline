@@ -1,13 +1,15 @@
 <template>
   <div class="selectable-group" :class="[slug, {active: status}]"
        @click="toggleOn()">
-    <span class="group-name">
+    <span class="group-name icon" :class="status ? 'checked' : 'unchecked'">
       <svgicon :icon="symbolTranslation[slug]"
                :class="'group-symbol group-name-' + slug + ' symbol-' + symbolTranslation[slug]"
                width="18" height="18">
       </svgicon>
-     {{fullName}}
     </span>
+    <label class="label">
+     {{fullName}}
+    </label>
   </div>
 </template>
 
@@ -24,12 +26,6 @@
       symbolTranslation() {
         return this.$store.getters.getSymbolTranslation
       },
-      // fullName() {
-      //   let groupObj = this.$store.getters.getGroup(this.slug);
-      //   if (groupObj) {
-      //     return groupObj.name
-      //   }
-      // }
     },
     methods: {
       toggleOn() {
