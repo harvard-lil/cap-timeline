@@ -171,7 +171,7 @@ PERMA_FOLDER = "0"
 # TOGGLE KEYS
 TOGGLES = {
     'years': {
-        'min': 1800,
+        'min': 1897,
         'max': 1930
     }
 }

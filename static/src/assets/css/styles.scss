@@ -29,9 +29,10 @@ nav {
 
   }
   &.main-nav {
-    background-color: $color-black;
+    background-color: $color-dark;
     color: $color-gray-light;
     z-index: 99999;
+    //height: 5.5em;
     a {
       text-decoration: none;
       color: $color-gray-light;
@@ -41,9 +42,10 @@ nav {
     }
   }
   .navbar-brand {
-    padding: 1rem 2rem;
+    padding: 1.5rem 2rem;
   }
   .nav-title {
+    font-size: 1.8em;
     font-weight: $font-weight-semibold;
     letter-spacing: 0.08em;
   }
@@ -70,11 +72,14 @@ body {
 
 main {
   display: grid;
-  padding-top: 4em;
+  padding-top: 7em;
   padding-bottom: 4em;
   grid-auto-flow: column;
   margin-left: 6em;
-  background-color: $color-gray-light;
+  background-color: $color-light;
+  // TODO: figure this out
+  height: calc(100vh - 11em);
+
 }
 
 a {
@@ -106,7 +111,7 @@ a {
   top: 0;
   bottom: 0;
   left: 0;
-  background-color: $color-gray-light;
+  background-color: $color-dark;
   border-right: 1px solid $color-gray-medium;
   box-shadow: 1px 0px 6px $color-gray-medium;
   ul {

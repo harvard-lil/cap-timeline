@@ -7,6 +7,7 @@
                   :min="minSliderYear"
                   :max="maxSliderYear"
                   :silent="true"
+                  :height="'14px'"
                   :enable-cross="false">
       </vue-slider>
       <ul class="year-values list-inline">
@@ -14,7 +15,7 @@
         <li class="list-inline-item">{{yearValue[1]}}</li>
       </ul>
     </div>
-    <hr/>
+    <br/>
     <!--Groups-->
     <div class="toggle-group">
       <h3>Groups</h3>
@@ -33,7 +34,7 @@
         </li>
       </ul>
     </div>
-    <hr/>
+    <br/>
     <!--Event types-->
     <div class="toggle-group">
       <h3>Event Types</h3>
@@ -129,11 +130,6 @@
     }
   }
 </script>
-
 <style>
-
-  .vue-slider.vue-slider-ltr {
-    padding: 0 0.5em !important;
-  }
 
 </style>

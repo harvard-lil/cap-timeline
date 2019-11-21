@@ -2,7 +2,6 @@ import os
 import json
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.views.generic.base import TemplateView
 from django.conf import settings
 
 from research.models import Event, Group, Region, Relationship

@@ -16,7 +16,6 @@ $group-colors: (
         'chinese': $color-green,
 );
 
-
 // event border colors
 @each $event-name, $event-color-value in $event-colors {
   .event-container.event-type-#{$event-name} {
@@ -32,6 +31,10 @@ $group-colors: (
   }
   .event-type.event-type-#{$event-name} {
     color: $event-color-value;
+  }
+
+  .timeline {
+
   }
 }
 
@@ -99,14 +102,14 @@ ul.event-list {
 .event-container {
   height: 100%;
   background-color: $color-white;
-  .event-title,
-  .event-date,
-  .event-type,
-  .event-description-short,
-  .group-relationships {
-    grid-column-start: 1;
-    grid-column-end: 4;
-  }
+  //.event-title,
+  //.event-date,
+  //.event-type,
+  //.event-description-short,
+  //.group-relationships {
+  //  grid-column-start: 1;
+  //  grid-column-end: 4;
+  //}
   ul {
     padding: 0;
   }

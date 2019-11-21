@@ -30,7 +30,7 @@ const store = new Vuex.Store({
     },
     event: null,
     year: null,
-    absoluteMinYear: 1800,
+    absoluteMinYear: 1912,
     absoluteMaxYear: 1930,
     minYear: null,
     maxYear: null,

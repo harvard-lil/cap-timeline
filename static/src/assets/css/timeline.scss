@@ -11,8 +11,9 @@
   }
   .year-label {
     text-align: center;
-    border-bottom: 1px solid $color-black;
-    width: 100%;
+    font-size: 1.2em;
+    font-weight: 400;
+    border-bottom: 2px solid $color-black;
     display: inline-block;
   }
   .container-wrapper {
@@ -21,14 +22,54 @@
     grid-template-rows: minmax(30px, auto);
     grid-auto-flow: column;
     grid-row-gap: 1em;
-    white-space: nowrap;
     grid-auto-columns: 10em;
   }
   .event-container {
-    //padding-left: 1em;
-    //padding-right: 1em;
+    padding: 0;
+    box-shadow: 0 0 4px 0 rgba(47, 47, 47, 0.50);
+    display: inline-block;
+    margin-left: 0.1em;
+    margin-right: 0.1em;
     .event-type {
-      width: 100%;
+      padding: 0.2em 0.4em;
+      font-size: 14px;
+      letter-spacing: 0.27px;
+    }
+    .event-contents {
+      padding: 0.2em 0.4em;
+    }
+    .event-name {
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 1.1em;
+      color: #2F2F2F;
+      letter-spacing: 0.46px;
     }
   }
+  .group-list {
+    float: right;
+    margin: 0;
+    //position: absolute;
+    //bottom: 0;
+  }
+  .group-list li {
+    list-style: none;
+  }
+  $event-colors: (
+          'legislation': #276E76,
+          'caselaw': #0075FF,
+          'world': #6F2E4C,
+          'us': #8E67C0
+  );
+  @each $event-name, $event-color-value in $event-colors {
+    .event-type.event-type-#{$event-name} {
+      background-color: $event-color-value;
+      color: $color-white;
+      opacity: 1;
+    }
+    .event-container {
+      border: 1px solid $color-black;
+    }
+  }
+
 }
