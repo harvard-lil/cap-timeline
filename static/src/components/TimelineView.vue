@@ -7,25 +7,9 @@
              :class="'col-'+getIdx(idx)"> {{idx+minYear}}
         </div>
         <template v-for="event in events[idx+minYear]">
-          <div v-bind:key="event.id"
-               class="event-container"
-               :class="['event-type-'+event.type, 'span' + getLength(event), 'col-'+getIdx(idx)]"
-               :title="event.name + ': ' + event.start_date_parsed + '(' + event.type + ')'">
-            <div class="event-type" :class="'event-type-'+event.type">{{event.type}}</div>
-            <div class="event-contents">
-              <div class="event-name">{{event.name}}</div>
-              <div class="event-description-short"
-                   v-if="event.description_short"
-                   v-html="event.description_short"></div>
-            </div>
-            <div class="group-relationships">
-              <ul class="group-list">
-                <group v-for="slug in event.groups"
-                       :key="slug" :slug="slug">
-                </group>
-              </ul>
-            </div>
-          </div>
+          <timeline-event v-bind:key="event.id" :event="event"
+                          :class="['event-type-'+event.type, 'span' + getLength(event), 'col-'+getIdx(idx)]">
+          </timeline-event>
         </template>
       </template>
     </div>
@@ -35,15 +19,16 @@
 <script>
   import Vue from 'vue';
   import store from '../store';
-  import Group from "./Group"
+  import TimelineEvent from "./TimelineEvent"
 
   export default {
     name: "TimelineView",
-    components: {Group},
+    components: {TimelineEvent},
     data() {
       return {
         years: [],
-        events: {}
+        events: {},
+        groups: {},
       }
     },
     methods: {

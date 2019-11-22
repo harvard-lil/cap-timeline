@@ -21,7 +21,7 @@
     grid-template-columns: 1fr;
     grid-template-rows: minmax(30px, auto);
     grid-auto-flow: column;
-    grid-row-gap: 1em;
+    grid-row-gap: 0.4em;
     grid-auto-columns: 10em;
   }
   .event-container {

@@ -20,7 +20,7 @@
     font-weight: normal;
     margin-bottom: 0.4em;
     font-size: 22px;
-    color: #AFD4FF;
+    color: $color-blue-light;
     letter-spacing: 0.98px;
   }
   ul {
@@ -40,6 +40,7 @@
   .toggle-group {
     padding: 0 1.2em;
     border-top: 0.5px solid $color-gray-light;
+    display: grid;
     &:last-child {
       padding-bottom: 4em;
     }
