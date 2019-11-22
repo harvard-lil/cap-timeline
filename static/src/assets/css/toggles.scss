@@ -1,3 +1,31 @@
+.sidebar {
+  z-index: 999;
+  position: fixed;
+  width: 14em;
+  top: 5em;
+  bottom: 0;
+  left: 0;
+  overflow-y: scroll;
+  background-color: $color-dark;
+  border-right: 1px solid $color-gray-medium;
+  box-shadow: 1px 0px 6px $color-gray-medium;
+  ul {
+    padding-left: 0;
+  }
+  li {
+    list-style: none;
+  }
+}
+
+.sidebar-sticky {
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: .5rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-bottom: 6em;
+}
+
 .toggles-menu {
   background-color: $color-dark;
   color: $color-white;
