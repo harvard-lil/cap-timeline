@@ -3,7 +3,7 @@
     <nav class="navbar main-nav fixed-top">
       <div class="navbar-brand">
         <span class="nav-title">
-          <router-link to="/">
+          <router-link to="/t">
           U.S. IMMIGRATION TIMELINE
         </router-link>
         </span>

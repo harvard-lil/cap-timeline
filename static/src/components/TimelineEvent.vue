@@ -12,6 +12,7 @@
 
       <div class="event-description-short"
            v-else-if="event.description_short" v-html="event.description_short.substr(0,80) + '...'"></div>
+      <div v-else class="event-description-short"></div>
     </div>
     <div class="group-relationships">
       <ul class="group-list">

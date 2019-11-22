@@ -22,7 +22,7 @@
   height: calc(100vh - 48px);
   padding-top: .5rem;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
   padding-bottom: 6em;
 }
 
@@ -30,9 +30,11 @@
   background-color: $color-dark;
   color: $color-white;
   z-index: 8;
-  border-top: 0.5px solid $color-gray-light;
+
   .zoom-level-btn {
     float: left;
+    margin-right: 1em;
+    margin-bottom: 2em;
     cursor: pointer;
     circle {
       fill: $color-gray-medium;
@@ -81,14 +83,18 @@
   svg {
     position: relative;
     top: 4px;
+
   }
   .event-types > li, .group-types > li {
     cursor: pointer;
   }
   .toggle-group {
     padding: 0 1.2em;
-    border-top: 0.5px solid $color-gray-light;
+    border-top: 1px solid $color-gray-medium;
     display: grid;
+    &:first-child {
+      border-top: 0;
+    }
     &:last-child {
       padding-bottom: 4em;
     }
@@ -96,6 +102,11 @@
   .icon {
     padding-right: 6px;
     margin-right: 0.3em;
+    &.unchecked {
+      path {
+        fill: $color-gray-medium;
+      }
+    }
     &.selectable-event {
       &.checked {
         circle {

@@ -15,11 +15,21 @@
     font-weight: 400;
     border-bottom: 2px solid $color-black;
     display: inline-block;
+    &.squiggle {
+      border-bottom: 0;
+      top: 1.16em;
+      position: relative;
+      path {
+        fill: transparent;
+        stroke: $color-black;
+        stroke-width: 5px;
+      }
+    }
   }
   .container-wrapper {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: minmax(30px, auto);
+    grid-template-rows: 30px repeat(auto-fit, 200px);
     grid-auto-flow: column;
     grid-row-gap: 0.4em;
     grid-auto-columns: 10em;
@@ -28,8 +38,8 @@
     padding: 0;
     box-shadow: 0 0 4px 0 rgba(47, 47, 47, 0.50);
     display: inline-block;
-    margin-left: 0.1em;
-    margin-right: 0.1em;
+    margin-left: 0.4em;
+
     .event-type {
       padding: 0.2em 0.4em;
       font-size: 14px;
@@ -37,6 +47,9 @@
     }
     .event-contents {
       padding: 0.2em 0.4em;
+    }
+    .event-description-short {
+      height: 75px;
     }
     .event-name {
       font-weight: 600;
@@ -68,7 +81,7 @@
       opacity: 1;
     }
     .event-container {
-      border: 1px solid $color-black;
+      border: 1px solid $color-gray-medium;
     }
   }
 

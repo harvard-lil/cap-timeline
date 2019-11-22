@@ -32,6 +32,7 @@ nav {
     background-color: $color-dark;
     color: $color-gray-light;
     z-index: 99999;
+    border-bottom: 1px solid $color-gray-medium;
     //height: 5.5em;
     a {
       text-decoration: none;
@@ -42,10 +43,10 @@ nav {
     }
   }
   .navbar-brand {
-    padding: 1.5rem 2rem;
+    padding: 1.5rem 1.3rem;
   }
   .nav-title {
-    font-size: 1.8em;
+    font-size: 1.4em;
     font-weight: $font-weight-semibold;
     letter-spacing: 0.08em;
   }

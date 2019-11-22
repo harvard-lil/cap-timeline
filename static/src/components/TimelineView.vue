@@ -3,9 +3,14 @@
     <div class="container-wrapper">
       <template v-for="(year, idx) in years">
         <div v-if="year === '-'"
-             class="year-label"
+             class="year-label squiggle "
              :class="'col-'+getIdx(idx)">
-          \/\/\/\/
+          <svgicon icon="squiggle"
+                   title="Skipping years"
+                   class=""
+                   width="165" height="24">
+          </svgicon>
+
         </div>
         <div v-else
              class="year-label"
@@ -23,6 +28,8 @@
 </template>
 
 <script>
+  import './icons/squiggle';
+
   import Vue from 'vue';
   import store from '../store';
   import TimelineEvent from "./TimelineEvent"
