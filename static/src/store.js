@@ -35,6 +35,7 @@ const store = new Vuex.Store({
     minYear: null,
     maxYear: null,
     activateAllGroupsWhenLoaded: false,
+    zoomLevel: 1,
   },
   actions: {
     loadGroups(context) {
@@ -116,6 +117,9 @@ const store = new Vuex.Store({
         state.groups[group] = true;
       }
     },
+    setZoomLevel(state, zoomLevel) {
+      state.zoomLevel = zoomLevel;
+    }
   },
   getters: {
     getGroups(state) {
@@ -163,8 +167,10 @@ const store = new Vuex.Store({
     },
     getAbsoluteMaxYear(state) {
       return state.absoluteMaxYear;
+    },
+    getZoomLevel(state) {
+      return state.zoomLevel;
     }
-
   },
 });
 export default store

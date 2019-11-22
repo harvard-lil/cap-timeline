@@ -1,5 +1,30 @@
 <template>
   <div class="sidebar-sticky toggles-menu">
+    <div class="toggle-group">
+      <h3>Zoom level</h3>
+      <ul class="list-inline">
+        <li class="list-inline-item">
+          <svgicon icon="plus"
+                   title="zoom in"
+                   class="zoom-level-btn plus"
+                   :class="zoom === 1 ? 'active' : ''"
+                   @click="switchZoomLevel('plus')"
+                   width="24" height="24">
+          </svgicon>
+        </li>
+        <li>
+          <svgicon icon="minus"
+                   title="zoom out"
+                   class="zoom-level-btn minus"
+                   :class="zoom === 0 ? 'active' : ''"
+                   @click="switchZoomLevel('minus')"
+                   width="24" height="24">
+          </svgicon>
+
+        </li>
+      </ul>
+    </div>
+
     <!--year slider-->
     <div class="toggle-group">
       <h3>Years</h3>
@@ -61,6 +86,10 @@
   import './icons/star5';
   import './icons/square';
   import './icons/heptagon';
+
+  import './icons/plus';
+  import './icons/minus';
+
   import VueSlider from 'vue-slider-component';
   import 'vue-slider-component/theme/default.css';
 
@@ -77,6 +106,13 @@
         minSliderYear: 0,
         maxSliderYear: 100,
         yearValue: [0, 100],
+        zoom: 1,
+      }
+    },
+    methods: {
+      switchZoomLevel(btn) {
+        this.zoom = btn === 'plus' ? 1 : 0;
+        store.commit('setZoomLevel', this.zoom);
       }
     },
     computed: {
@@ -106,6 +142,9 @@
       },
       absoluteMaxYear() {
         return store.getters.getAbsoluteMaxYear;
+      },
+      zoomLevel() {
+        return store.getters.getZoomLevel;
       }
     },
     watch: {
@@ -126,7 +165,7 @@
       let startingMaxYear = this.$route.query.maxyear ? Number(this.$route.query.maxyear) : this.maxSliderYear;
 
       this.yearValue = [startingMinYear, startingMaxYear];
-
+      this.zoom = this.zoomLevel;
     }
   }
 </script>

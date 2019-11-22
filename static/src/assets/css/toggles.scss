@@ -3,6 +3,26 @@
   color: $color-white;
   z-index: 8;
   border-top: 0.5px solid $color-gray-light;
+  .zoom-level-btn {
+    float: left;
+    cursor: pointer;
+    circle {
+      fill: $color-gray-medium;
+    }
+    path {
+      stroke: $color-black;
+    }
+
+    &.active {
+      circle {
+        fill: $color-blue-bright;
+      }
+      path {
+        stroke: $color-white;
+      }
+
+    }
+  }
   .vue-slider-process {
     background-color: $color-gray-light;
   }
