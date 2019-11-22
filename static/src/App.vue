@@ -62,6 +62,9 @@
       activeEvents() {
         return store.getters.getActiveEvents;
       },
+      zoom() {
+        return store.getters.getZoomLevel;
+      }
     },
     watch: {
       activeGroups(newGroups) {
@@ -120,6 +123,16 @@
         }
         Object.keys(newQuery).length ?
             this.$router.push({query: newQuery}) : this.$router.push({});
+      },
+      zoom(newZoom, oldZoom) {
+        if (newZoom === oldZoom)
+          return;
+        let newQuery = {};
+        newQuery = Object.assign({}, this.$route.query);
+        newQuery['zoom'] = newZoom;
+        Object.keys(newQuery).length ?
+            this.$router.push({query: newQuery}) : this.$router.push({});
+
       }
     },
     beforeCreate() {
