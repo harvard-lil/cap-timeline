@@ -28,17 +28,9 @@
       return {
         years: [],
         events: {},
-        groups: {},
       }
     },
     methods: {
-      getGroups() {
-        let url = 'http://localhost:8000/data/groups';
-        this.$http.get(url)
-            .then((response) => {
-              this.groups = response.body;
-            })
-      },
       getData() {
         let url = 'http://localhost:8000/data/events';
         this.$http.get(url)
@@ -80,7 +72,6 @@
 
     created() {
       this.getData();
-      this.getGroups();
     },
 
   }
