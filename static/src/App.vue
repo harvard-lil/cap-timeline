@@ -3,7 +3,7 @@
     <nav class="navbar main-nav fixed-top">
       <div class="navbar-brand">
         <span class="nav-title">
-          <router-link to="/t">
+          <router-link to="/">
           U.S. IMMIGRATION TIMELINE
         </router-link>
         </span>
@@ -38,6 +38,17 @@
       getYear(date) {
         return Number(date.split('-')[0])
       },
+      updateParams(param, val) {
+        if (this.$route.name === 'eventview')
+          return;
+        let newQuery = Object.assign({}, this.$route.query);
+        if (!(val)) {
+          delete newQuery[param];
+        } else {
+          newQuery[param] = val;
+        }
+        this.$router.push({query: newQuery});
+      }
     },
     data() {
       return {
@@ -69,70 +80,37 @@
     watch: {
       activeGroups(newGroups) {
         // updating route to match active groups
-        let newQuery = {};
-        newQuery = Object.assign({}, this.$route.query);
-        if (newGroups.length > 0) {
-          // TODO: check if newgroups are same as old groups
+        let groups = newGroups.join(',');
+        if (newGroups.length) {
           if (this.$route.query.groups && newGroups.length === this.$route.query.groups.split(',').length)
             return;
-          newQuery['groups'] = newGroups.join(',')
         } else {
           if (!(this.$route.query.groups))
             return;
-          delete newQuery['groups']
+          groups = '';
         }
-        Object.keys(newQuery).length ?
-            this.$router.push({query: newQuery}) : this.$router.push({});
+        this.updateParams('groups', groups)
       },
       minYear(year) {
-        let newQuery = Object.assign({}, this.$route.query);
-        if (year) {
-          if (Number(this.$route.query.minyear) === Number(year))
-            return;
-          newQuery.minyear = year;
-        } else {
-          delete newQuery['minyear']
-        }
-        Object.keys(newQuery).length ?
-            this.$router.push({query: newQuery}) : this.$router.push({});
+        this.updateParams('minyear', year)
       },
       maxYear(year) {
-        let newQuery = Object.assign({}, this.$route.query);
-        if (year) {
-          if (Number(this.$route.query.maxyear) === Number(year))
-            return;
-
-          newQuery.maxyear = year;
-        } else {
-          delete newQuery['maxyear']
-        }
-        Object.keys(newQuery).length ?
-            this.$router.push({query: newQuery}) : this.$router.push({});
+        this.updateParams('maxyear', year)
       },
       activeEvents(newEvents) {
-        // updating route to match active groups
-        let newQuery = {};
-        newQuery = Object.assign({}, this.$route.query);
-        if (newEvents.length > 0) {
-          // TODO: check if newgroups are same as old groups
-          if (this.$route.query.events && newEvents.length === this.$route.query.events.split(',').length)
+        let events = newEvents.join(',');
+        if (newEvents.length) {
+          if (this.$route.query.groups && newEvents.length === this.$route.query.groups.split(',').length)
             return;
-          newQuery['events'] = newEvents.join(',')
         } else {
-          delete newQuery['events']
+          if (!(this.$route.query.groups))
+            return;
+          events = '';
         }
-        Object.keys(newQuery).length ?
-            this.$router.push({query: newQuery}) : this.$router.push({});
+        this.updateParams('events', events)
       },
-      zoom(newZoom, oldZoom) {
-        if (newZoom === oldZoom)
-          return;
-        let newQuery = {};
-        newQuery = Object.assign({}, this.$route.query);
-        newQuery['zoom'] = newZoom;
-        Object.keys(newQuery).length ?
-            this.$router.push({query: newQuery}) : this.$router.push({});
-
+      zoom(newZoom) {
+        this.updateParams('zoom', newZoom)
       }
     },
     beforeCreate() {
