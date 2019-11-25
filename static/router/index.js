@@ -11,7 +11,7 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      redirect: 'events'
+      component: TimelineView
     },
     {
       path: '/events',
@@ -24,7 +24,7 @@ export default new Router({
       component: EventView,
     },
     {
-      path: '/t',
+      path: '/timeline',
       name: 'timelineview',
       component: TimelineView,
     },

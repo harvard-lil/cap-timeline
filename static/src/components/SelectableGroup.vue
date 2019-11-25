@@ -8,12 +8,14 @@
       </svgicon>
     </span>
     <label class="label">
-     {{fullName}}
+      {{fullName}}
     </label>
   </div>
 </template>
 
 <script>
+  import store from '../store';
+
   export default {
     name: "SelectableGroup",
     props: ["slug", "status", "fullName"],
@@ -26,6 +28,9 @@
       symbolTranslation() {
         return this.$store.getters.getSymbolTranslation
       },
+      activeGroups() {
+        return store.getters.getActiveGroups;
+      }
     },
     methods: {
       toggleOn() {

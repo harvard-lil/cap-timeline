@@ -5,12 +5,10 @@
         <div v-if="year === '-'"
              class="year-label squiggle "
              :class="'col-'+getIdx(idx)">
-          <svgicon icon="squiggle"
-                   title="Skipping years"
-                   class=""
-                   width="165" height="24">
-          </svgicon>
-
+          <div class="squiggly-line-container">
+            <div class="line line2"></div>
+            <div class="line line3"></div>
+          </div>
         </div>
         <div v-else
              class="year-label"
@@ -95,7 +93,7 @@
         if (this.zoomLevel === 1) {
           for (let i = 0; i < this.activeYears.length; i++) {
             if (this.activeYears[i] === '-') {
-              if (this.years[this.years.length-1] !== '-') {
+              if (this.years[this.years.length - 1] !== '-') {
                 // avoid too many squiggly lines
                 this.years.push('-');
               }

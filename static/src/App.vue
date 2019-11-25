@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container" :class="eventSelected ? 'event-selected event-selected-'+eventSelected : ''">
+  <div class="app-container" :class="'route-'+$route.name">
     <nav class="navbar main-nav fixed-top">
       <div class="navbar-brand">
         <span class="nav-title">
@@ -9,11 +9,10 @@
         </span>
       </div>
     </nav>
-    <div class="subtitle-bar"></div>
-    <nav class="sidebar">
+    <nav class="sidebar" v-if="showSidebar()">
       <toggles></toggles>
     </nav>
-    <main class="main">
+    <main class="main" :class="'route-'+$route.name">
       <router-view :selectedEvent="eventSelected">
       </router-view>
     </main>
@@ -48,6 +47,11 @@
           newQuery[param] = val;
         }
         this.$router.push({query: newQuery});
+      },
+      showSidebar() {
+        if (this.$route.name === 'eventview')
+          return false;
+        return true;
       }
     },
     data() {

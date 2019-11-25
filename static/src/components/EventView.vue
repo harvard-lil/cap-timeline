@@ -1,48 +1,48 @@
 <template>
   <div class="detail-view">
-    <h2>{{year}}</h2>
+    <h1>{{year}}</h1>
     <div class="event-details-container" :class="'event-type-'+event.type">
       <div class="col-1">
-        <h4 class="small-title">Date</h4>
-        {{event.start_date_parsed}}
-        <h4 v-if="event.citations && event.citations.length" class="small-title">Sources</h4>
-        <template v-if="event.citations">
-          <a v-for="citation in event.citations"
-             :href="citation.url"
-             target="_blank"
-             :key="citation.id">
-            {{citation.title}}
-          </a>
-        </template>
-        <h4 class="small-title">Groups affected</h4>
-        <div class="group-relationships">
-          <ul class="group-list">
-            <group v-for="slug in event.groups"
-                   :key="slug"
-                   :showName="true"
-                   :slug="slug">
-            </group>
-          </ul>
-        </div>
-        <h4 class="small-title" v-if="relationships.preceding && relationships.preceding.length>0">Related,
-          preceding</h4>
-        <div v-for="preceding in relationships.preceding" v-bind:key="preceding.id">
-          <a class="related-event" @click="goToRelatedEvent(preceding.id)">
-            {{preceding.name}}
-          </a>
-          ({{preceding.type}}, {{preceding.start_date.split('-')[0]}})
-        </div>
-        <h4 class="small-title" v-if="relationships.succeeding && relationships.succeeding.length>0">Related,
-          succeeding</h4>
-        <div v-for="succeeding in relationships.succeeding" v-bind:key="succeeding.id">
-          <a class="related-event" @click="goToRelatedEvent(succeeding.id)">
-            {{succeeding.name}}
-          </a>
-          ({{succeeding.type}}, {{succeeding.start_date.split('-')[0]}})
+        <div class="event-type">{{event.type}}</div>
+        <div class="event-content">
+          <h4 class="small-title">Date</h4>
+          {{event.start_date_parsed}}
+          <h4 v-if="event.citations && event.citations.length" class="small-title">Sources</h4>
+          <template v-if="event.citations">
+            <p v-for="citation in event.citations"
+               :key="citation.id">
+              {{citation.type.charAt(0).toUpperCase()+ citation.type.slice(1)}}: <a :href="citation.url" target="_blank">{{citation.title}}</a>
+            </p>
+          </template>
+          <h4 class="small-title">Groups affected</h4>
+          <div class="group-relationships">
+            <ul class="group-list">
+              <group v-for="slug in event.groups"
+                     :key="slug"
+                     :showName="true"
+                     :slug="slug">
+              </group>
+            </ul>
+          </div>
+          <h4 class="small-title" v-if="relationships.preceding && relationships.preceding.length>0">Related,
+            preceding</h4>
+          <div v-for="preceding in relationships.preceding" v-bind:key="preceding.id">
+            <a class="related-event" @click="goToRelatedEvent(preceding.id)">
+              {{preceding.name}}
+            </a>
+            ({{preceding.type}}, {{preceding.start_date.split('-')[0]}})
+          </div>
+          <h4 class="small-title" v-if="relationships.succeeding && relationships.succeeding.length>0">Related,
+            succeeding</h4>
+          <div v-for="succeeding in relationships.succeeding" v-bind:key="succeeding.id">
+            <a class="related-event" @click="goToRelatedEvent(succeeding.id)">
+              {{succeeding.name}}
+            </a>
+            ({{succeeding.type}}, {{succeeding.start_date.split('-')[0]}})
+          </div>
         </div>
       </div>
       <div class="col-2">
-        <div class="event-type">{{event.type}}</div>
         <h1>{{event.name}}</h1>
         <div class="event-description-long">
           <h4 class="small-title">Description</h4>
@@ -97,7 +97,7 @@
             })
       },
       goToRelatedEvent(id) {
-        this.$router.push({params: { event_id: id }});
+        this.$router.push({params: {event_id: id}});
         this.$router.go();
       }
     },

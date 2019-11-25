@@ -9,15 +9,38 @@
       grid-column-start: $i;
     }
   }
+  .squiggly-line-container {
+    position: relative;
+    height: 50px;
+  }
+  .line {
+    position: absolute;
+    height: 10px;
+    width: 200%;
+    transform: translate(-25%) scale(0.5);
+  }
+
+  .line2 {
+    background: linear-gradient(45deg, transparent, transparent 49%,
+            $color-black 49%, transparent 60%);
+  }
+  .line3 {
+    background: linear-gradient(-45deg, transparent, transparent 49%,
+            $color-black 49%, transparent 60%);
+  }
+  .line {
+    background-size: 20px 20px;
+  }
+
   .year-label {
     text-align: center;
     font-size: 1.2em;
     font-weight: 400;
-    border-bottom: 2px solid $color-black;
+    border-bottom: 1px solid $color-black;
     display: inline-block;
     &.squiggle {
       border-bottom: 0;
-      top: 1.16em;
+      top: 1.4em;
       position: relative;
       path {
         fill: transparent;
@@ -81,7 +104,7 @@
       opacity: 1;
     }
     .event-container {
-      border: 1px solid $color-gray-medium;
+      border: 1px solid $color-gray-light-medium;
     }
   }
 

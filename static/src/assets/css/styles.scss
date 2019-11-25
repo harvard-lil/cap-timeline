@@ -76,11 +76,13 @@ main {
   padding-top: 7em;
   padding-bottom: 4em;
   grid-auto-flow: column;
-  margin-left: 6em;
+  margin-left: 14em;
   background-color: $color-light;
-  // TODO: figure this out
-  height: calc(100vh - 11em);
-
+  min-height: calc(100vh - 11em);
+  &.route-eventview {
+    margin-left: 0;
+    width: 100%;
+  }
 }
 
 a {
@@ -97,6 +99,12 @@ a {
   width: 100%;
   display: grid;
   grid-template-columns: 8em 1fr;
+  &.route-eventview {
+    grid-template-columns: 1fr;
+    font-size: 1.2em;
+    letter-spacing: .01em;
+    line-height: 1.4em;
+  }
 }
 
 .row {

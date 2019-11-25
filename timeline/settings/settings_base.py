@@ -58,9 +58,9 @@ TEMPLATES = [
             os.path.join(BASE_DIR, '../dist'),
             os.path.join(BASE_DIR, '../research', 'templates'),
         ],
-        # 'APP_DIRS': True,
+        'APP_DIRS': True,
         'OPTIONS': {
-            'context_processors': [
+                'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -69,6 +69,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 FRONTEND_DIR = os.path.join(BASE_DIR, 'static')
