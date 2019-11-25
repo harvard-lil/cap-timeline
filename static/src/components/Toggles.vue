@@ -80,12 +80,15 @@
 <script>
   import './icons/diamond';
   import './icons/circle';
-  import './icons/triangle';
-  import './icons/polygon';
+  import './icons/circle-1';
+  import './icons/circle-2';
+  import './icons/circle-3';
+  import './icons/diamond-1';
+  import './icons/diamond-2';
   import './icons/oval';
-  import './icons/star5';
-  import './icons/square';
-  import './icons/heptagon';
+  import './icons/polygon-1';
+  import './icons/polygon-2';
+  import './icons/square-2';
 
   import './icons/plus';
   import './icons/minus';

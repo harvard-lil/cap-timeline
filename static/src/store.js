@@ -10,11 +10,13 @@ const store = new Vuex.Store({
     groupsByRegion: [],
     groupNames: {},
     symbolTranslation: {
-      jewish: 'diamond',
-      indian: 'triangle',
-      chinese: 'polygon',
-      japanese: 'square',
-      mexican: 'star5',
+      jewish: 'diamond-1',
+      indian: 'circle-3',
+      chinese: 'circle-2',
+      japanese: 'circle-1',
+      mexican: 'polygon-2',
+      russian: 'diamond-2',
+      italian: 'square-2',
     },
     eventTypes: {
       us: false,
