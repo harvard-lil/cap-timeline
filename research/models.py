@@ -2,7 +2,7 @@ import json
 import requests
 import markdown
 from django.db import models
-from timeline.settings import PERMA_KEY, PERMA_FOLDER, STORAGES
+from timeline.settings import PERMA_KEY, PERMA_FOLDER, STORAGES, CAP_KEY, CAP_URL
 from django.db.models import Q
 
 class Region(models.Model):
@@ -79,6 +79,25 @@ class Citation(models.Model):
         )
 
     def save(self, *args, **kwargs):
+        if self.caselaw_citation:
+            if not self.url:
+                # find case
+
+                url = CAP_URL + '?cite=' + self.caselaw_citation
+                response = requests.get(
+                    url,
+                    headers={'Authorization': 'Token %s' % CAP_KEY}
+                )
+                resp = response.json()
+                if resp['count'] == 1:
+                    case = resp['results'][0]
+                    self.title = case['name_abbreviation']
+                    self.url = case['frontend_url']
+                    self.type = 'caselaw'
+                    self.volume_number = case['volume']['volume_number']
+                    self.publication_date = case['decision_date']
+                    self.publication_title = 'Caselaw Access Project'
+
         if self.url and not self.archived_url:
             if PERMA_KEY:
                 data = {"url": self.url, "folder": PERMA_FOLDER}
@@ -132,10 +151,10 @@ class Event(models.Model):
                 citations.append(c)
 
         start_date = str(self.start_date)
-        start_date_parsed = self.start_date.strftime("%B %d, %Y") if self.start_date else None
+        start_date_parsed = self.start_date.strftime("%b %d, %Y") if self.start_date else None
 
         end_date = str(self.end_date) if self.end_date else None
-        end_date_parsed = self.end_date.strftime("%B %d, %Y") if self.end_date else None
+        end_date_parsed = self.end_date.strftime("%b %d, %Y") if self.end_date else None
 
         relationships = []
         for relationship in Relationship.objects.filter(Q(preceding_event__id=self.id) | Q(succeeding_event__id=self.id)):

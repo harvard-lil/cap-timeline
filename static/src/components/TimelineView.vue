@@ -5,18 +5,24 @@
         <div v-if="year === '-'"
              class="year-label squiggle "
              :class="'col-'+getIdx(idx)">
-          <div class="squiggly-line-container">
+          <!--<div class="squiggly-line-container">
             <div class="line line2"></div>
             <div class="line line3"></div>
-          </div>
+            </div>-->
+          <span class="arrow" title="">&#8672;</span>
+          <span class="etc">&#8230;</span>
+          <span class="arrow" title="">&#8674;</span>
         </div>
         <div v-else
              class="year-label"
              v-bind:key="year"
-             :class="'col-'+getIdx(idx)"> {{year}}
+             :class="'col-'+getIdx(idx)">
+          {{year}}
         </div>
         <template v-for="event in events[year]">
-          <timeline-event v-bind:key="event.id" :event="event"
+          <timeline-event v-bind:key="event.id"
+                          :event="event"
+                          :tabindex="idx"
                           :class="['event-type-'+event.type, 'span' + getLength(event), 'col-'+getIdx(idx)]">
           </timeline-event>
         </template>

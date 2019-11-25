@@ -1,25 +1,25 @@
 <template>
   <div v-show="!hide" v-bind:key="event.id"
        @click="getDetails()"
+       v-on:keyup.enter="getDetails()"
        class="event-container"
        :title="event.name + ': ' + event.start_date_parsed + '(' + event.type + ')'">
     <div class="event-type" :class="'event-type-'+event.type">{{event.type}}</div>
     <div class="event-contents">
       <div class="event-name">{{event.name}}</div>
-      <div class="event-description-short"
-           v-if="event.description_short && event.description_short.length < 80"
-           v-html="event.description_short"></div>
+      <div class="event-date">{{event.start_date_parsed}}</div>
+      <div class="group-relationships" v-if="event.groups.length">
+        <ul class="group-list">
+          <li class="group-section-label">Groups:</li>
+          <group v-for="slug in event.groups"
+                 :key="slug" :slug="slug">
+          </group>
+        </ul>
+      </div>
 
       <div class="event-description-short"
-           v-else-if="event.description_short" v-html="event.description_short.substr(0,80) + '...'"></div>
-      <div v-else class="event-description-short"></div>
-    </div>
-    <div class="group-relationships">
-      <ul class="group-list">
-        <group v-for="slug in event.groups"
-               :key="slug" :slug="slug">
-        </group>
-      </ul>
+           v-if="event.description_short"
+           v-html="event.description_short"></div>
     </div>
   </div>
 </template>

@@ -6,23 +6,25 @@
     <div class="event-type" :class="'event-type-'+data.type">
       {{ eventTranslation[data.type] }}
     </div>
-    <div class="event-title">
-      <h3>{{ data.name }}</h3>
+    <div class="event-content">
+      <div class="event-title">
+        <h3>{{ data.name }}</h3>
 
-    </div>
-    <div class="event-date">
+      </div>
+      <div class="event-date">
         {{ data.start_date_parsed }}
-         <span v-if="this.endYear">&ndash;{{ data.end_date_parsed}}</span>
-    </div>
-    <div class="event-description-short"
-         v-html="data.description_short"></div>
+        <span v-if="this.endYear">&ndash;{{ data.end_date_parsed}}</span>
+      </div>
+      <div class="event-description-short"
+           v-html="data.description_short"></div>
 
-    <div class="group-relationships">
-      <ul class="group-list">
-        <group v-for="slug in groups"
-               :key="slug" :slug="slug">
-        </group>
-      </ul>
+      <div class="group-relationships">
+        <ul class="group-list">
+          <group v-for="slug in groups"
+                 :key="slug" :slug="slug">
+          </group>
+        </ul>
+      </div>
     </div>
   </li>
 </template>
@@ -34,7 +36,7 @@
   export default {
     name: "event",
     components: {Group},
-    props: ["data","selectedEvent", "minYear", "maxYear"],
+    props: ["data", "selectedEvent", "minYear", "maxYear"],
     data() {
       return {
         startYear: null,
@@ -93,7 +95,7 @@
       getDetails() {
         // this.$parent.selectedEvent = this.data.id;
         this.$store.commit('setSelectedEvent', this.data.id);
-        this.$router.push({ name: 'eventview', params: { event_id: this.data.id } });
+        this.$router.push({name: 'eventview', params: {event_id: this.data.id}});
         this.$router.go();
       },
       updateActiveGroups() {

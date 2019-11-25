@@ -20,6 +20,10 @@ $group-colors: (
 @each $event-name, $event-color-value in $event-colors {
   .event-container.event-type-#{$event-name} {
     border: 1px solid $color-gray-light-medium;
+    .group-symbol {
+      fill: #{$event-color-value};
+    }
+
   }
   .event-details-container.event-type-#{$event-name} {
     border: 1px solid $color-gray-light-medium;
@@ -33,17 +37,12 @@ $group-colors: (
     }
   }
   .event-type.event-type-#{$event-name} {
-    color: $event-color-value;
+    background-color: $event-color-value;
+    color: $color-white;
   }
-
 }
 
 // group colors
-@each $group-name, $group-color-value in $group-colors {
-  .group-symbol.group-name-#{$group-name} {
-    fill: $group-color-value;
-  }
-}
 
 p {
   margin: 0;
@@ -82,12 +81,10 @@ ul.event-list {
 }
 
 .event-list-detail-view {
-   padding-left: 0;
+  padding-left: 0;
 }
 
 .event-container {
-  display: grid;
-  padding: 1em;
   list-style: none;
   cursor: pointer;
   box-shadow: 0 0 4px 0 rgba(47, 47, 47, 0.50);
@@ -98,7 +95,7 @@ ul.event-list {
   .group-relationships {
     li {
       float: left;
-      margin: 0.2em;
+      margin: .1em;
     }
   }
 }
@@ -107,6 +104,11 @@ ul.event-list {
   text-transform: uppercase;
   font-size: 0.9em;
   font-weight: 600;
+  padding: .5em 1em;
+}
+
+.event-content {
+  padding: 1em;
 }
 
 .event-description-short {
@@ -119,14 +121,16 @@ ul.event-list {
   width: 80%;
   margin: 0 auto;
 }
+
 .event-details-container {
   background-color: $color-white;
   display: grid;
   grid-template-columns: 12em 1fr;
   box-shadow: 0 0 4px 0 rgba(47, 47, 47, 0.50);
-  .event-content {
-    padding: 1em;
+  h1 {
+    line-height: 1.1em
   }
+
   .col-1 {
     border-right: 1px solid $color-gray-light-medium;
   }

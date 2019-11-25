@@ -1,7 +1,7 @@
 <template>
   <div class="detail-view">
     <h1>{{year}}</h1>
-    <div class="event-details-container" :class="'event-type-'+event.type">
+    <div class="event-details-container" tabindex="0" :class="'event-type-'+event.type">
       <div class="col-1">
         <div class="event-type">{{event.type}}</div>
         <div class="event-content">
@@ -14,8 +14,8 @@
               {{citation.type.charAt(0).toUpperCase()+ citation.type.slice(1)}}: <a :href="citation.url" target="_blank">{{citation.title}}</a>
             </p>
           </template>
-          <h4 class="small-title">Groups affected</h4>
-          <div class="group-relationships">
+          <h4 class="small-title" v-if="event.groups && event.groups.length">Groups affected</h4>
+          <div class="group-relationships" v-if="event.groups && event.groups.length">
             <ul class="group-list">
               <group v-for="slug in event.groups"
                      :key="slug"
@@ -27,12 +27,14 @@
           <h4 class="small-title" v-if="relationships.preceding && relationships.preceding.length>0">Related,
             preceding</h4>
           <div v-for="preceding in relationships.preceding" v-bind:key="preceding.id">
-            <a class="related-event" @click="goToRelatedEvent(preceding.id)">
+            <a class="related-event"
+               @click="goToRelatedEvent(preceding.id)">
               {{preceding.name}}
             </a>
             ({{preceding.type}}, {{preceding.start_date.split('-')[0]}})
           </div>
-          <h4 class="small-title" v-if="relationships.succeeding && relationships.succeeding.length>0">Related,
+          <h4 class="small-title"
+              v-if="relationships.succeeding && relationships.succeeding.length>0">Related,
             succeeding</h4>
           <div v-for="succeeding in relationships.succeeding" v-bind:key="succeeding.id">
             <a class="related-event" @click="goToRelatedEvent(succeeding.id)">
@@ -44,23 +46,28 @@
       </div>
       <div class="col-2">
         <h1>{{event.name}}</h1>
-        <div class="event-description-long">
+        <h5 v-if="event.type === 'caselaw'">{{event.caselaw_citation}}</h5>
+        <div class="event-description-long" v-if="event.description_long">
           <h4 class="small-title">Description</h4>
-
           <span v-html="event.description_long"></span>
         </div>
       </div>
     </div>
     <h2 v-if="relationships.preceding && relationships.preceding.length>0">Preceding</h2>
     <ul class="event-list event-list-detail-view">
-      <event v-for="related_event in relationships.preceding"
+      <event v-for="(related_event, idx) in relationships.preceding"
+             :tabindex="idx"
+             v-on:keyup.enter="goToRelatedEvent(related_event.id)"
              :key="related_event.id"
              :data="related_event">
       </event>
+
     </ul>
     <h2 v-if="relationships.succeeding && relationships.succeeding.length>0">Succeeding</h2>
     <ul class="event-list event-list-detail-view">
-      <event v-for="related_event in relationships.succeeding"
+      <event v-for="(related_event, idx) in relationships.succeeding"
+             :tabindex="idx"
+             v-on:keyup.enter="goToRelatedEvent(related_event.id)"
              :key="related_event.id"
              :data="related_event">
       </event>

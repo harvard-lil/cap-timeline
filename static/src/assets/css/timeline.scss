@@ -35,13 +35,20 @@
   .year-label {
     text-align: center;
     font-size: 1.2em;
-    font-weight: 400;
-    border-bottom: 1px solid $color-black;
+    font-weight: 600;
+    border-bottom: 2px solid $color-dark;
     display: inline-block;
     &.squiggle {
-      border-bottom: 0;
-      top: 1.4em;
-      position: relative;
+      .arrow, .etc {
+        top: 0.9em;
+        color: $color-dark;
+        background: $color-light;
+        position: relative;
+      }
+      .etc {
+        top: 0.75em;
+        font-size: 0.8em;
+      }
       path {
         fill: transparent;
         stroke: $color-black;
@@ -62,50 +69,49 @@
     box-shadow: 0 0 4px 0 rgba(47, 47, 47, 0.50);
     display: inline-block;
     margin-left: 0.4em;
-
+    border: 1px solid $color-gray-medium;
+    border-radius: 2%;
+    overflow-y: scroll;
+    &:focus {
+      outline: 2px solid $color-blue-bright;
+    }
     .event-type {
       padding: 0.2em 0.4em;
       font-size: 14px;
       letter-spacing: 0.27px;
+      border-radius: 2% 0;
+    }
+    .event-date, .group-section-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: $color-gray;
+    }
+    .group-section-label {
+      font-weight: 400;
     }
     .event-contents {
       padding: 0.2em 0.4em;
     }
     .event-description-short {
-      height: 75px;
+    }
+    .group-relationships {
+      display: inline-block;
     }
     .event-name {
       font-weight: 600;
       font-size: 20px;
       line-height: 1.1em;
-      color: #2F2F2F;
+      color: $color-black;
       letter-spacing: 0.46px;
     }
   }
   .group-list {
-    float: right;
+    //float: right;
     margin: 0;
-    //position: absolute;
-    //bottom: 0;
+    display: inline list-item;
+    list-style: none;
   }
   .group-list li {
     list-style: none;
   }
-  $event-colors: (
-          'legislation': #276E76,
-          'caselaw': #0075FF,
-          'world': #6F2E4C,
-          'us': #8E67C0
-  );
-  @each $event-name, $event-color-value in $event-colors {
-    .event-type.event-type-#{$event-name} {
-      background-color: $event-color-value;
-      color: $color-white;
-      opacity: 1;
-    }
-    .event-container {
-      border: 1px solid $color-gray-light-medium;
-    }
-  }
-
 }

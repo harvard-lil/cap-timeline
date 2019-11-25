@@ -11,24 +11,24 @@ $color-us: #8E67C0;
 $color-black: #2F2F2F;
 $color-red: #EA3F00;
 $color-pink: #C35387;
-$color-purple: #8E67C0;
+$color-purple: $color-us;
 $color-navy: #29466B;
 $color-turquoise: #3AA4B1;
 $color-green: #3EB76A;
 $color-gold: #D59914;
 
+$color-white: white;
 $color-gray-light: #FCFCFC;
 $color-gray-light-medium: #E2E2E2;
 $color-gray-medium: #979797;
-$color-white: white;
-$color-blue: #4A90E2;
-$color-blue-light: #AFD4FF;
 $color-gray: #757575;
+$color-blue-light: #AFD4FF;
+$color-blue: #4A90E2;
 $color-blue-bright: #007AFF;
 $color-highlight: rgba(255, 243, 27, 0.47);
 $color-yellow: #FFD21B;
-$color-dark: #26262E;
 $color-light: #F7F7FF;
+$color-dark: #26262E;
 
 // fonts
 $font-weight-semibold: 600;

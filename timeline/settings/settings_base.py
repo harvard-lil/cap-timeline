@@ -166,7 +166,7 @@ STORAGES = {
 }
 
 # PERMA
-PERMA_KEY = "claim your perma key: https://perma.cc/settings/tools"
+PERMA_KEY = "Claim your perma key: https://perma.cc/settings/tools"
 PERMA_FOLDER = "0"
 
 # TOGGLE KEYS
@@ -176,3 +176,6 @@ TOGGLES = {
         'max': 1930
     }
 }
+
+CAP_KEY = "Claim your CAP key: https://case.law/user/register/"
+CAP_URL = "https://api.case.law/v1/cases/"
