@@ -106,11 +106,12 @@
     padding-right: 6px;
     margin-right: 0.3em;
     &.unchecked {
-      path {
+      path, circle {
         fill: $color-gray-medium;
       }
     }
     &.selectable-event {
+
       &.checked {
         circle {
           fill: $color-blue-bright;

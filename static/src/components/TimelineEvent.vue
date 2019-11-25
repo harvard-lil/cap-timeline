@@ -1,7 +1,9 @@
 <template>
   <div v-show="!hide" v-bind:key="event.id"
        @click="getDetails()"
+       ref="timelineEvent"
        v-on:keyup.enter="getDetails()"
+       v-on:keydown.tab="scrollIntoView()"
        class="event-container"
        :title="event.name + ': ' + event.start_date_parsed + '(' + event.type + ')'">
     <div class="event-type" :class="'event-type-'+event.type">{{event.type}}</div>
@@ -88,6 +90,10 @@
         }
         this.updateHide();
       },
+      scrollIntoView() {
+        this.$refs.timelineEvent.scrollIntoView(true);
+        window.scroll(-100, window.scrollY);
+      }
 
     },
     computed: {
