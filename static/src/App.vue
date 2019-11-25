@@ -1,6 +1,10 @@
 <template>
   <div class="app-container" :class="'route-'+$route.name">
     <nav class="navbar main-nav fixed-top">
+      <a id='skip-nav' class='screenreader-text' href='#main-content'>
+        Skip to content
+      </a>
+
       <div class="navbar-brand">
         <span class="nav-title">
           <router-link to="/">
@@ -12,7 +16,7 @@
     <nav class="sidebar" v-if="showSidebar()">
       <toggles></toggles>
     </nav>
-    <main class="main" :class="'route-'+$route.name">
+    <main id="main-content" class="main" :class="'route-'+$route.name">
       <router-view :selectedEvent="eventSelected">
       </router-view>
     </main>

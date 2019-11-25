@@ -34,11 +34,12 @@ nav {
     z-index: 99999;
     border-bottom: 1px solid $color-gray-medium;
     //height: 5.5em;
+
     a {
       text-decoration: none;
       color: $color-gray-light;
       &:hover {
-        color: $color-navy;
+        color: $color-blue-light;
       }
     }
   }
@@ -46,7 +47,7 @@ nav {
     padding: 1.5rem 1.3rem;
   }
   .nav-title {
-    font-size: 1.4em;
+    font-size: 22px;
     font-weight: $font-weight-semibold;
     letter-spacing: 0.08em;
   }
@@ -55,6 +56,24 @@ nav {
   }
 
 }
+
+.screenreader-text {
+  position: absolute;
+  left: -999px;
+  width:1px;
+  height: 1px;
+  top: auto;
+
+  &:focus {
+    color: $color-blue-light;
+    display: inline-block;
+    height: auto;
+    width: auto;
+    position: static;
+    margin: auto;
+  }
+}
+
 
 @media (min-width: 30rem) {
   nav {
@@ -79,6 +98,7 @@ main {
   margin-left: 14em;
   background-color: $color-light;
   min-height: calc(100vh - 11em);
+  position: absolute;
   &.route-eventview {
     margin-left: 0;
     width: 100%;
