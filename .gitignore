@@ -6,6 +6,7 @@ node_modules
 .pyenv-version
 node_modules
 /dist
+settings.py
 
 # local env files
 .env.local
