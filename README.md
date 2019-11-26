@@ -1,9 +1,10 @@
 # Timeline
 
-![timeline view](https://hu-my.sharepoint.com/personal/aaizman_law_harvard_edu/Documents/timeline/timeline.png)
+![timeline view](./timeline.png)
 
 
-![details view](https://hu-my.sharepoint.com/personal/aaizman_law_harvard_edu/Documents/timeline/timeline-details.png)
+![details view](./timeline-details.png)
+
 
 Requires postgres
 
