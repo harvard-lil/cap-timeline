@@ -6,7 +6,7 @@
         <li class="list-inline-item">
           <svgicon icon="plus"
                    title="zoom in"
-                   class="zoom-level-btn plus"
+                   class="zoom-level-btn plus icon"
                    :class="zoom === 1 ? 'active' : ''"
                    @click="switchZoomLevel('plus')"
                    width="24" height="24">
@@ -15,7 +15,7 @@
         <li>
           <svgicon icon="minus"
                    title="zoom out"
-                   class="zoom-level-btn minus"
+                   class="zoom-level-btn minus icon"
                    :class="zoom === 0 ? 'active' : ''"
                    @click="switchZoomLevel('minus')"
                    width="24" height="24">
@@ -82,14 +82,12 @@
 </template>
 
 <script>
-  import './icons/diamond';
   import './icons/circle';
   import './icons/circle-1';
   import './icons/circle-2';
   import './icons/circle-3';
   import './icons/diamond-1';
   import './icons/diamond-2';
-  import './icons/oval';
   import './icons/polygon-1';
   import './icons/polygon-2';
   import './icons/square-2';

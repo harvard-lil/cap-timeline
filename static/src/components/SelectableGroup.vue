@@ -1,7 +1,7 @@
 <template>
   <div class="selectable-group" :class="[slug, {active: status}]"
        @click="toggleOn()">
-    <span class="group-name icon" :class="status ? 'checked' : 'unchecked'">
+    <span class="group-name icon" :class="status ? 'active' : ''">
       <svgicon :icon="symbolTranslation[slug]"
                :class="'group-symbol group-name-' + slug + ' symbol-' + symbolTranslation[slug]"
                width="18" height="18">
