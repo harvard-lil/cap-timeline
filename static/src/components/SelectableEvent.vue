@@ -1,8 +1,8 @@
 <template>
   <li class="list-item" :class="status ? 'checked' : 'unchecked'" @click="changeStatus()">
-    <span class="icon selectable-event" :class="status ? 'checked' : 'unchecked'">
+    <span class="icon selectable-event" :class="status ? 'active' : ''">
       <svgicon :icon="status ? 'checked' : 'unchecked'"
-               :class="status ? 'checked' : 'unchecked'"
+               :class="status ? 'active' : ''"
                width="18" height="18">
       </svgicon>
     </span>

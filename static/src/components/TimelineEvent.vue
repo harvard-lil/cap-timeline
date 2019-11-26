@@ -1,7 +1,9 @@
 <template>
   <div v-show="!hide" v-bind:key="event.id"
        @click="getDetails()"
-       v-on:keyup.enter="getDetails()"
+       ref="timelineEvent"
+       @keyup.enter="getDetails()"
+       @keyup.tab="scrollIntoView($event)"
        class="event-container"
        :title="event.name + ': ' + event.start_date_parsed + '(' + event.type + ')'">
     <div class="event-type" :class="'event-type-'+event.type">{{event.type}}</div>
@@ -76,7 +78,6 @@
         }
       },
       getDetails() {
-        // this.$parent.selectedEvent = this.event.id;
         this.$store.commit('setSelectedEvent', this.event.id);
         this.$router.push({name: 'eventview', params: {event_id: this.event.id}});
         this.$router.go();
@@ -88,7 +89,12 @@
         }
         this.updateHide();
       },
-
+      scrollIntoView(e) {
+        this.$refs.timelineEvent.scrollIntoView(true);
+        if (e.shiftKey) {
+          window.scroll(window.scrollX-200, window.scrollY);
+        }
+      }
     },
     computed: {
       eventTypeStatus() {

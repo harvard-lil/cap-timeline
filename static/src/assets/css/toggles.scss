@@ -15,15 +15,15 @@
   li {
     list-style: none;
   }
-}
+  .sidebar-sticky {
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: .5rem;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    padding-bottom: 6em;
+  }
 
-.sidebar-sticky {
-  top: 0;
-  height: calc(100vh - 48px);
-  padding-top: .5rem;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  padding-bottom: 6em;
 }
 
 .toggles-menu {
@@ -36,22 +36,6 @@
     margin-right: 1em;
     margin-bottom: 2em;
     cursor: pointer;
-    circle {
-      fill: $color-gray-medium;
-    }
-    path {
-      stroke: $color-black;
-    }
-
-    &.active {
-      circle {
-        fill: $color-blue-bright;
-      }
-      path {
-        stroke: $color-white;
-      }
-
-    }
   }
   .vue-slider-process {
     background-color: $color-gray-light;
@@ -64,6 +48,14 @@
       &:last-child {
         float: right
       }
+    }
+    input {
+      background: transparent;
+      border: 0;
+      color: $color-white;
+      border-bottom: 1px solid $color-white;
+      text-align: left;
+      width: 40px;
     }
   }
   h3 {
@@ -105,42 +97,36 @@
   .icon {
     padding-right: 6px;
     margin-right: 0.3em;
-    &.unchecked {
+    path, circle {
+      fill: $color-gray-medium;
+      &:hover, &:focus {
+        fill: $color-white !important;
+      }
+    }
+    path {
+      fill: transparent;
+      stroke: $color-black;
+      stroke-width: 2px;
+    }
+    &.active {
+      path, circle {
+        fill: $color-blue-bright;
+      }
       path {
-        fill: $color-gray-medium;
+        stroke: $color-white;
       }
     }
     &.selectable-event {
-      &.checked {
-        circle {
-          fill: $color-blue-bright;
-        }
-        path {
-          stroke: $color-white;
-          fill: transparent;
-        }
-
+      .symbol-square, .symbol-circle {
+        width: 14px !important;
+        height: 14px !important;
       }
-      &.unchecked {
-        circle {
-          fill: $color-gray-medium !important;
-        }
-        path {
-          stroke: $color-white;
-          fill: transparent;
-        }
-        .symbol-square, .symbol-circle {
-          width: 14px !important;
-          height: 14px !important;
-        }
+      .symbol-diamond, .symbol-oval, .symbol-polygon {
+        margin-left: -1px;
+      }
 
-        .symbol-diamond, .symbol-oval, .symbol-polygon {
-          margin-left: -1px;
-        }
-
-        .symbol-square {
-          margin-left: 1px;
-        }
+      .symbol-square {
+        margin-left: 1px;
       }
     }
   }
@@ -149,6 +135,10 @@
   }
   .selectable-group {
     color: $color-gray-medium;
+    path {
+      stroke-width: 0;
+      fill: $color-gray-medium;
+    }
     &.active {
       color: $color-white;
     }

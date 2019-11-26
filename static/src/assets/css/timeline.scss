@@ -88,6 +88,7 @@
     }
     .group-section-label {
       font-weight: 400;
+      margin-left: 0;
     }
     .event-contents {
       padding: 0.2em 0.4em;
@@ -106,7 +107,6 @@
     }
   }
   .group-list {
-    //float: right;
     margin: 0;
     display: inline list-item;
     list-style: none;
