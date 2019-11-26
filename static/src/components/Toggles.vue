@@ -36,8 +36,12 @@
                   :enable-cross="false">
       </vue-slider>
       <ul class="year-values list-inline">
-        <li class="list-inline-item">{{yearValue[0]}}</li>
-        <li class="list-inline-item">{{yearValue[1]}}</li>
+        <li class="list-inline-item">
+          <input type="number" :min="minSliderYear" :max="yearValue[1]" v-model="yearValue[0]">
+        </li>
+        <li class="list-inline-item">
+          <input type="number" :max="maxSliderYear" :min="yearValue[0]" v-model="yearValue[1]">
+        </li>
       </ul>
     </div>
     <br/>

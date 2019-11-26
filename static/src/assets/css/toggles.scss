@@ -65,6 +65,14 @@
         float: right
       }
     }
+    input {
+      background: transparent;
+      border: 0;
+      color: $color-white;
+      border-bottom: 1px solid $color-white;
+      text-align: left;
+      width: 40px;
+    }
   }
   h3 {
     font-weight: normal;
