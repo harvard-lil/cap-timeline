@@ -81,6 +81,13 @@
       letter-spacing: 0.27px;
       border-radius: 2% 0;
     }
+    .political-dissident-marker {
+      float: right;
+      margin-top: 3px;
+      circle {
+        fill: $color-orange;
+      }
+    }
     .event-date, .group-section-label {
       font-size: 14px;
       font-weight: 600;

@@ -23,10 +23,12 @@ $group-colors: (
     .group-symbol {
       fill: #{$event-color-value};
     }
-
   }
   .event-details-container.event-type-#{$event-name} {
     border: 1px solid $color-gray-light-medium;
+    .group-symbol {
+      fill: #{$event-color-value};
+    }
     .small-title {
       color: #{$event-color-value};
     }
@@ -89,11 +91,15 @@ ul.event-list {
   cursor: pointer;
   box-shadow: 0 0 4px 0 rgba(47, 47, 47, 0.50);
   background-color: $color-white;
+  h3 {
+    margin: 0.2em 0;
+  }
   ul {
     padding: 0;
   }
   .group-relationships {
     margin-top: -3px;
+    display: inline-block;
     li {
       float: left;
       margin: .1em;
@@ -132,7 +138,6 @@ ul.event-list {
   h1 {
     line-height: 1.1em
   }
-
   .col-1 {
     border-right: 1px solid $color-gray-light-medium;
   }
@@ -151,5 +156,8 @@ ul.event-list {
   }
   li {
     list-style: none;
+  }
+  .group-symbol {
+    margin-right: 3px;
   }
 }

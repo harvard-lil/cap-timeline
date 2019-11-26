@@ -6,7 +6,7 @@
         <div class="event-type">{{event.type}}</div>
         <div class="event-content">
           <h4 class="small-title">Date</h4>
-          {{event.start_date_parsed}}
+          {{event.start_date_parsed}}<span v-if="event.end_date_parsed">&#8211;{{event.end_date_parsed}}</span>
           <h4 v-if="event.citations && event.citations.length" class="small-title">Sources</h4>
           <template v-if="event.citations">
             <p v-for="citation in event.citations"
@@ -14,7 +14,8 @@
               {{citation.type.charAt(0).toUpperCase()+ citation.type.slice(1)}}: <a :href="citation.url" target="_blank">{{citation.title}}</a>
             </p>
           </template>
-          <h4 class="small-title" v-if="event.groups && event.groups.length">Groups affected</h4>
+          <h4 class="small-title" v-if="event.groups && 
+          event.groups.length">Groups affected</h4>
           <div class="group-relationships" v-if="event.groups && event.groups.length">
             <ul class="group-list">
               <group v-for="slug in event.groups"

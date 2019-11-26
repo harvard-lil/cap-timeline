@@ -22,6 +22,7 @@
         <template v-for="event in events[year]">
           <timeline-event v-bind:key="event.id"
                           :event="event"
+                          :eventType="eventTranslation[event.type]"
                           :tabindex="idx"
                           :class="['event-type-'+event.type, 'span' + getLength(event), 'col-'+getIdx(idx)]">
           </timeline-event>
@@ -85,7 +86,7 @@
         }
         let startYear = this.getYear(event.start_date);
         let endYear = this.getYear(event.end_date);
-        return endYear - startYear;
+        return 1 + endYear - startYear;
       },
       getYear(date) {
         return Number(date.split('-')[0])
@@ -127,8 +128,10 @@
       },
       zoomLevel() {
         return store.getters.getZoomLevel;
+      },
+      eventTranslation() {
+        return store.getters.getEventTranslation;
       }
-
     },
     watch: {
       minYear() {

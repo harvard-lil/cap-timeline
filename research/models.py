@@ -133,6 +133,8 @@ class Event(models.Model):
     description_long = models.TextField(blank=True)
     description_short = models.CharField(max_length=800, blank=True)
     groups = models.ManyToManyField(Group, blank=True)
+    # marked true when event specifically targeted political dissidents
+    political_dissidents = models.BooleanField(default=False)
     hide = models.BooleanField(default=False)
     type = models.CharField(blank=True, null=True, max_length=100,
                             choices=(("us", "us"),
@@ -171,6 +173,7 @@ class Event(models.Model):
             citations=citations,
             type=self.type,
             hide=self.hide,
+            political_dissidents=self.political_dissidents,
             relationships=relationships,
             description_long=markdown.markdown(self.description_long),
             description_short=markdown.markdown(self.description_short),
