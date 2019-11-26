@@ -6,10 +6,23 @@
        @keyup.tab="scrollIntoView($event)"
        class="event-container"
        :title="event.name + ': ' + event.start_date_parsed + '(' + event.type + ')'">
-    <div class="event-type" :class="'event-type-'+event.type">{{event.type}}</div>
+    <div class="event-type" :class="'event-type-'+event.type">
+      {{eventType}}
+      <span v-if="event.political_dissidents">
+        <svgicon icon="circle-3"
+                 title="Political dissidents targeted"
+                 class="political-dissident-marker"
+                 width="10" height="10">
+        </svgicon>
+
+      </span>
+    </div>
     <div class="event-contents">
       <div class="event-name">{{event.name}}</div>
-      <div class="event-date">{{event.start_date_parsed}}</div>
+      <div class="event-date">
+        <span>{{event.start_date_parsed}}</span>
+        <span v-if="event.end_date_parsed">&#8211;{{event.end_date_parsed}}</span>
+      </div>
       <div class="group-relationships" v-if="event.groups.length">
         <ul class="group-list">
           <li class="group-section-label">Groups:</li>
@@ -33,7 +46,7 @@
   export default {
     name: "TimelineEvent",
     components: {Group},
-    props: ["event"],
+    props: ["event", "eventType"],
     data() {
       return {
         startYear: null,
@@ -92,7 +105,7 @@
       scrollIntoView(e) {
         this.$refs.timelineEvent.scrollIntoView(true);
         if (e.shiftKey) {
-          window.scroll(window.scrollX-200, window.scrollY);
+          window.scroll(window.scrollX - 200, window.scrollY);
         }
       }
     },

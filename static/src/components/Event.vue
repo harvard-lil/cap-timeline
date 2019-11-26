@@ -9,15 +9,11 @@
     <div class="event-content">
       <div class="event-title">
         <h3>{{ data.name }}</h3>
-
       </div>
       <div class="event-date">
         {{ data.start_date_parsed }}
         <span v-if="this.endYear">&ndash;{{ data.end_date_parsed}}</span>
       </div>
-      <div class="event-description-short"
-           v-html="data.description_short"></div>
-
       <div class="group-relationships">
         <ul class="group-list">
           <group v-for="slug in groups"
@@ -25,6 +21,8 @@
           </group>
         </ul>
       </div>
+      <div class="event-description-short"
+           v-html="data.description_short"></div>
     </div>
   </li>
 </template>

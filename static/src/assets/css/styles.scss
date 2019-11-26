@@ -5,6 +5,10 @@
 @import "event";
 @import "timeline";
 
+
+body, html {
+  background-color: $color-light;
+}
 // fonts
 
 .text-bold {
@@ -96,7 +100,7 @@ main {
   padding-bottom: 4em;
   grid-auto-flow: column;
   margin-left: 14em;
-  background-color: $color-light;
+
   min-height: calc(100vh - 11em);
   position: absolute;
   &.route-eventview {
