@@ -8,10 +8,10 @@
        :title="event.name + ': ' + event.start_date_parsed + '(' + event.type + ')'">
     <div class="event-type" :class="'event-type-'+event.type">
       {{eventType}}
-      <span v-if="event.political_dissidents">
+      <span v-for="(themeName, themeSlug) in event.themes">
         <svgicon icon="circle-3"
-                 title="Political dissidents targeted"
-                 class="political-dissident-marker"
+                 :title="themeName"
+                 :class="themeSlug"
                  width="10" height="10">
         </svgicon>
 

@@ -5,6 +5,7 @@ from django.db import models
 from timeline.settings import PERMA_KEY, PERMA_FOLDER, STORAGES, CAP_KEY, CAP_URL
 from django.db.models import Q
 
+
 class Region(models.Model):
     name = models.CharField(max_length=1000, unique=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
@@ -123,6 +124,22 @@ class Relationship(models.Model):
         return "%s is directly related to %s" % (self.succeeding_event.name, self.preceding_event.name,)
 
 
+class Theme(models.Model):
+    name = models.CharField(max_length=800)
+    description = models.TextField(blank=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self.name.lower()
+            self.slug = self.slug.replace(' ', '_')
+
+        super(Theme, self).save(*args, **kwargs)
+
+
 class Event(models.Model):
     name = models.CharField(max_length=1000)
     start_date = models.DateField(null=True, blank=True)
@@ -133,14 +150,14 @@ class Event(models.Model):
     description_long = models.TextField(blank=True)
     description_short = models.CharField(max_length=800, blank=True)
     groups = models.ManyToManyField(Group, blank=True)
-    # marked true when event specifically targeted political dissidents
-    political_dissidents = models.BooleanField(default=False)
+    themes = models.ManyToManyField(Theme, blank=True, related_name='events')
     hide = models.BooleanField(default=False)
     type = models.CharField(blank=True, null=True, max_length=100,
                             choices=(("us", "us"),
                                      ("world", "world"),
                                      ("legislation", "legislation"),
-                                     ("caselaw", "caselaw")))
+                                     ("caselaw", "caselaw"),
+                                     ("administrative", "administrative")))
 
     def __str__(self):
         return self.name
@@ -159,9 +176,14 @@ class Event(models.Model):
         end_date_parsed = self.end_date.strftime("%b %d, %Y") if self.end_date else None
 
         relationships = []
-        for relationship in Relationship.objects.filter(Q(preceding_event__id=self.id) | Q(succeeding_event__id=self.id)):
+        for relationship in Relationship.objects.filter(
+                Q(preceding_event__id=self.id) | Q(succeeding_event__id=self.id)):
             rel = relationship.succeeding_event if relationship.preceding_event.id == self.id else relationship.preceding_event
             relationships.append([rel.id, rel.type])
+
+        themes = {}
+        for theme in self.themes.all():
+            themes[theme.slug] = theme.name
 
         return dict(
             id=self.id,
@@ -173,7 +195,7 @@ class Event(models.Model):
             citations=citations,
             type=self.type,
             hide=self.hide,
-            political_dissidents=self.political_dissidents,
+            themes=themes,
             relationships=relationships,
             description_long=markdown.markdown(self.description_long),
             description_short=markdown.markdown(self.description_short),
