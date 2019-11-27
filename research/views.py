@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.conf import settings
 
-from research.models import Event, Group, Region, Relationship
+from research.models import Event, Group, Region, Relationship, Theme
 from timeline import settings
 
 
@@ -80,3 +80,10 @@ def groups_by_region(request):
 
 def year_settings(request):
     return HttpResponse(json.dumps(settings.TOGGLES['years']), content_type='application/json')
+
+
+def themes(request):
+    all_themes = {}
+    for t in Theme.objects.all():
+        all_themes[t.slug] = t.name
+    return HttpResponse(json.dumps(all_themes), content_type='application/json')

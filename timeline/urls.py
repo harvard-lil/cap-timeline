@@ -11,5 +11,6 @@ urlpatterns = [
     path('data/groups/', views.groups),
     path('data/groups-by-region/', views.groups_by_region),
     path('data/year-settings/', views.year_settings),
+    path('data/themes/', views.themes),
     re_path(r'^.*/$', views.index)
 ]
