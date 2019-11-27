@@ -11,9 +11,12 @@
           <template v-if="event.citations">
             <p v-for="citation in event.citations"
                :key="citation.id">
-              {{citation.type.charAt(0).toUpperCase()+ citation.type.slice(1)}}: <a :href="citation.url" target="_blank">{{citation.title}}</a>
+              {{citation.type.charAt(0).toUpperCase()+ citation.type.slice(1)}}: <a :href="citation.url"
+                                                                                    target="_blank">{{citation.title}}</a>
             </p>
           </template>
+
+          <!--Groups affected-->
           <h4 class="small-title" v-if="event.groups && 
           event.groups.length">Groups affected</h4>
           <div class="group-relationships" v-if="event.groups && event.groups.length">
@@ -25,6 +28,23 @@
               </group>
             </ul>
           </div>
+
+          <!--Themes-->
+          <h4 class="small-title" v-if="event.themes">Themes</h4>
+          <div class="thematic-relationships" v-if="event.themes">
+            <ul class="theme-list">
+              <li v-for="(themeName, themeSlug) in event.themes">
+                <svgicon icon="circle-3"
+                         :title="themeName"
+                         :class="themeSlug"
+                         width="18" height="18">
+                </svgicon>
+                {{themeName}}
+              </li>
+            </ul>
+          </div>
+
+          <!--Relationships, preceding-->
           <h4 class="small-title" v-if="relationships.preceding && relationships.preceding.length>0">Related,
             preceding</h4>
           <div v-for="preceding in relationships.preceding" v-bind:key="preceding.id">
@@ -34,6 +54,8 @@
             </a>
             ({{preceding.type}}, {{preceding.start_date.split('-')[0]}})
           </div>
+
+          <!--Relationships, succeeding-->
           <h4 class="small-title"
               v-if="relationships.succeeding && relationships.succeeding.length>0">Related,
             succeeding</h4>

@@ -76,7 +76,23 @@
         </selectable-event>
       </ul>
     </div>
+    <br/>
     <!--Themes ? -->
+    <div class="toggle-group">
+      <h3>Themes</h3>
+      <ul class="theme-types">
+        <li class="list-item" v-for="(themeName, themeSlug) in themes">
+          <span class="theme-icon icon" :class="themeSlug">
+            <svgicon icon="circle-3"
+                     :title="themeName"
+                     :class="themeSlug"
+                     width="15" height="15">
+            </svgicon>
+          </span>
+          <label class="label">{{themeName}}</label>
+        </li>
+      </ul>
+    </div>
 
   </div>
 </template>
@@ -150,13 +166,15 @@
       },
       zoomLevel() {
         return store.getters.getZoomLevel;
+      },
+      themes() {
+        return store.getters.getThemes;
       }
     },
     watch: {
       yearValue(newYearValue) {
         store.commit('setMinYear', Number(newYearValue[0]));
         store.commit('setMaxYear', Number(newYearValue[1]));
-
       }
     },
     mounted() {
@@ -174,6 +192,3 @@
     }
   }
 </script>
-<style>
-
-</style>

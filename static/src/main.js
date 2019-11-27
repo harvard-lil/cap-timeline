@@ -19,3 +19,4 @@ new Vue({
 store.dispatch('loadYears');
 store.dispatch('loadGroups');
 store.dispatch('loadGroupsByRegion');
+store.dispatch('loadThemes');

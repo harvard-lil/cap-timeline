@@ -9,6 +9,7 @@ const store = new Vuex.Store({
     groups: {},
     groupsByRegion: [],
     groupNames: {},
+    themes: [],
     symbolTranslation: {
       jewish: 'diamond-1',
       indian: 'circle-3',
@@ -60,7 +61,14 @@ const store = new Vuex.Store({
           .then((response) => {
             context.commit('loadYears', response.data)
           })
-    }
+    },
+    loadThemes(context) {
+      let url = "http://localhost:8000/data/themes";
+      axios.get(url)
+          .then((response) => {
+            context.commit('loadThemes', response.data)
+          })
+    },
   },
   mutations: {
     loadGroups(state, groups) {
@@ -121,6 +129,9 @@ const store = new Vuex.Store({
     },
     setZoomLevel(state, zoomLevel) {
       state.zoomLevel = zoomLevel;
+    },
+    loadThemes(state, themes) {
+      state.themes = themes
     }
   },
   getters: {
@@ -172,6 +183,9 @@ const store = new Vuex.Store({
     },
     getZoomLevel(state) {
       return state.zoomLevel;
+    },
+    getThemes(state) {
+      return state.themes;
     }
   },
 });
