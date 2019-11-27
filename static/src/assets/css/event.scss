@@ -21,13 +21,15 @@ $group-colors: (
   .event-container.event-type-#{$event-name} {
     border: 1px solid $color-gray-light-medium;
     .group-symbol {
-      fill: #{$event-color-value};
+      //fill: #{$event-color-value};
+      fill: $color-gray;
     }
   }
   .event-details-container.event-type-#{$event-name} {
     border: 1px solid $color-gray-light-medium;
     .group-symbol {
-      fill: #{$event-color-value};
+      //fill: #{$event-color-value};
+      fill: $color-gray;
     }
     .small-title {
       color: #{$event-color-value};
@@ -161,7 +163,7 @@ ul.event-list {
     circle {
       top: 2px;
       position: relative;
-      fill: $color-orange;
+      fill: $color-black;
     }
   }
 
