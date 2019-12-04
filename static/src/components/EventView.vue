@@ -7,8 +7,8 @@
         <div class="event-content">
           <h4 class="small-title">Date</h4>
           {{event.start_date_parsed}}<span v-if="event.end_date_parsed">&#8211;{{event.end_date_parsed}}</span>
-          <h4 v-if="event.citations && event.citations.length" class="small-title">Sources</h4>
           <template v-if="event.citations">
+            <h4 class="small-title">Sources</h4>
             <p v-for="citation in event.citations"
                :key="citation.id">
               {{citation.type.charAt(0).toUpperCase()+ citation.type.slice(1)}}: <a :href="citation.url"
@@ -17,33 +17,36 @@
           </template>
 
           <!--Groups affected-->
-          <h4 class="small-title" v-if="event.groups && 
-          event.groups.length">Groups affected</h4>
-          <div class="group-relationships" v-if="event.groups && event.groups.length">
-            <ul class="group-list">
-              <group v-for="slug in event.groups"
-                     :key="slug"
-                     :showName="true"
-                     :slug="slug">
-              </group>
-            </ul>
-          </div>
+          <template v-if="event.groups &&
+          event.groups.length">
+            <h4 class="small-title">Groups affected</h4>
+            <div class="group-relationships">
+              <ul class="group-list">
+                <group v-for="slug in event.groups"
+                       :key="slug"
+                       :showName="true"
+                       :slug="slug">
+                </group>
+              </ul>
+            </div>
+          </template>
 
           <!--Themes-->
-          <h4 class="small-title" v-if="event.themes">Themes</h4>
-          <div class="thematic-relationships" v-if="event.themes">
-            <ul class="theme-list">
-              <li v-for="(themeName, themeSlug) in event.themes">
-                <svgicon icon="circle-3"
-                         :title="themeName"
-                         :class="themeSlug"
-                         width="18" height="18">
-                </svgicon>
-                {{themeName}}
-              </li>
-            </ul>
-          </div>
-
+          <template v-if="Object.keys(event.themes).length">
+            <h4 class="small-title">Themes</h4>
+            <div class="thematic-relationships">
+              <ul class="theme-list">
+                <li v-for="(themeName, themeSlug) in event.themes">
+                  <svgicon icon="circle-3"
+                           :title="themeName"
+                           :class="themeSlug"
+                           width="18" height="18">
+                  </svgicon>
+                  {{themeName}}
+                </li>
+              </ul>
+            </div>
+          </template>
           <!--Relationships, preceding-->
           <h4 class="small-title" v-if="relationships.preceding && relationships.preceding.length>0">Related,
             preceding</h4>
