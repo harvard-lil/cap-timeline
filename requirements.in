@@ -14,3 +14,5 @@ django-cors-headers
 pytz
 pip-tools
 Fabric3
+
+markdown
