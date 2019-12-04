@@ -23,6 +23,7 @@ fabric3==1.14.post1
 idna==2.8                 # via requests
 libsass==0.19.2           # via django-libsass, libsasscompiler
 libsasscompiler==0.1.5
+markdown==3.1.1
 paramiko==2.6.0           # via fabric3
 pip-tools==4.0.0
 psycopg2-binary==2.8.3
@@ -35,3 +36,6 @@ rjsmin==1.1.0             # via django-compressor
 six==1.12.0               # via bcrypt, cryptography, django-appconf, fabric3, libsass, pip-tools, pynacl
 sqlparse==0.3.0           # via django
 urllib3==1.25.3           # via requests
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools==42.0.2        # via markdown
