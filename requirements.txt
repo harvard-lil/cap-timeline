@@ -18,7 +18,7 @@ django-libsass==0.7
 django-pipeline==1.6.14
 django-storages==1.7.1
 django-webpack-loader==0.6.0
-django==2.2.4
+django==2.2.8
 fabric3==1.14.post1
 idna==2.8                 # via requests
 libsass==0.19.2           # via django-libsass, libsasscompiler
@@ -38,4 +38,4 @@ sqlparse==0.3.0           # via django
 urllib3==1.25.3           # via requests
 
 # The following packages are considered to be unsafe in a requirements file:
-# setuptools==42.0.2        # via markdown
+# setuptools
