@@ -56,7 +56,6 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, '../dist'),
-            os.path.join(BASE_DIR, '../research', 'templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -144,13 +143,13 @@ STATICFILES_FINDERS = (
 )
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, '../dist/static'),
 ]
 
 WEBPACK_LOADER = {
     'DEFAULT': {
         'CACHE': DEBUG,
-        'BUNDLE_DIR_NAME': '/static/dist/',  # must end with slash
+        'BUNDLE_DIR_NAME': '../dist/static/',  # must end with slash
         'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
     }
 }

@@ -1,9 +1,10 @@
 let path = require('path');
 const BundleTracker = require("webpack-bundle-tracker");
 const devMode = process.env.NODE_ENV !== 'production';
+
 module.exports = {
-  publicPath: devMode ? 'http://localhost:8080' : './dist',
-  outputDir: path.resolve(__dirname, './dist'),
+  publicPath: devMode ? 'http://localhost:8080' : './',
+  outputDir: 'dist',
   runtimeCompiler: true,
   assetsDir: 'static',
   configureWebpack: {
