@@ -1,10 +1,11 @@
 __pycache__
-db-files
+#db-files
 
 node_modules
 .DS_Store
 .pyenv-version
 node_modules
+#/dist
 settings.py
 
 # local env files
