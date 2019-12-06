@@ -32,7 +32,7 @@
           </template>
 
           <!--Themes-->
-          <template v-if="Object.keys(event.themes).length">
+          <template v-if="event.themes && Object.keys(event.themes).length">
             <h4 class="small-title">Themes</h4>
             <div class="thematic-relationships">
               <ul class="theme-list">
