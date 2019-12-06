@@ -3,7 +3,7 @@ const BundleTracker = require("webpack-bundle-tracker");
 const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-  publicPath: devMode ? 'http://localhost:8080' : './',
+  publicPath: devMode ? 'http://localhost:8080' : '/',
   outputDir: 'dist',
   runtimeCompiler: true,
   assetsDir: 'static',

@@ -71,7 +71,6 @@ TEMPLATES = [
 
 
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
-FRONTEND_DIR = os.path.join(BASE_DIR, 'static')
 
 WSGI_APPLICATION = 'timeline.wsgi.application'
 
