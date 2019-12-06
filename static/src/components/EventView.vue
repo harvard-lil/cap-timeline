@@ -36,7 +36,7 @@
             <h4 class="small-title">Themes</h4>
             <div class="thematic-relationships">
               <ul class="theme-list">
-                <li v-for="(themeName, themeSlug) in event.themes">
+                <li v-for="(themeName, themeSlug) in event.themes" v-bind:key="themeSlug">
                   <svgicon icon="circle-3"
                            :title="themeName"
                            :class="themeSlug"
