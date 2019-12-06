@@ -42,28 +42,28 @@ const store = new Vuex.Store({
   },
   actions: {
     loadGroups(context) {
-      let url = 'http://localhost:8000/data/groups';
+      let url = process.env.VUE_APP_BACKEND_DATA_URL + 'groups';
       axios.get(url)
           .then((response) => {
             context.commit('loadGroups', response.data)
           })
     },
     loadGroupsByRegion(context) {
-      let url = 'http://localhost:8000/data/groups-by-region';
+      let url = process.env.VUE_APP_BACKEND_DATA_URL + 'groups-by-region';
       axios.get(url)
           .then((response) => {
             context.commit('loadGroupsByRegion', response.data)
           })
     },
     loadYears(context) {
-      let url = "http://localhost:8000/data/year-settings";
+      let url = process.env.VUE_APP_BACKEND_DATA_URL + 'year-settings';
       axios.get(url)
           .then((response) => {
             context.commit('loadYears', response.data)
           })
     },
     loadThemes(context) {
-      let url = "http://localhost:8000/data/themes";
+      let url = process.env.VUE_APP_BACKEND_DATA_URL + 'themes';
       axios.get(url)
           .then((response) => {
             context.commit('loadThemes', response.data)

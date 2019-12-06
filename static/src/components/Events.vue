@@ -30,7 +30,7 @@
     },
     methods: {
       getGroups() {
-        let url = 'http://localhost:8000/data/groups';
+        let url = process.env.VUE_APP_BACKEND_DATA_URL + 'groups';
         this.$http.get(url)
             .then((response) => {
               this.groups = response.body;
@@ -38,13 +38,13 @@
       },
 
       getData() {
-        let url = 'http://localhost:8000/data/events';
+        let url = process.env.VUE_APP_BACKEND_DATA_URL + 'events';
         this.$http.get(url)
             .then((response) => {
               for (let i = 0; i < response.body.length; i++) {
-                let year = this.getYear(response.body[i].start_date)
+                let year = this.getYear(response.body[i].start_date);
                 if (year in this.events) {
-                  this.events[year].push(response.body[i])
+                  this.events[year].push(response.body[i]);
                   Vue.set(this.events, year, this.events[year])
                 } else {
                   Vue.set(this.events, year, [response.body[i]])

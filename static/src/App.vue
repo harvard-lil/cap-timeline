@@ -31,7 +31,7 @@
     components: {Toggles},
     methods: {
       getData() {
-        this.$http.get('http://localhost:8000/data/events')
+        this.$http.get(process.env.VUE_APP_BACKEND_DATA_URL + 'events')
             .then((response) => {
               this.events = response.body.sort((a, b) => {
                 return this.getYear(a.start_date) - this.getYear(b.start_date)

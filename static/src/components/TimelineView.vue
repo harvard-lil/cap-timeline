@@ -51,7 +51,7 @@
     },
     methods: {
       getData() {
-        let url = 'http://localhost:8000/data/events';
+        let url = process.env.VUE_APP_BACKEND_DATA_URL + 'events';
         this.$http.get(url)
             .then((response) => {
               for (let i = 0; i < response.body.length; i++) {
@@ -67,7 +67,7 @@
             })
       },
       getActiveYears() {
-        let url = 'http://localhost:8000/data/years';
+        let url = process.env.VUE_APP_BACKEND_DATA_URL + 'years';
         this.$http.get(url)
             .then((response) => {
               for (let i = 0; i < response.body.length; i++) {
