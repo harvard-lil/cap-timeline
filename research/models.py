@@ -1,6 +1,7 @@
 import json
 import requests
 import markdown
+from autoslug import AutoSlugField
 from django.db import models
 from timeline.settings import PERMA_KEY, PERMA_FOLDER, STORAGES, CAP_KEY, CAP_URL
 from django.db.models import Q
@@ -233,3 +234,11 @@ class Image(models.Model):
     def save(self, *args, **kwargs):
         self.src.type = 'image'
         return super(Image, self).save(*args, **kwargs)
+
+
+class Meta(models.Model):
+    title = models.CharField(null=False, blank=False, max_length=1000)
+    subtitle = models.TextField(null=True, blank=True)
+    slug = AutoSlugField(max_length=255, populate_from="title", unique=True, null=False, blank=False, primary_key=True)
+
+
