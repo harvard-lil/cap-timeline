@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from research.models import Event, Finding, Weight, Image, \
     Citation, Group, Relationship, Region, Theme
 
@@ -21,6 +22,7 @@ class GroupAdmin(admin.ModelAdmin):
 @admin.register(Relationship)
 class RelationshipAdmin(admin.ModelAdmin):
     list_display = ["preceding_event", "succeeding_event", "id"]
+
 
 @admin.register(Theme)
 class ThemeAdmin(admin.ModelAdmin):
