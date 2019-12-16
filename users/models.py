@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, Group
 from research.models import Meta
 
 
@@ -20,12 +20,18 @@ class TimelineUserManager(BaseUserManager):
         kwargs.setdefault('is_active', True)
         return self.create_user(email=email, password=password, **kwargs)
 
+    def create_staff_user(self, email, password, **kwargs):
+        kwargs.setdefault('is_staff', True)
+        kwargs.setdefault('is_superuser', False)
+        kwargs.setdefault('email_verified', True)
+        kwargs.setdefault('is_active', True)
+        return self.create_user(email=email, password=password, **kwargs)
+
 
 class TimelineUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(blank=True, unique=True, db_index=True,
                               verbose_name='email address',
                               error_messages={'unique': u"A user with that email address already exists.", })
-
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -37,3 +43,8 @@ class TimelineUser(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         verbose_name = 'User'
+
+    def save(self, *args, **kwargs):
+        if self.is_staff and not self.is_superuser:
+            group = Group.objects.get(name='staff')
+            self.groups.add(group)
