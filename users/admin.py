@@ -37,19 +37,16 @@ class UserChangeForm(forms.ModelForm):
         model = TimelineUser
         fields = ('email', 'password', 'is_active', )
 
-    def clean_password(self):
-        return self.initial["password"]
-
 
 @admin.register(TimelineUser)
 class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
 
-    list_display = ('email', )
+    list_display = ('email',)
     list_filter = ('is_staff', )
     fieldsets = (
-        (None, {'fields': ('email',)}),
+        (None, {'fields': ('email','timelines')}),
         ('Permissions', {'fields': ('is_staff',)})
     )
     add_fieldsets = (

@@ -32,3 +32,5 @@ def create_json():
     storage_dir = os.path.join(settings.DB_DIR, 'json')
     with open(os.path.join(storage_dir, 'events.json'), 'w+') as f:
         json.dump(all_events, f)
+
+

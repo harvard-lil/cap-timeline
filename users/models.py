@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from research.models import Meta
 
 
 class TimelineUserManager(BaseUserManager):
@@ -29,6 +30,7 @@ class TimelineUser(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     email_verified = models.BooleanField(default=False)
+    timelines = models.ManyToManyField(Meta, blank=True, related_name='users')
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     objects = TimelineUserManager()
