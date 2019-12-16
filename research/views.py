@@ -24,12 +24,18 @@ def event(request, event_id):
         "preceding": [],
         "succeeding": []
     }
-    for relationship in Relationship.objects.filter(preceding_event__id=event_obj.id):
-        rel = relationship.succeeding_event
-        relationships['succeeding'].append(rel.as_json())
-    for relationship in Relationship.objects.filter(succeeding_event__id=event_obj.id):
-        rel = relationship.preceding_event
-        relationships['preceding'].append(rel.as_json())
+    for relationship in Relationship.objects.filter(event_one__id=event_obj.id):
+        rel = relationship.event_two
+        if rel.start_date > event_obj.start_date:
+            relationships['succeeding'].append(rel.as_json())
+        else:
+            relationships['preceding'].append(rel.as_json())
+    for relationship in Relationship.objects.filter(event_two__id=event_obj.id):
+        rel = relationship.event_one
+        if rel.start_date > event_obj.start_date:
+            relationships['succeeding'].append(rel.as_json())
+        else:
+            relationships['preceding'].append(rel.as_json())
 
     def sort_by_date(e):
         return e['start_date']

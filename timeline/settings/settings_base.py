@@ -24,9 +24,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
+    'django_extensions',
     'corsheaders',
     'compressor',
     'pipeline',
+    'users',
     'research',
     'storages',  # http://django-storages.readthedocs.io/en/latest/index.html
     'webpack_loader',
@@ -162,6 +164,8 @@ STORAGES = {
         },
     },
 }
+
+AUTH_USER_MODEL = 'users.TimelineUser'
 
 # PERMA
 PERMA_KEY = "Claim your perma key: https://perma.cc/settings/tools"

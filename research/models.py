@@ -1,9 +1,11 @@
 import json
 import requests
 import markdown
+
+from autoslug import AutoSlugField
 from django.db import models
-from timeline.settings import PERMA_KEY, PERMA_FOLDER, STORAGES, CAP_KEY, CAP_URL
 from django.db.models import Q
+from django.conf import settings
 
 
 class Region(models.Model):
@@ -84,10 +86,10 @@ class Citation(models.Model):
             if not self.url:
                 # find case
 
-                url = CAP_URL + '?cite=' + self.caselaw_citation
+                url = settings.CAP_URL + '?cite=' + self.caselaw_citation
                 response = requests.get(
                     url,
-                    headers={'Authorization': 'Token %s' % CAP_KEY}
+                    headers={'Authorization': 'Token %s' % settings.CAP_KEY}
                 )
                 resp = response.json()
                 if resp['count'] == 1:
@@ -100,9 +102,9 @@ class Citation(models.Model):
                     self.publication_title = 'Caselaw Access Project'
 
         if self.url and not self.archived_url:
-            if PERMA_KEY:
-                data = {"url": self.url, "folder": PERMA_FOLDER}
-                res = requests.post("https://api.perma.cc/v1/archives/?api_key=%s" % PERMA_KEY,
+            if settings.PERMA_KEY:
+                data = {"url": self.url, "folder": settings.PERMA_FOLDER}
+                res = requests.post("https://api.perma.cc/v1/archives/?api_key=%s" % settings.PERMA_KEY,
                                     data=json.dumps(data),
                                     headers={'Content-type': 'application/json'},
                                     allow_redirects=True)
@@ -116,12 +118,12 @@ class Citation(models.Model):
 
 
 class Relationship(models.Model):
-    preceding_event = models.ForeignKey('Event', on_delete=models.DO_NOTHING, related_name='heads')
-    succeeding_event = models.ForeignKey('Event', on_delete=models.DO_NOTHING, related_name='tails')
+    event_one = models.ForeignKey('Event', on_delete=models.DO_NOTHING, related_name='heads')
+    event_two = models.ForeignKey('Event', on_delete=models.DO_NOTHING, related_name='tails')
     description = models.TextField(blank=True)
 
     def __str__(self):
-        return "%s is directly related to %s" % (self.succeeding_event.name, self.preceding_event.name,)
+        return "%s is directly related to %s" % (self.event_one.name, self.event_two.name,)
 
 
 class Theme(models.Model):
@@ -158,6 +160,7 @@ class Event(models.Model):
                                      ("legislation", "legislation"),
                                      ("caselaw", "caselaw"),
                                      ("administrative", "administrative")))
+    timeline = models.ForeignKey('Meta', null=False, blank=False, related_name='events', on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return self.name
@@ -177,8 +180,8 @@ class Event(models.Model):
 
         relationships = []
         for relationship in Relationship.objects.filter(
-                Q(preceding_event__id=self.id) | Q(succeeding_event__id=self.id)):
-            rel = relationship.succeeding_event if relationship.preceding_event.id == self.id else relationship.preceding_event
+                Q(event_one__id=self.id) | Q(event_two__id=self.id)):
+            rel = relationship.event_two if relationship.event_one.id == self.id else relationship.event_one
             relationships.append([rel.id, rel.type])
 
         themes = {}
@@ -224,7 +227,7 @@ class Weight(models.Model):
 
 
 class Image(models.Model):
-    data = models.FileField(storage=STORAGES['image_storage'])
+    data = models.FileField(storage=settings.STORAGES['image_storage'])
     src = models.ForeignKey('Citation', null=True, related_name='images', on_delete=models.DO_NOTHING)
 
     def __str__(self):
@@ -233,3 +236,12 @@ class Image(models.Model):
     def save(self, *args, **kwargs):
         self.src.type = 'image'
         return super(Image, self).save(*args, **kwargs)
+
+
+class Meta(models.Model):
+    title = models.CharField(null=False, blank=False, max_length=1000)
+    subtitle = models.TextField(null=True, blank=True)
+    slug = AutoSlugField(max_length=255, populate_from="title", unique=True, null=False, blank=False, primary_key=True)
+
+    def __str__(self):
+        return self.title

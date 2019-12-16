@@ -13,7 +13,6 @@ $ psql -c "CREATE DATABASE research;"
 $ pip install -r requirements.txt
 $ ./manage.py migrate
 $ mkdir db-files
-$ mkdir db-files/images
 $ ./manage.py createsuperuser # follow prompts
 ```
 
@@ -25,5 +24,4 @@ $ fab create_json
 To generate svg icons
 ```
 $ npm run generate-icons 
-
 ```

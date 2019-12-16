@@ -10,9 +10,15 @@ django-pipeline
 django-libsass
 django-webpack-loader
 django-cors-headers
+django-autoslug
+django-extensions
 
 pytz
 pip-tools
 Fabric3
 
 markdown
+
+# testing
+pytest==3.7.0
+pytest-django
