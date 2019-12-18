@@ -16,6 +16,12 @@ $ mkdir db-files
 $ ./manage.py createsuperuser # follow prompts
 ```
 
+Create settings
+```
+$ cp timeline/settings/settings.example.py timeline/settings.py
+
+```
+
 To update / create new events
 ```bash
 $ fab create_json
