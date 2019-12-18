@@ -10,6 +10,9 @@ jobs:
       # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
       - image: circleci/python:3.5.7
       - image: circleci/postgres:9.4
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: research
 
     working_directory: ~/timeline
 
@@ -29,8 +32,8 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
-            ./manage.py migrate
             mkdir db-files
+            ./manage.py migrate
             cp timeline/settings/settings.example.py timeline/settings.py
 
       - save_cache:
