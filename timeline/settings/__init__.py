@@ -5,7 +5,7 @@
 try:
     from .settings import *  # noqa
 except ImportError as e:
-    if e.msg == "No module named 'config.settings.settings'":
+    if e.msg == "No module named 'timeline.settings.settings'":
         from .settings_base import *  # noqa
     else:
         raise
