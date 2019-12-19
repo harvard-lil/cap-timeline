@@ -124,7 +124,7 @@
         if (!store.getters.getSelectedEvent) {
           store.commit('setSelectedEvent', this.$route.params.event_id);
         }
-        let url = process.env.VUE_APP_BACKEND_DATA_URL + 'events/' + store.getters.getSelectedEvent;
+        let url = process.env.VUE_APP_BACKEND_DATA_URL + this.getters.getSlug + '/events/' + store.getters.getSelectedEvent;
         this.$http.get(url)
             .then((response) => {
               this.event = response.body['event'];

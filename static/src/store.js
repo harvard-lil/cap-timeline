@@ -6,6 +6,7 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
+    slug: "",
     groups: {},
     groupsByRegion: [],
     groupNames: {},
@@ -41,29 +42,33 @@ const store = new Vuex.Store({
     zoomLevel: 1,
   },
   actions: {
+    setTimelineSlug(context, slug) {
+      context.commit('setTimelineSlug', slug)
+    },
     loadGroups(context) {
-      let url = process.env.VUE_APP_BACKEND_DATA_URL + 'groups';
+      let url = process.env.VUE_APP_BACKEND_DATA_URL + context.state.slug + '/groups';
       axios.get(url)
           .then((response) => {
+            console.log("loadgroups", response.data)
             context.commit('loadGroups', response.data)
           })
     },
     loadGroupsByRegion(context) {
-      let url = process.env.VUE_APP_BACKEND_DATA_URL + 'groups-by-region';
+      let url = process.env.VUE_APP_BACKEND_DATA_URL + context.state.slug + '/groups-by-region';
       axios.get(url)
           .then((response) => {
             context.commit('loadGroupsByRegion', response.data)
           })
     },
     loadYears(context) {
-      let url = process.env.VUE_APP_BACKEND_DATA_URL + 'year-settings';
+      let url = process.env.VUE_APP_BACKEND_DATA_URL + context.state.slug + '/year-settings';
       axios.get(url)
           .then((response) => {
             context.commit('loadYears', response.data)
           })
     },
     loadThemes(context) {
-      let url = process.env.VUE_APP_BACKEND_DATA_URL + 'themes';
+      let url = process.env.VUE_APP_BACKEND_DATA_URL + context.state.slug + '/themes';
       axios.get(url)
           .then((response) => {
             context.commit('loadThemes', response.data)
@@ -71,11 +76,16 @@ const store = new Vuex.Store({
     },
   },
   mutations: {
+    setTimelineSlug(state, slug) {
+      state.slug = slug;
+    },
     loadGroups(state, groups) {
       // work around:
       // we're getting URL parameters before groups are loaded from the server
       // because of this, we're checking if groups have already been initialized with their correct status
       // otherwise we're hiding groups from view
+
+      state.groups ={};
       for (let i = 0; i < groups.length; i++) {
         if (!(state.groups[groups[i][0]]))
           if (state.activateAllGroupsWhenLoaded) {
@@ -135,6 +145,9 @@ const store = new Vuex.Store({
     }
   },
   getters: {
+    getSlug(state) {
+      return state.slug;
+    },
     getGroups(state) {
       return state.groups;
     },

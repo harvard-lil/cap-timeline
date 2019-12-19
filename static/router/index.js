@@ -9,22 +9,22 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '/:slug',
       name: 'home',
       component: TimelineView
     },
     {
-      path: '/events',
+      path: '/:slug/events',
       name: 'events',
       component: Events,
     },
     {
-      path: '/events/:event_id',
+      path: '/:slug/events/:event_id',
       name: 'eventview',
       component: EventView,
     },
     {
-      path: '/timeline',
+      path: '/:slug/timeline',
       name: 'timelineview',
       component: TimelineView,
     },

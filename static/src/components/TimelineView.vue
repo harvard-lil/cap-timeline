@@ -51,7 +51,7 @@
     },
     methods: {
       getData() {
-        let url = process.env.VUE_APP_BACKEND_DATA_URL + 'events';
+        let url = process.env.VUE_APP_BACKEND_DATA_URL + this.slug + '/events';
         this.$http.get(url)
             .then((response) => {
               for (let i = 0; i < response.body.length; i++) {
@@ -67,7 +67,7 @@
             })
       },
       getActiveYears() {
-        let url = process.env.VUE_APP_BACKEND_DATA_URL + 'years';
+        let url = process.env.VUE_APP_BACKEND_DATA_URL + this.slug + '/years';
         this.$http.get(url)
             .then((response) => {
               for (let i = 0; i < response.body.length; i++) {
@@ -116,7 +116,6 @@
             year += 1;
           }
         }
-
       },
     },
     computed: {
@@ -131,7 +130,10 @@
       },
       eventTranslation() {
         return store.getters.getEventTranslation;
-      }
+      },
+      slug() {
+        return store.getters.getSlug;
+      },
     },
     watch: {
       minYear() {
@@ -142,12 +144,11 @@
       },
       zoomLevel() {
         this.getYears();
+      },
+      slug() {
+        this.getData();
+        this.getActiveYears();
       }
-    },
-
-    created() {
-      this.getData();
-      this.getActiveYears();
     },
   }
 </script>

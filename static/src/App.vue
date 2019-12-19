@@ -31,7 +31,7 @@
     components: {Toggles},
     methods: {
       getData() {
-        this.$http.get(process.env.VUE_APP_BACKEND_DATA_URL + 'events')
+        this.$http.get(process.env.VUE_APP_BACKEND_DATA_URL + this.slug + '/events')
             .then((response) => {
               this.events = response.body.sort((a, b) => {
                 return this.getYear(a.start_date) - this.getYear(b.start_date)
@@ -83,6 +83,9 @@
       },
       zoom() {
         return store.getters.getZoomLevel;
+      },
+      slug() {
+        return store.getters.getSlug;
       }
     },
     watch: {
@@ -119,6 +122,9 @@
       },
       zoom(newZoom) {
         this.updateParams('zoom', newZoom)
+      },
+      slug() {
+        this.getData();
       }
     },
     beforeCreate() {
@@ -146,11 +152,6 @@
       } else {
         this.$store.commit("activateAllGroups")
       }
-
-
     },
-    created() {
-      this.getData();
-    }
   };
 </script>
