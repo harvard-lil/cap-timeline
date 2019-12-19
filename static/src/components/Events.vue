@@ -30,7 +30,7 @@
     },
     methods: {
       getGroups() {
-        let url = process.env.VUE_APP_BACKEND_DATA_URL + 'groups';
+        let url = process.env.VUE_APP_BACKEND_DATA_URL + this.slug + '/groups';
         this.$http.get(url)
             .then((response) => {
               this.groups = response.body;
@@ -38,7 +38,7 @@
       },
 
       getData() {
-        let url = process.env.VUE_APP_BACKEND_DATA_URL + 'events';
+        let url = process.env.VUE_APP_BACKEND_DATA_URL + this.slug + '/events';
         this.$http.get(url)
             .then((response) => {
               for (let i = 0; i < response.body.length; i++) {
@@ -63,11 +63,16 @@
       },
       maxYear() {
         return store.getters.getMaxYear;
+      },
+      slug() {
+        return store.getters.getSlug;
       }
     },
-    created() {
-      this.getData();
-      this.getGroups();
+    watch: {
+      slug() {
+        this.getData();
+        this.getGroups();
+      }
     },
   }
 </script>

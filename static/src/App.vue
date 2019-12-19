@@ -45,17 +45,15 @@
         if (this.$route.name === 'eventview')
           return;
         let newQuery = Object.assign({}, this.$route.query);
-        if (!(val)) {
-          delete newQuery[param];
-        } else {
+        if (val) {
           newQuery[param] = val;
         }
-        this.$router.push({query: newQuery});
+        if (Object.keys(newQuery).length && JSON.stringify(newQuery) !== JSON.stringify(this.$route.query)) {
+          this.$router.push({query: newQuery});
+        }
       },
       showSidebar() {
-        if (this.$route.name === 'eventview')
-          return false;
-        return true;
+        return this.$route.name !== 'eventview';
       }
     },
     data() {
@@ -103,10 +101,10 @@
         this.updateParams('groups', groups)
       },
       minYear(year) {
-        this.updateParams('minyear', year)
+        this.updateParams('minyear', year.toString())
       },
       maxYear(year) {
-        this.updateParams('maxyear', year)
+        this.updateParams('maxyear', year.toString())
       },
       activeEvents(newEvents) {
         let events = newEvents.join(',');
