@@ -18,7 +18,7 @@ def events(request, slug):
     except models.Meta.DoesNotExist:
         raise Http404('Timeline not found')
 
-    with open(os.path.join(settings.DB_DIR, 'json/events.json'), 'r') as f:
+    with open(os.path.join(settings.DB_DIR, 'json/events-%s.json' % meta.slug), 'r') as f:
         all_events = f.read()
     return HttpResponse(all_events, content_type='application/json')
 
