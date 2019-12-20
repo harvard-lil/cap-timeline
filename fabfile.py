@@ -9,7 +9,7 @@ except Exception as e:
     print("WARNING: Can't configure Django -- tasks depending on Django will fail:\n%s" % e)
 
 from django.conf import settings
-from research.models import Event, Citation, Group, Meta, Relationship
+from research.models import Event, Meta
 
 from fabric.decorators import task
 from django.core import management
@@ -23,14 +23,21 @@ def run_django(port="127.0.0.1:8000"):
 
 
 @task
-def create_json():
-    from research.models import Event
-    events = Event.objects.select_related('image', 'weight').filter(hide=False).order_by('start_date').prefetch_related(
-        'citation')
+def create_json(timeline=None):
+    """
+    Creating json files for each timeline (or a single timeline if arg is passed in.
+    """
+    if not timeline:
+        metas = Meta.objects.all()
+        for meta in metas:
+            create_json(timeline=meta.slug)
 
+    events = Event.objects.select_related('image', 'weight').filter(
+        hide=False, timeline=timeline).order_by(
+        'start_date').prefetch_related(
+        'citation')
     all_events = [event.as_json() for event in events]
     storage_dir = os.path.join(settings.DB_DIR, 'json')
-    with open(os.path.join(storage_dir, 'events.json'), 'w+') as f:
+    filename = 'events-%s.json' % timeline if timeline else 'events.json'
+    with open(os.path.join(storage_dir, filename), 'w+') as f:
         json.dump(all_events, f)
-
-
