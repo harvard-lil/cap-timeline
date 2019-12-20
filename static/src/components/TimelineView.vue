@@ -2,13 +2,9 @@
   <div class="timeline">
     <div class="container-wrapper">
       <template v-for="(year, idx) in years">
-        <div v-if="year === '-'"
+        <div v-if="year === '-'" v-bind:key="year + idx"
              class="year-label squiggle "
              :class="'col-'+getIdx(idx)">
-          <!--<div class="squiggly-line-container">
-            <div class="line line2"></div>
-            <div class="line line3"></div>
-            </div>-->
           <span class="arrow" title="">&#8672;</span>
           <span class="etc">&#8230;</span>
           <span class="arrow" title="">&#8674;</span>
@@ -51,6 +47,10 @@
     },
     methods: {
       getData() {
+        if (Object.keys(this.events).length) {
+          this.getYears();
+          return;
+        }
         let url = process.env.VUE_APP_BACKEND_DATA_URL + this.slug + '/events';
         this.$http.get(url)
             .then((response) => {
@@ -150,5 +150,9 @@
         this.getActiveYears();
       }
     },
+    beforeMount() {
+      this.getData();
+      this.getActiveYears();
+    }
   }
 </script>

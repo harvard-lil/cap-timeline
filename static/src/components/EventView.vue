@@ -105,6 +105,7 @@
 </template>
 
 <script>
+  import axios from 'axios';
   import store from '../store'
   import Group from "./Group"
   import Event from "./Event"
@@ -119,26 +120,32 @@
         relationships: []
       }
     },
+    computed: {
+      slug() {
+        return store.getters.getSlug;
+      }
+    },
     methods: {
       getData() {
         if (!store.getters.getSelectedEvent) {
           store.commit('setSelectedEvent', this.$route.params.event_id);
         }
-        let url = process.env.VUE_APP_BACKEND_DATA_URL + this.getters.getSlug + '/events/' + store.getters.getSelectedEvent;
-        this.$http.get(url)
+        let url = process.env.VUE_APP_BACKEND_DATA_URL + store.getters.getSlug + '/events/' + store.getters.getSelectedEvent;
+        axios.get(url)
             .then((response) => {
-              this.event = response.body['event'];
-              this.relationships = response.body.related_events;
+              this.event = response.data['event'];
+              this.relationships = response.data.related_events;
               this.year = Number(this.event.start_date.substring(0, 4));
             })
       },
       goToRelatedEvent(id) {
         this.$router.push({params: {event_id: id}});
-        this.$router.go();
       }
     },
-    beforeMount() {
-      this.getData();
-    }
+    watch: {
+      slug() {
+        this.getData();
+      }
+    },
   }
 </script>

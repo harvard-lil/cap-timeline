@@ -49,7 +49,6 @@ const store = new Vuex.Store({
       let url = process.env.VUE_APP_BACKEND_DATA_URL + context.state.slug + '/groups';
       axios.get(url)
           .then((response) => {
-            console.log("loadgroups", response.data)
             context.commit('loadGroups', response.data)
           })
     },
