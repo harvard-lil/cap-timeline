@@ -7,9 +7,9 @@
 
       <div class="navbar-brand">
         <span class="nav-title">
-          <router-link to="/">
-          U.S. IMMIGRATION TIMELINE
-        </router-link>
+          <router-link :to="'/'+slug">
+            {{title}}
+          </router-link>
         </span>
       </div>
     </nav>
@@ -30,14 +30,6 @@
     name: 'App',
     components: {Toggles},
     methods: {
-      getData() {
-        this.$http.get(process.env.VUE_APP_BACKEND_DATA_URL + 'events')
-            .then((response) => {
-              this.events = response.body.sort((a, b) => {
-                return this.getYear(a.start_date) - this.getYear(b.start_date)
-              });
-            })
-      },
       getYear(date) {
         return Number(date.split('-')[0])
       },
@@ -45,17 +37,15 @@
         if (this.$route.name === 'eventview')
           return;
         let newQuery = Object.assign({}, this.$route.query);
-        if (!(val)) {
-          delete newQuery[param];
-        } else {
+        if (val) {
           newQuery[param] = val;
         }
-        this.$router.push({query: newQuery});
+        if (Object.keys(newQuery).length && JSON.stringify(newQuery) !== JSON.stringify(this.$route.query)) {
+          this.$router.push({query: newQuery});
+        }
       },
       showSidebar() {
-        if (this.$route.name === 'eventview')
-          return false;
-        return true;
+        return this.$route.name !== 'eventview';
       }
     },
     data() {
@@ -83,6 +73,12 @@
       },
       zoom() {
         return store.getters.getZoomLevel;
+      },
+      slug() {
+        return store.getters.getSlug;
+      },
+      title() {
+        return store.getters.getTitle;
       }
     },
     watch: {
@@ -100,10 +96,10 @@
         this.updateParams('groups', groups)
       },
       minYear(year) {
-        this.updateParams('minyear', year)
+        this.updateParams('minyear', year.toString())
       },
       maxYear(year) {
-        this.updateParams('maxyear', year)
+        this.updateParams('maxyear', year.toString())
       },
       activeEvents(newEvents) {
         let events = newEvents.join(',');
@@ -119,9 +115,17 @@
       },
       zoom(newZoom) {
         this.updateParams('zoom', newZoom)
-      }
+      },
     },
     beforeCreate() {
+      let slug = window.location.pathname.split('/')[1];
+      store.dispatch('setTimelineSlug', slug);
+      store.dispatch('setMetadata');
+      store.dispatch('loadYears');
+      store.dispatch('loadGroups');
+      store.dispatch('loadGroupsByRegion');
+      store.dispatch('loadThemes');
+
       if (this.$route.query.event)
         this.$store.commit('setSelectedEvent', Number(this.$route.query.event));
 
@@ -146,11 +150,6 @@
       } else {
         this.$store.commit("activateAllGroups")
       }
-
-
     },
-    created() {
-      this.getData();
-    }
   };
 </script>

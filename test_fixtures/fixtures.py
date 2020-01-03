@@ -32,3 +32,9 @@ def superuser():
     user.is_staff = True
     user.is_superuser = True
     return user
+
+
+@pytest.fixture
+def timelinemeta():
+    meta = MetaFactory()
+    return meta
