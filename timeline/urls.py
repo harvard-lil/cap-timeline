@@ -12,5 +12,6 @@ urlpatterns = [
     path('data/<str:slug>/groups-by-region/', views.groups_by_region),
     path('data/<str:slug>/year-settings/', views.year_settings),
     path('data/<str:slug>/themes/', views.themes),
+    path('data/<str:slug>/meta/', views.meta),
     re_path(r'^.*/$', views.index)
 ]

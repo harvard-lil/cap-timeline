@@ -245,3 +245,11 @@ class Meta(models.Model):
 
     def __str__(self):
         return self.title
+
+    def as_json(self):
+        return dict(
+            title=self.title,
+            subtitle=self.subtitle,
+            slug=self.slug,
+        )
+

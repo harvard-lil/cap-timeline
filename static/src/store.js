@@ -7,6 +7,8 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     slug: "",
+    title: "",
+    subtitle: "",
     groups: {},
     groupsByRegion: [],
     groupNames: {},
@@ -45,6 +47,14 @@ const store = new Vuex.Store({
     setTimelineSlug(context, slug) {
       context.commit('setTimelineSlug', slug)
     },
+    setMetadata(context) {
+      let url = process.env.VUE_APP_BACKEND_DATA_URL + context.state.slug + '/meta';
+      axios.get(url)
+          .then((response) => {
+            context.commit('setMetadata', response.data)
+          })
+
+    },
     loadGroups(context) {
       let url = process.env.VUE_APP_BACKEND_DATA_URL + context.state.slug + '/groups';
       axios.get(url)
@@ -78,6 +88,12 @@ const store = new Vuex.Store({
     setTimelineSlug(state, slug) {
       state.slug = slug;
       localStorage.setItem('slug', slug)
+    },
+    setMetadata(state, meta) {
+      state.title = meta.title;
+      state.subtitle = meta.subtitle;
+      localStorage.setItem('title', meta.title);
+      localStorage.setItem('subtitle', meta.subtitle);
     },
     loadGroups(state, groups) {
       // work around:
@@ -147,6 +163,9 @@ const store = new Vuex.Store({
   getters: {
     getSlug(state) {
       return state.slug;
+    },
+    getTitle(state) {
+      return state.title;
     },
     getGroups(state) {
       return state.groups;

@@ -7,9 +7,9 @@
 
       <div class="navbar-brand">
         <span class="nav-title">
-          <router-link to="/">
-          U.S. IMMIGRATION TIMELINE
-        </router-link>
+          <router-link :to="'/'+slug">
+            {{title}}
+          </router-link>
         </span>
       </div>
     </nav>
@@ -76,6 +76,9 @@
       },
       slug() {
         return store.getters.getSlug;
+      },
+      title() {
+        return store.getters.getTitle;
       }
     },
     watch: {
@@ -117,7 +120,7 @@
     beforeCreate() {
       let slug = window.location.pathname.split('/')[1];
       store.dispatch('setTimelineSlug', slug);
-
+      store.dispatch('setMetadata');
       store.dispatch('loadYears');
       store.dispatch('loadGroups');
       store.dispatch('loadGroupsByRegion');

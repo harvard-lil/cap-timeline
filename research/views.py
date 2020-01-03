@@ -14,18 +14,18 @@ def index(request):
 
 def events(request, slug):
     try:
-        meta = Meta.objects.get(slug=slug)
+        metadata = Meta.objects.get(slug=slug)
     except models.Meta.DoesNotExist:
         raise Http404('Timeline not found')
 
-    with open(os.path.join(settings.DB_DIR, 'json/events-%s.json' % meta.slug), 'r') as f:
+    with open(os.path.join(settings.DB_DIR, 'json/events-%s.json' % metadata.slug), 'r') as f:
         all_events = f.read()
     return HttpResponse(all_events, content_type='application/json')
 
 
 def event(request, event_id, slug):
     try:
-        meta = Meta.objects.get(slug=slug)
+        metadata = Meta.objects.get(slug=slug)
     except models.Meta.DoesNotExist:
         raise Http404('Timeline not found')
 
@@ -61,7 +61,7 @@ def event(request, event_id, slug):
 
 def years(request, slug):
     try:
-        meta = Meta.objects.get(slug=slug)
+        metadata = Meta.objects.get(slug=slug)
     except models.Meta.DoesNotExist:
         raise Http404('Timeline not found')
     # get all active years
@@ -86,7 +86,7 @@ def years(request, slug):
 
 def groups(request, slug):
     try:
-        meta = Meta.objects.get(slug=slug)
+        metadata = Meta.objects.get(slug=slug)
     except models.Meta.DoesNotExist:
         raise Http404('Timeline not found')
 
@@ -96,7 +96,7 @@ def groups(request, slug):
 
 def groups_by_region(request, slug):
     try:
-        meta = Meta.objects.get(slug=slug)
+        metadata = Meta.objects.get(slug=slug)
     except models.Meta.DoesNotExist:
         raise Http404('Timeline not found')
 
@@ -116,7 +116,7 @@ def groups_by_region(request, slug):
 
 def year_settings(request, slug):
     try:
-        meta = Meta.objects.get(slug=slug)
+        metadata = Meta.objects.get(slug=slug)
     except models.Meta.DoesNotExist:
         raise Http404('Timeline not found')
 
@@ -125,7 +125,7 @@ def year_settings(request, slug):
 
 def themes(request, slug):
     try:
-        meta = Meta.objects.get(slug=slug)
+        metadata = Meta.objects.get(slug=slug)
     except models.Meta.DoesNotExist:
         raise Http404('Timeline not found')
 
@@ -133,3 +133,12 @@ def themes(request, slug):
     for t in Theme.objects.all():
         all_themes[t.slug] = t.name
     return HttpResponse(json.dumps(all_themes), content_type='application/json')
+
+
+def meta(request, slug):
+    try:
+        metadata = Meta.objects.get(slug=slug)
+    except models.Meta.DoesNotExist:
+        raise Http404('Timeline not found')
+
+    return HttpResponse(json.dumps(metadata.as_json()), content_type='application/json')
