@@ -30,14 +30,6 @@
     name: 'App',
     components: {Toggles},
     methods: {
-      getData() {
-        this.$http.get(process.env.VUE_APP_BACKEND_DATA_URL + this.slug + '/events')
-            .then((response) => {
-              this.events = response.body.sort((a, b) => {
-                return this.getYear(a.start_date) - this.getYear(b.start_date)
-              });
-            })
-      },
       getYear(date) {
         return Number(date.split('-')[0])
       },
@@ -121,9 +113,6 @@
       zoom(newZoom) {
         this.updateParams('zoom', newZoom)
       },
-      slug() {
-        this.getData();
-      }
     },
     beforeCreate() {
       let slug = window.location.pathname.split('/')[1];
