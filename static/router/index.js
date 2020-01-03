@@ -19,7 +19,7 @@ export default new Router({
       component: Events,
     },
     {
-      path: '/:slug/events/:event_id/',
+      path: '/:slug/events/:event_id',
       name: 'eventview',
       component: EventView,
     },
