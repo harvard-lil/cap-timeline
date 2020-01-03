@@ -126,6 +126,14 @@
       }
     },
     beforeCreate() {
+      let slug = window.location.pathname.split('/')[1];
+      store.dispatch('setTimelineSlug', slug);
+
+      store.dispatch('loadYears');
+      store.dispatch('loadGroups');
+      store.dispatch('loadGroupsByRegion');
+      store.dispatch('loadThemes');
+
       if (this.$route.query.event)
         this.$store.commit('setSelectedEvent', Number(this.$route.query.event));
 

@@ -15,9 +15,3 @@ new Vue({
   render: h => h(App),
   store
 }).$mount("#app");
-let slug = window.location.pathname.split('/')[1]
-store.dispatch('setTimelineSlug', slug);
-store.dispatch('loadYears');
-store.dispatch('loadGroups');
-store.dispatch('loadGroupsByRegion');
-store.dispatch('loadThemes');

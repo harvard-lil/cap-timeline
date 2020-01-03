@@ -51,6 +51,8 @@
           this.getYears();
           return;
         }
+        if (!(this.slug))
+          return;
         let url = process.env.VUE_APP_BACKEND_DATA_URL + this.slug + '/events';
         this.$http.get(url)
             .then((response) => {
@@ -145,10 +147,6 @@
       zoomLevel() {
         this.getYears();
       },
-      slug() {
-        this.getData();
-        this.getActiveYears();
-      }
     },
     beforeMount() {
       this.getData();

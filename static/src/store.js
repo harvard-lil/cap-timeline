@@ -77,6 +77,7 @@ const store = new Vuex.Store({
   mutations: {
     setTimelineSlug(state, slug) {
       state.slug = slug;
+      localStorage.setItem('slug', slug)
     },
     loadGroups(state, groups) {
       // work around:

@@ -142,10 +142,8 @@
         this.$router.push({params: {event_id: id}});
       }
     },
-    watch: {
-      slug() {
-        this.getData();
-      }
+    beforeMount() {
+      this.getData();
     },
   }
 </script>

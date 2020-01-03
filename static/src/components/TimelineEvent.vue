@@ -93,7 +93,6 @@
       getDetails() {
         this.$store.commit('setSelectedEvent', this.event.id);
         this.$router.push({name: 'eventview', params: {event_id: this.event.id}});
-        this.$router.go();
       },
       updateActiveGroups() {
         for (let i = 0; i < this.groups.length; i++) {
