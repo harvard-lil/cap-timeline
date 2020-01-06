@@ -48,3 +48,7 @@ class TimelineUser(AbstractBaseUser, PermissionsMixin):
         if self.is_staff and not self.is_superuser:
             group = Group.objects.get(name='staff')
             self.groups.add(group)
+        super(TimelineUser, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.email
