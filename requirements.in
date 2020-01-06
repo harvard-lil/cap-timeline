@@ -1,6 +1,6 @@
 requests
 
-psycopg2-binary
+psycopg2
 
 libsasscompiler
 
