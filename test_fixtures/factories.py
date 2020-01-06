@@ -2,6 +2,7 @@ import pytest
 import factory
 from pytest_factoryboy import register
 from django.contrib.auth.models import Group
+from django.conf import settings
 # from autoslug import AutoSlugField
 from django.utils.text import slugify
 
@@ -21,7 +22,7 @@ class GroupFactory(factory.DjangoModelFactory):
 @pytest.mark.django_db
 class UserFactory(factory.DjangoModelFactory):
     class Meta:
-        model = TimelineUser
+        model = settings.AUTH_USER_MODEL
 
     id = factory.Sequence(lambda n: '%04d' % n)
     email = factory.Faker('email')
