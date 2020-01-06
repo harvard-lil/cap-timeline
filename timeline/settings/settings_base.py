@@ -28,8 +28,10 @@ INSTALLED_APPS = [
     'corsheaders',
     'compressor',
     'pipeline',
+    # apps
     'users',
     'research',
+
     'storages',  # http://django-storages.readthedocs.io/en/latest/index.html
     'webpack_loader',
 
