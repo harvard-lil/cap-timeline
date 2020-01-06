@@ -31,13 +31,18 @@ def create_json(timeline=None):
         metas = Meta.objects.all()
         for meta in metas:
             create_json(timeline=meta.slug)
+    else:
+        events = Event.objects.select_related('image', 'weight').filter(
+            hide=False, timeline=timeline).order_by(
+            'start_date').prefetch_related(
+            'citation')
+        all_events = [event.as_json() for event in events]
+        storage_dir = os.path.join(settings.DB_DIR, 'json')
+        if not (os.path.exists(storage_dir)):
+            os.mkdir(storage_dir)
 
-    events = Event.objects.select_related('image', 'weight').filter(
-        hide=False, timeline=timeline).order_by(
-        'start_date').prefetch_related(
-        'citation')
-    all_events = [event.as_json() for event in events]
-    storage_dir = os.path.join(settings.DB_DIR, 'json')
-    filename = 'events-%s.json' % timeline if timeline else 'events.json'
-    with open(os.path.join(storage_dir, filename), 'w+') as f:
-        json.dump(all_events, f)
+        print("timeline:", timeline)
+
+        filename = 'events-%s.json' % timeline if timeline else 'events.json'
+        with open(os.path.join(storage_dir, filename), 'w+') as f:
+            json.dump(all_events, f)
