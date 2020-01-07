@@ -13,7 +13,7 @@
         </span>
       </div>
     </nav>
-    <nav class="sidebar" v-if="showSidebar()">
+    <nav class="sidebar" v-if="inTimeline()">
       <toggles></toggles>
     </nav>
     <main id="main-content" class="main" :class="'route-'+$route.name">
@@ -34,8 +34,9 @@
         return Number(date.split('-')[0])
       },
       updateParams(param, val) {
-        if (this.$route.name === 'eventview')
-          return;
+        if (!(this.inTimeline())) {
+          return
+        }
         let newQuery = Object.assign({}, this.$route.query);
         if (val) {
           newQuery[param] = val;
@@ -44,8 +45,8 @@
           this.$router.push({query: newQuery});
         }
       },
-      showSidebar() {
-        return this.$route.name !== 'eventview';
+      inTimeline() {
+        return this.$route.name === 'timeline';
       }
     },
     data() {
