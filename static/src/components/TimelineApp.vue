@@ -130,7 +130,6 @@
 
       if (this.$route.query.groups) {
         let startingGroups = this.$route.query.groups.split(',');
-        console.log("startingGroups", startingGroups)
         for (let i = 0; i < startingGroups.length; i++) {
           this.$store.commit("setGroupStatus", {slug: startingGroups[i], status: true})
         }
