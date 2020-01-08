@@ -34,6 +34,7 @@ class Group(models.Model):
     date_start = models.DateTimeField(null=True, blank=True)
     date_end = models.DateTimeField(null=True, blank=True)
     region = models.ForeignKey('Region', blank=True, null=True, on_delete=models.DO_NOTHING)
+    timeline = models.ForeignKey('Meta', null=True, blank=True, related_name='groups', on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return self.name
@@ -66,6 +67,7 @@ class Citation(models.Model):
                                      ("webpage", "webpage"),
                                      ("article", "article"),
                                      ("book", "book")))
+    timeline = models.ForeignKey('Meta', null=True, blank=True, related_name='citations', on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return self.title
