@@ -78,7 +78,7 @@
     </div>
     <br/>
     <!--Themes ? -->
-    <div class="toggle-group" v-if="themes.length">
+    <div class="toggle-group" v-if="Object.keys(themes).length">
       <h3>Themes</h3>
       <ul class="theme-types">
         <li class="list-item" v-for="(themeName, themeSlug) in themes">
