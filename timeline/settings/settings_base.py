@@ -126,8 +126,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-# STATIC_URL = '/static/'
-
 PIPELINE = {
     'COMPILERS': (
         'libsasscompiler.LibSassCompiler',
@@ -176,7 +174,7 @@ PERMA_FOLDER = "0"
 # TOGGLE KEYS
 TOGGLES = {
     'years': {
-        'min': 1897,
+        'min': 1850,
         'max': 1930
     }
 }

@@ -125,9 +125,9 @@
       eventTypeStatus() {
         this.updateHide();
       },
-      topLevelActiveGroups() {
-        this.updateActiveGroups();
-      },
+      // topLevelActiveGroups() {
+      //   this.updateActiveGroups();
+      // },
       hide() {
         EventBus.$emit("updateHideStatus", {id: this.data.id, hide: this.hide})
       }
