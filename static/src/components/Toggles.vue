@@ -46,7 +46,7 @@
     </div>
     <br/>
     <!--Groups-->
-    <div class="toggle-group">
+    <div class="toggle-group" v-if="groupsByRegion.length">
       <h3>Groups</h3>
       <ul class="group-types list-group">
         <li class="list-item" v-for="region in groupsByRegion" v-bind:key="region.slug">
@@ -78,7 +78,7 @@
     </div>
     <br/>
     <!--Themes ? -->
-    <div class="toggle-group">
+    <div class="toggle-group" v-if="themes.length">
       <h3>Themes</h3>
       <ul class="theme-types">
         <li class="list-item" v-for="(themeName, themeSlug) in themes">

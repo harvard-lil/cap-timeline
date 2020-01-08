@@ -1,5 +1,10 @@
 <template>
-    <div>hello!</div>
+    <div>
+        List available timelines here
+        <router-link :to="'/us-immigration'">
+            US Immigration
+        </router-link>
+    </div>
 </template>
 
 <script>
