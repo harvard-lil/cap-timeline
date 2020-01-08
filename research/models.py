@@ -257,3 +257,7 @@ class Meta(models.Model):
             slug=self.slug,
         )
 
+    def publish(self):
+        import subprocess
+        subprocess.call(["fab", "create_json:timeline=%s" % self.slug])
+
