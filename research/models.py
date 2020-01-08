@@ -12,6 +12,7 @@ class Region(models.Model):
     name = models.CharField(max_length=1000, unique=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
     description = models.TextField(blank=True)
+    timeline = models.ForeignKey('Meta', null=True, blank=True, related_name='regions', on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return self.name
@@ -132,6 +133,7 @@ class Theme(models.Model):
     name = models.CharField(max_length=800)
     description = models.TextField(blank=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
+    timeline = models.ForeignKey('Meta', null=True, blank=True, related_name='themes', on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return self.name

@@ -90,7 +90,7 @@ def groups(request, slug):
     except models.Meta.DoesNotExist:
         raise Http404('Timeline not found')
 
-    all_groups = Group.objects.values_list('slug', 'name').order_by('region__slug')
+    all_groups = Group.objects.filter(timeline=slug).values_list('slug', 'name').order_by('region__slug')
     return HttpResponse(json.dumps(list(all_groups)), content_type='application/json')
 
 
@@ -100,10 +100,13 @@ def groups_by_region(request, slug):
     except models.Meta.DoesNotExist:
         raise Http404('Timeline not found')
 
-    rgns = Region.objects.all().order_by('name')
+    rgns = Region.objects.filter(timeline=slug).order_by('name')
+    if rgns.count == 0:
+        return HttpResponse(json.dumps([]), content_type='application/json')
+
     rg_list = []
     for rgn in rgns:
-        grps = list(Group.objects.filter(region=rgn.id).order_by('region__slug').values('slug', 'name', 'region__name',
+        grps = list(Group.objects.filter(timeline=slug, region=rgn.id).order_by('region__slug').values('slug', 'name', 'region__name',
                                                                                         'region__slug'))
         rgn_obj = {
             'slug': rgn.slug,
@@ -130,7 +133,7 @@ def themes(request, slug):
         raise Http404('Timeline not found')
 
     all_themes = {}
-    for t in Theme.objects.all():
+    for t in Theme.objects.filter(timeline=slug):
         all_themes[t.slug] = t.name
     return HttpResponse(json.dumps(all_themes), content_type='application/json')
 

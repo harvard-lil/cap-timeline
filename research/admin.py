@@ -48,11 +48,13 @@ class EventAdmin(admin.ModelAdmin):
 @admin.register(Citation)
 class CitationAdmin(admin.ModelAdmin):
     list_display = ["title", "type", "publication_title"]
+    list_filter = (TimelineFilter,)
 
 
 @admin.register(Group)
 class GroupAdmin(admin.ModelAdmin):
     list_display = ["name", "slug", "region"]
+    list_filter = (TimelineFilter,)
 
 
 @admin.register(Relationship)
@@ -63,6 +65,7 @@ class RelationshipAdmin(admin.ModelAdmin):
 @admin.register(Theme)
 class ThemeAdmin(admin.ModelAdmin):
     list_display = ["slug", "id", "name"]
+    list_filter = (TimelineFilter,)
 
 
 @admin.register(Meta)
@@ -70,7 +73,10 @@ class MetaAdmin(admin.ModelAdmin):
     list_display = ["slug", "title", "subtitle"]
 
 
+@admin.register(Region)
+class RegionAdmin(admin.ModelAdmin):
+    list_filter = (TimelineFilter,)
+
 admin.site.register(Finding)
 admin.site.register(Weight)
 admin.site.register(Image)
-admin.site.register(Region)
