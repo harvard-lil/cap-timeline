@@ -81,7 +81,7 @@
     <div class="toggle-group" v-if="Object.keys(themes).length">
       <h3>Themes</h3>
       <ul class="theme-types">
-        <li class="list-item" v-for="(themeName, themeSlug) in themes">
+        <li class="list-item" v-for="(themeName, themeSlug) in themes" v-bind:key="themeSlug">
           <span class="theme-icon icon" :class="themeSlug">
             <svgicon icon="circle-3"
                      :title="themeName"
