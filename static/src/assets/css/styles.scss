@@ -9,6 +9,7 @@
 body, html {
   background-color: $color-light;
 }
+
 // fonts
 
 .text-bold {
@@ -21,9 +22,12 @@ body, html {
 
 nav {
   justify-items: center;
+
   &.navbar {
     z-index: 1;
+    padding: 1em;
   }
+
   &.fixed-top {
     position: fixed;
     top: 0;
@@ -32,6 +36,7 @@ nav {
     width: 100vw;
 
   }
+
   &.main-nav {
     background-color: $color-dark;
     color: $color-gray-light;
@@ -42,21 +47,36 @@ nav {
     a {
       text-decoration: none;
       color: $color-gray-light;
+
       &:hover {
         color: $color-blue-light;
       }
     }
   }
+
   .navbar-brand {
-    padding: 1.5rem 1.3rem;
+    padding: 1.5rem 0;
   }
+
   .nav-title {
     font-size: 22px;
     font-weight: $font-weight-semibold;
     letter-spacing: 0.08em;
   }
+
   .nav-title-blue {
     color: $color-green;
+  }
+
+  .symbol-home {
+    fill: $color-white;
+  }
+
+  .home-link {
+    float: right;
+    padding-right: 2em;
+    bottom: -5px;
+    position: relative;
   }
 
 }
@@ -64,7 +84,7 @@ nav {
 .screenreader-text {
   position: absolute;
   left: -999px;
-  width:1px;
+  width: 1px;
   height: 1px;
   top: auto;
 
@@ -103,6 +123,7 @@ main {
 
   min-height: calc(100vh - 11em);
   position: absolute;
+
   &.route-eventview {
     margin-left: 0;
     width: 100%;
@@ -114,6 +135,7 @@ a {
   border-bottom: 0;
   cursor: pointer;
   text-decoration: none;
+
   &:hover, &:focus, &:active {
     color: $color-navy;
   }
@@ -123,6 +145,7 @@ a {
   width: 100%;
   display: grid;
   grid-template-columns: 8em 1fr;
+
   &.route-eventview {
     grid-template-columns: 1fr;
     font-size: 1.2em;
@@ -139,12 +162,15 @@ a {
 .year-list {
   margin-bottom: 4em;
   font-family: $font-family-monospace;
+
   li.year {
     padding: 0.2em;
+
     .active {
       cursor: pointer;
       text-decoration: underline;
     }
+
     .selected, span.active:hover {
       background-color: $color-highlight;
       text-decoration: none;
@@ -163,10 +189,12 @@ a {
   padding: 0.5em;
   position: fixed;
   right: 0;
+
   .key-icon {
     position: fixed;
     margin-top: -1em;
     right: 1em;
+
     .inner-circle, .outer-circle {
       fill: $color-black;
     }
@@ -177,8 +205,10 @@ a {
 .key-container > .key-content {
   visibility: hidden;
   padding: 0.8em 0.8em 0;
+
   ul {
     padding: 0;
+
     li {
       list-style: none;
       line-height: 2em;
@@ -190,13 +220,16 @@ a {
 .key-container.open {
   background-color: $color-black;
   right: 40px;
+
   .key-icon {
     transform: rotate(180deg);
     margin-left: 50px;
   }
+
   .key {
     fill: $color-yellow;
   }
+
   .key-content {
     visibility: visible;
   }

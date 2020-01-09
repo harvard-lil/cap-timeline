@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="17px" height="19px" viewBox="0 0 17 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+    <title>Group 3</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="0.0004 0.0003 17 0.0003 17 18.9913 0.0004 18.9913"></polygon>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-HD-Copy-22" transform="translate(-1387.000000, -35.000000)">
+            <g id="Group-3" transform="translate(1387.000000, 35.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Clip-2"></g>
+                <path d="M8.4814,0.0068 L0.0104,6.9828 C0.0034,6.9878 0.0004,6.9968 0.0004,7.0058 L0.0004,18.9618 C0.0004,18.9778 0.0134,18.9918 0.0294,18.9918 L5.9704,18.9918 C5.9864,18.9918 6.0004,18.9778 6.0004,18.9618 L6.0004,14.6588 C6.0004,14.2898 6.2984,13.9918 6.6674,13.9918 L10.3334,13.9918 C10.7014,13.9918 11.0004,14.2898 11.0004,14.6588 L11.0004,18.9618 C11.0004,18.9778 11.0134,18.9918 11.0294,18.9918 L16.9704,18.9918 C16.9864,18.9918 17.0004,18.9778 17.0004,18.9618 L17.0004,7.0058 C17.0004,6.9968 16.9964,6.9878 16.9894,6.9828 L8.5194,0.0068 C8.5074,-0.0022 8.4924,-0.0022 8.4814,0.0068" id="Fill-1" fill="#FFFFFF" mask="url(#mask-2)"></path>
+            </g>
+        </g>
+    </g>
+</svg>
