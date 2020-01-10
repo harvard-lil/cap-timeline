@@ -1,6 +1,9 @@
+import os
 import json
 import requests
 import markdown
+from django.utils import timezone
+import pytz
 
 from autoslug import AutoSlugField
 from django.db import models
@@ -81,8 +84,7 @@ class Citation(models.Model):
             publication_title=self.publication_title,
             archived_url=self.archived_url,
             archived_date=str(self.archived_date),
-            type=self.type
-        )
+            type=self.type)
 
     def save(self, *args, **kwargs):
         if self.caselaw_citation:
@@ -246,6 +248,8 @@ class Meta(models.Model):
     title = models.CharField(null=False, blank=False, max_length=1000)
     subtitle = models.TextField(null=True, blank=True)
     slug = AutoSlugField(max_length=255, populate_from="title", unique=True, null=False, blank=False, primary_key=True)
+    published = models.BooleanField(default=False)
+    published_date = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -254,15 +258,46 @@ class Meta(models.Model):
         return dict(
             title=self.title,
             subtitle=self.subtitle,
-            slug=self.slug,
-        )
+            slug=self.slug)
 
-    def publish(self):
-        import subprocess
-        subprocess.call(["fab", "create_json:timeline=%s" % self.slug])
-        subprocess.call(["fab", "create_meta:timeline=%s" % self.slug])
+    def save(self, *args, **kwargs):
+        if self.published:
+            self.published_date = timezone.now()
+        super(Meta, self).save(*args, **kwargs)
+
+    def publish_meta(self):
+        self.published = True
+        self.published_date = timezone.now()
+        self.save()
+
+    def unpublish_meta(self):
+        self.published = False
+        self.published_date = None
+        self.save()
+
+    def publish_all_data_for_timeline(self):
+        events = Event.objects.select_related('image', 'weight').filter(
+            hide=False, timeline=self.slug).order_by(
+            'start_date').prefetch_related(
+            'citation')
+        all_events = [event.as_json() for event in events]
+        storage_dir = os.path.join(settings.DB_DIR, 'json')
+
+        filename = 'events-%s.json' % self.slug if self.slug else 'events.json'
+        filepath = os.path.join(storage_dir, filename)
+
+        if not (os.path.exists(storage_dir)):
+            os.mkdir(storage_dir)
+
+        with open(os.path.join(filepath), 'w+') as f:
+            json.dump(all_events, f)
+
+        self.publish_meta()
 
     @classmethod
     def publish_all_metas(cls):
-        import subprocess
-        subprocess.call(["fab", "create_meta"])
+        [meta.publish_meta() for meta in cls.objects.all()]
+
+    @classmethod
+    def publish_all_datas(cls):
+        [meta.publish_all_data_for_timeline() for meta in cls.objects.all()]

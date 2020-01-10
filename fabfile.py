@@ -8,8 +8,7 @@ try:
 except Exception as e:
     print("WARNING: Can't configure Django -- tasks depending on Django will fail:\n%s" % e)
 
-from django.conf import settings
-from research.models import Event, Meta
+from research.models import Meta
 
 from fabric.decorators import task
 from django.core import management
@@ -32,25 +31,11 @@ def create_json(timeline=None):
     For a single timeline:
     `fab create_json:timeline='single-timeline-slug'`
     """
-    if not timeline:
-        metas = Meta.objects.all()
-        for meta in metas:
-            create_json(timeline=meta.slug)
+    if timeline:
+        meta = Meta.objects.get(slug=timeline)
+        meta.publish_all_data_for_timeline()
     else:
-        events = Event.objects.select_related('image', 'weight').filter(
-            hide=False, timeline=timeline).order_by(
-            'start_date').prefetch_related(
-            'citation')
-        all_events = [event.as_json() for event in events]
-        storage_dir = os.path.join(settings.DB_DIR, 'json')
-        if not (os.path.exists(storage_dir)):
-            os.mkdir(storage_dir)
-
-        print("create_json for timeline:", timeline)
-
-        filename = 'events-%s.json' % timeline if timeline else 'events.json'
-        with open(os.path.join(storage_dir, filename), 'w+') as f:
-            json.dump(all_events, f)
+        Meta.objects.publish_all_datas()
 
 
 @task
@@ -60,31 +45,9 @@ def create_meta(timeline=None):
     For a single timeline:
     `fab create_meta:timeline='single-timeline-slug'`
     """
-    filename = 'meta.json'
-    storage_dir = os.path.join(settings.DB_DIR, 'json')
-    filepath = os.path.join(storage_dir, filename)
-
-    if not (os.path.exists(storage_dir)):
-        os.mkdir(storage_dir)
-
     if timeline:
-        print("create_meta for timeline:", timeline)
-
-        one_meta = Meta.objects.get(slug=timeline)
-
-        if os.path.exists(filepath):
-            with open(filepath, 'r') as f:
-                meta_json = json.load(f)
-            for m in meta_json:
-                if m['slug'] == timeline:
-                    m['title'] = one_meta.title
-                    m['subtitle'] = one_meta.subtitle
-                    break
-        else:
-            meta_json = one_meta.as_json()
-
+        meta = Meta.objects.get(slug=timeline)
+        meta.publish_meta()
     else:
-        meta_json = [meta.as_json() for meta in Meta.objects.all().order_by('title')]
+        Meta.objects.publish_all_metas()
 
-    with open(os.path.join(storage_dir, filename), 'w+') as f:
-        json.dump(meta_json, f)

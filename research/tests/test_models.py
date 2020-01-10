@@ -14,3 +14,13 @@ def test_create_meta():
     new_meta = Meta.objects.create(title=title)
     assert new_meta.slug is not slugify(title)
 
+
+@pytest.mark.django_db
+def test_publish():
+    title = "My New Timeline"
+    meta = Meta.objects.create(title=title)
+    assert meta.slug == slugify(title)
+    assert not meta.published
+
+    meta.publish_meta()
+    assert meta.published
