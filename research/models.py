@@ -260,4 +260,9 @@ class Meta(models.Model):
     def publish(self):
         import subprocess
         subprocess.call(["fab", "create_json:timeline=%s" % self.slug])
+        subprocess.call(["fab", "create_meta:timeline=%s" % self.slug])
 
+    @classmethod
+    def publish_all_metas(cls):
+        import subprocess
+        subprocess.call(["fab", "create_meta"])

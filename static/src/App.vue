@@ -1,9 +1,9 @@
 <template>
-  <div class="app-container" :class="'route-'+$route.name">
-    <main id="main-content" class="main" :class="'route-'+$route.name">
-      <router-view></router-view>
-    </main>
-  </div>
+    <div class="app-container" :class="'route-'+$route.name">
+        <main id="main-content" class="main" :class="'route-'+$route.name">
+            <router-view></router-view>
+        </main>
+    </div>
 </template>
 <script>
 
@@ -11,6 +11,6 @@
     name: 'App',
     metaInfo: {
       title: 'Timelines',
-    }
+    },
   };
 </script>
