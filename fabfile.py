@@ -35,7 +35,7 @@ def create_json(timeline=None):
         meta = Meta.objects.get(slug=timeline)
         meta.publish_all_data_for_timeline()
     else:
-        Meta.objects.publish_all_datas()
+        Meta.publish_all_datas()
 
 
 @task
@@ -49,5 +49,5 @@ def create_meta(timeline=None):
         meta = Meta.objects.get(slug=timeline)
         meta.publish_meta()
     else:
-        Meta.objects.publish_all_metas()
+        Meta.publish_all_metas()
 
