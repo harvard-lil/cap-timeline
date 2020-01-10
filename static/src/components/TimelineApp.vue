@@ -5,13 +5,20 @@
                 Skip to content
             </a>
 
-            <div class="navbar-brand">
-        <span class="nav-title">
-          <router-link :to="'/'+slug">
-            {{title}}
-          </router-link>
-        </span>
-            </div>
+            <span class="navbar-brand">
+                <span class="nav-title">
+                  <router-link :to="'/'+slug">
+                    {{title}}
+                  </router-link>
+                </span>
+            </span>
+            <span class="home-link">
+                <router-link to="/">
+                  <svgicon class='icon symbol-home' icon="home"
+                           width="18" height="18">
+                  </svgicon>
+                </router-link>
+            </span>
         </nav>
 
         <nav class="sidebar" v-if="inTimeline()">
@@ -24,6 +31,7 @@
 <script>
   import store from "../store";
   import Toggles from './Toggles';
+  import './icons/home';
 
   export default {
     name: "TimelineApp",

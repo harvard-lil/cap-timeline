@@ -9,5 +9,8 @@
 
   export default {
     name: 'App',
+    metaInfo: {
+      title: 'Timelines',
+    }
   };
 </script>

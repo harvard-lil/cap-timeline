@@ -13,11 +13,13 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      meta: {
+        title: 'Timelines: Home',
+      },
     },
     {
       path: '/:slug/',
-      name: 'timelineapp',
       component: TimelineApp,
       children: [
         {

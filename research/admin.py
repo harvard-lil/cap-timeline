@@ -68,14 +68,23 @@ class ThemeAdmin(admin.ModelAdmin):
     list_filter = (TimelineFilter,)
 
 
+def publish(modeladmin, request, queryset):
+    [instance.publish() for instance in queryset]
+
+
+publish.short_description = "Publish changes"
+
+
 @admin.register(Meta)
 class MetaAdmin(admin.ModelAdmin):
     list_display = ["slug", "title", "subtitle"]
+    actions = [publish]
 
 
 @admin.register(Region)
 class RegionAdmin(admin.ModelAdmin):
     list_filter = (TimelineFilter,)
+
 
 admin.site.register(Finding)
 admin.site.register(Weight)
