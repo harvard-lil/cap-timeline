@@ -148,7 +148,6 @@ def meta(request, slug):
 
 
 def metas(request):
-    with open(os.path.join(settings.DB_DIR, 'json/meta.json'), 'r') as f:
-        meta_data = f.read()
-    return HttpResponse(meta_data, content_type='application/json')
+    all_published_timelines = [meta.as_json() for meta in Meta.objects.filter(published=True)]
+    return HttpResponse(json.dumps(all_published_timelines), content_type='application/json')
 

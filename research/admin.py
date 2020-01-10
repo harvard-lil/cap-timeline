@@ -69,21 +69,25 @@ class ThemeAdmin(admin.ModelAdmin):
 
 
 def publish(modeladmin, request, queryset):
-    [instance.publish() for instance in queryset]
+    [instance.publish_all_data_for_timeline() for instance in queryset]
 
 
 def publish_metas(modeladmin, request, queryset):
     queryset.publish_all_metas()
 
 
-publish.short_description = "Publish changes"
-publish_metas.short_description = "Update meta"
+def unpublish(modeladmin, request, queryset):
+    [instance.unpublish_meta() for instance in queryset]
 
+
+publish.short_description = "Publish changes"
+publish_metas.short_description = "Publish timeline"
+unpublish.short_description = "Unpublish timeline"
 
 @admin.register(Meta)
 class MetaAdmin(admin.ModelAdmin):
-    list_display = ["slug", "title", "subtitle"]
-    actions = [publish]
+    list_display = ["slug", "title", "subtitle", "published", "published_date"]
+    actions = [publish, unpublish]
 
 
 @admin.register(Region)
