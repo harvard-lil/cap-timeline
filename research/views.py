@@ -145,3 +145,10 @@ def meta(request, slug):
         raise Http404('Timeline not found')
 
     return HttpResponse(json.dumps(metadata.as_json()), content_type='application/json')
+
+
+def metas(request):
+    with open(os.path.join(settings.DB_DIR, 'json/meta.json'), 'r') as f:
+        meta_data = f.read()
+    return HttpResponse(meta_data, content_type='application/json')
+
