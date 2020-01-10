@@ -72,7 +72,12 @@ def publish(modeladmin, request, queryset):
     [instance.publish() for instance in queryset]
 
 
+def publish_metas(modeladmin, request, queryset):
+    queryset.publish_all_metas()
+
+
 publish.short_description = "Publish changes"
+publish_metas.short_description = "Update meta"
 
 
 @admin.register(Meta)
