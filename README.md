@@ -1,5 +1,5 @@
 # Timeline
-[![CircleCI](https://circleci.com/gh/anastasia/timeline.svg?style=svg)](https://circleci.com/gh/anastasia/timeline)
+[![CircleCI](https://circleci.com/gh/harvard-lil/cap-timeline.svg?style=svg)](https://circleci.com/gh/harvard-lil/cap-timeline)
 
 ![timeline view](https://anastasia.github.io/assets/img/timeline/timeline.png)
 
