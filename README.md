@@ -1,10 +1,10 @@
 # Timeline
 [![CircleCI](https://circleci.com/gh/anastasia/timeline.svg?style=svg)](https://circleci.com/gh/anastasia/timeline)
 
-![timeline view](./timeline.png)
+![timeline view](https://anastasia.github.io/assets/img/timeline/timeline.png)
 
 
-![details view](./timeline-details.png)
+![details view](https://anastasia.github.io/assets/img/timeline/timeline-details.png)
 
 
 Requires postgres
