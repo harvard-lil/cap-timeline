@@ -1,4 +1,5 @@
 # Timeline
+[![CircleCI](https://circleci.com/gh/anastasia/timeline.svg?style=svg)](https://circleci.com/gh/anastasia/timeline)
 
 ![timeline view](./timeline.png)
 
