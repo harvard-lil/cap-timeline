@@ -40,7 +40,6 @@ const store = new Vuex.Store({
     absoluteMaxYear: 1930,
     minYear: null,
     maxYear: null,
-    activateAllGroupsWhenLoaded: false,
     zoomLevel: 1,
   },
   actions: {
@@ -55,11 +54,11 @@ const store = new Vuex.Store({
           })
 
     },
-    loadGroups(context) {
+    loadGroups(context, activateAll) {
       let url = process.env.VUE_APP_BACKEND_DATA_URL + context.state.slug + '/groups';
       axios.get(url)
           .then((response) => {
-            context.commit('loadGroups', response.data)
+            context.commit('loadGroups', {groups: response.data, activateAll: activateAll})
           })
     },
     loadGroupsByRegion(context) {
@@ -95,23 +94,19 @@ const store = new Vuex.Store({
       localStorage.setItem('title', meta.title);
       localStorage.setItem('subtitle', meta.subtitle);
     },
-    loadGroups(state, groups) {
+    loadGroups(state, data) {
       // work around:
       // we're getting URL parameters before groups are loaded from the server
       // because of this, we're checking if groups have already been initialized with their correct status
       // otherwise we're hiding groups from view
-
-      state.groups ={};
+      let groups = data.groups;
       for (let i = 0; i < groups.length; i++) {
-        if (!(state.groups[groups[i][0]]))
-          if (state.activateAllGroupsWhenLoaded) {
-            Vue.set(state.groups, groups[i][0], true);
-          } else {
-            Vue.set(state.groups, groups[i][0], false);
-          }
-          Vue.set(state.groupNames, groups[i][0], groups[i][1]);
+        let groupSlug = groups[i][0];
+        if (!(state.groups[groupSlug])) {
+            Vue.set(state.groups, groupSlug, data.activateAll);
+        }
+        Vue.set(state.groupNames, groupSlug, groups[i][1]);
       }
-      state.activateAllGroupsWhenLoaded = false;
     },
     loadGroupsByRegion(state, groupsByRegion) {
       state.groupsByRegion = groupsByRegion;
@@ -143,14 +138,6 @@ const store = new Vuex.Store({
     activateAllEvents(state) {
       for (let event in state.eventTypes) {
         state.eventTypes[event] = true;
-      }
-    },
-    activateAllGroups(state) {
-      // See "work around" note above
-      if (Object.keys(state.groups).length === 0)
-        state.activateAllGroupsWhenLoaded = true;
-      for (let group in state.groups) {
-        state.groups[group] = true;
       }
     },
     setZoomLevel(state, zoomLevel) {

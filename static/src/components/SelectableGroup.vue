@@ -1,5 +1,5 @@
 <template>
-  <div class="selectable-group" :class="[slug, {active: status}]"
+  <li class="list-item selectable-group" :class="[slug, {active: status}]"
        @click="toggleOn()">
     <span class="group-name icon" :class="status ? 'active' : ''">
       <svgicon :icon="symbolTranslation[slug]"
@@ -10,7 +10,7 @@
     <label class="label">
       {{fullName}}
     </label>
-  </div>
+  </li>
 </template>
 
 <script>

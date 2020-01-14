@@ -109,6 +109,9 @@
         }
         this.updateParams('events', events)
       },
+      activeGroups() {
+        this.updateParams('groups', this.activeGroups.join(','));
+      },
       zoom(newZoom) {
         this.updateParams('zoom', newZoom)
       },
@@ -118,37 +121,33 @@
       store.dispatch('setTimelineSlug', slug);
       store.dispatch('setMetadata');
       store.dispatch('loadYears');
-      store.dispatch('loadGroups');
       store.dispatch('loadGroupsByRegion');
       store.dispatch('loadThemes');
 
       if (this.$route.query.event)
-        this.$store.commit('setSelectedEvent', Number(this.$route.query.event));
+        store.commit('setSelectedEvent', Number(this.$route.query.event));
 
       if (this.$route.query.events) {
         // if specific events are mentioned, activate those
         let startingActiveEvents = this.$route.query.events.split(',');
         for (let i = 0; i < startingActiveEvents.length; i++) {
-          this.$store.commit("setEventStatus", {name: startingActiveEvents[i], status: true})
+          store.commit("setEventStatus", {name: startingActiveEvents[i], status: true})
         }
-        // otherwise activate all events
       } else {
-        this.$store.commit("activateAllEvents")
+        // otherwise activate all events
+        store.commit("activateAllEvents")
       }
 
       if (this.$route.query.groups) {
         let startingGroups = this.$route.query.groups.split(',');
         for (let i = 0; i < startingGroups.length; i++) {
-          this.$store.commit("setGroupStatus", {slug: startingGroups[i], status: true})
+          store.commit("setGroupStatus", {slug: startingGroups[i], status: true})
         }
-        // otherwise activate all groups
+        store.dispatch('loadGroups', false);
       } else {
-        this.$store.commit("activateAllGroups")
+        // otherwise activate all groups
+        store.dispatch('loadGroups', true);
       }
     },
   }
 </script>
-
-<style scoped>
-
-</style>
