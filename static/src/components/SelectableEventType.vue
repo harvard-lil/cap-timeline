@@ -15,7 +15,7 @@
   import './icons/checked';
   import './icons/unchecked';
   export default {
-    name: "SelectableEvent",
+    name: "SelectableEventType",
     props: ["name", "fullname", "status"],
     methods: {
       changeStatus() {

@@ -78,12 +78,12 @@
         <div class="toggle-group">
             <h3>Event Types</h3>
             <ul class="event-types list-group">
-                <selectable-event v-for="(status, eventType) in eventTypes"
+                <selectable-event-type v-for="(status, eventType) in eventTypes"
                                   v-bind:key="eventType"
                                   :name="eventType"
                                   :status="status"
                                   :fullname="eventTranslation[eventType]">
-                </selectable-event>
+                </selectable-event-type>
             </ul>
         </div>
         <br/>
@@ -125,12 +125,12 @@
   import 'vue-slider-component/theme/default.css';
 
   import SelectableGroup from './SelectableGroup';
-  import SelectableEvent from './SelectableEvent';
+  import SelectableEventType from './SelectableEventType';
   import store from '../store';
 
   export default {
     name: "toggles",
-    components: {SelectableGroup, SelectableEvent, VueSlider},
+    components: {SelectableGroup, SelectableEventType, VueSlider},
     data() {
       return {
         showingEvent: false,
