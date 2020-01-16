@@ -121,6 +121,7 @@
       store.dispatch('setTimelineSlug', slug);
       store.dispatch('setMetadata');
       store.dispatch('loadYears');
+      store.dispatch('loadEventTypes');
       store.dispatch('loadGroupsByRegion');
       store.dispatch('loadThemes');
 
