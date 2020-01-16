@@ -3,7 +3,7 @@ from django.contrib.admin import SimpleListFilter
 from django.db.models import Q
 
 from research.models import Event, Finding, Weight, Image, \
-    Citation, Group, Relationship, Region, Theme, Meta
+    Citation, Group, Relationship, Region, Theme, Meta, EventType
 
 
 class TimelineFilter(SimpleListFilter):
@@ -92,6 +92,12 @@ class MetaAdmin(admin.ModelAdmin):
 
 @admin.register(Region)
 class RegionAdmin(admin.ModelAdmin):
+    list_filter = (TimelineFilter,)
+
+
+@admin.register(EventType)
+class EventTypeAdmin(admin.ModelAdmin):
+    list_display = ["slug", "name"]
     list_filter = (TimelineFilter,)
 
 

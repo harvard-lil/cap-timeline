@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.conf import settings
 from research import models
-from research.models import Event, Group, Region, Relationship, Theme, Meta
+from research.models import Event, EventType, Group, Region, Relationship, Theme, Meta
 from timeline import settings
 
 
@@ -21,6 +21,18 @@ def events(request, slug):
     with open(os.path.join(settings.DB_DIR, 'json/events-%s.json' % metadata.slug), 'r') as f:
         all_events = f.read()
     return HttpResponse(all_events, content_type='application/json')
+
+
+def event_types(request, slug):
+    try:
+        metadata = Meta.objects.get(slug=slug)
+    except models.Meta.DoesNotExist:
+        raise Http404('Timeline not found')
+
+    all_event_types = EventType.objects.filter(timeline=metadata)\
+        .order_by('name')\
+        .values('name', 'slug')
+    return HttpResponse(json.dumps(list(all_event_types)), content_type='application/json')
 
 
 def event(request, event_id, slug):

@@ -212,6 +212,15 @@ class Event(models.Model):
         )
 
 
+class EventType(models.Model):
+    name = models.CharField(max_length=1000, blank=True)
+    slug = AutoSlugField(max_length=255, populate_from="name", unique=True, null=False, blank=False, primary_key=True)
+    timeline = models.ForeignKey('Meta', null=False, blank=False, related_name='eventtypes', on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        return self.name
+
+
 class Finding(models.Model):
     """
         Editorializing events
