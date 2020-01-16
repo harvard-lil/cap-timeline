@@ -160,14 +160,7 @@ class Event(models.Model):
     groups = models.ManyToManyField(Group, blank=True)
     themes = models.ManyToManyField(Theme, blank=True, related_name='events')
     hide = models.BooleanField(default=False)
-    type = models.CharField(blank=True, null=True, max_length=100,
-                            choices=(("us", "us"),
-                                     ("world", "world"),
-                                     ("legislation", "legislation"),
-                                     ("caselaw", "caselaw"),
-                                     ("administrative", "administrative")))
-
-    new_type = models.ForeignKey('EventType', null=True, blank=True, related_name='events', on_delete=models.DO_NOTHING)
+    type = models.ForeignKey('EventType', null=True, blank=True, related_name='events', on_delete=models.DO_NOTHING)
     timeline = models.ForeignKey('Meta', null=False, blank=False, related_name='events', on_delete=models.DO_NOTHING)
 
     def __str__(self):
@@ -190,7 +183,7 @@ class Event(models.Model):
         for relationship in Relationship.objects.filter(
                 Q(event_one__id=self.id) | Q(event_two__id=self.id)):
             rel = relationship.event_two if relationship.event_one.id == self.id else relationship.event_one
-            relationships.append([rel.id, rel.type])
+            relationships.append([rel.id, rel.type.name])
 
         themes = {}
         for theme in self.themes.all():
@@ -204,7 +197,7 @@ class Event(models.Model):
             end_date=end_date,
             end_date_parsed=end_date_parsed,
             citations=citations,
-            type=self.type,
+            type=self.type.slug,
             hide=self.hide,
             themes=themes,
             relationships=relationships,
@@ -217,7 +210,7 @@ class Event(models.Model):
 class EventType(models.Model):
     name = models.CharField(max_length=1000, blank=True)
     slug = AutoSlugField(max_length=255, populate_from="name", unique=True, null=False, blank=False, primary_key=True)
-    timeline = models.ForeignKey('Meta', null=False, blank=False, related_name='eventtypes', on_delete=models.DO_NOTHING)
+    timeline = models.ForeignKey('Meta', null=True, blank=True, related_name='eventtypes', on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return self.name
