@@ -92,13 +92,13 @@
             <h3>Themes</h3>
             <ul class="theme-types">
                 <li class="list-item" v-for="(themeName, themeSlug) in themes" v-bind:key="themeSlug">
-          <span class="theme-icon icon" :class="themeSlug">
-            <svgicon icon="circle-3"
-                     :title="themeName"
-                     :class="themeSlug"
-                     width="15" height="15">
-            </svgicon>
-          </span>
+                  <span class="theme-icon icon" :class="themeSlug">
+                    <svgicon icon="circle-3"
+                             :title="themeName"
+                             :class="themeSlug"
+                             width="15" height="15">
+                    </svgicon>
+                  </span>
                     <label class="label">{{themeName}}</label>
                 </li>
             </ul>

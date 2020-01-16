@@ -58,11 +58,11 @@ const store = new Vuex.Store({
             context.commit('loadGroupsByRegion', response.data)
           })
     },
-    loadEventTypes(context) {
+    loadEventTypes(context, activateAll) {
       let url = process.env.VUE_APP_BACKEND_DATA_URL + context.state.slug + '/event-types';
       axios.get(url)
           .then((response) => {
-            context.commit('loadEventTypes', response.data)
+            context.commit('loadEventTypes', {types: response.data, activateAll: activateAll})
           })
 
     },
@@ -109,9 +109,12 @@ const store = new Vuex.Store({
     loadGroupsByRegion(state, groupsByRegion) {
       state.groupsByRegion = groupsByRegion;
     },
-    loadEventTypes(state, eventTypes) {
+    loadEventTypes(state, data) {
+      let eventTypes = data.types;
       for (let i=0; i<eventTypes.length; i++) {
-        Vue.set(state.eventTypes, eventTypes[i].slug, true);
+        if (!(state.eventTypes[eventTypes[i].slug])) {
+          Vue.set(state.eventTypes, eventTypes[i].slug, data.activateAll);
+        }
         Vue.set(state.eventTranslation, eventTypes[i].slug, eventTypes[i].name);
       }
     },

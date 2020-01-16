@@ -121,7 +121,6 @@
       store.dispatch('setTimelineSlug', slug);
       store.dispatch('setMetadata');
       store.dispatch('loadYears');
-      store.dispatch('loadEventTypes');
       store.dispatch('loadGroupsByRegion');
       store.dispatch('loadThemes');
 
@@ -134,9 +133,10 @@
         for (let i = 0; i < startingActiveEvents.length; i++) {
           store.commit("setEventStatus", {name: startingActiveEvents[i], status: true})
         }
+        store.dispatch('loadEventTypes', false);
       } else {
         // otherwise activate all events
-        store.commit("activateAllEvents")
+        store.dispatch('loadEventTypes', true);
       }
 
       if (this.$route.query.groups) {
