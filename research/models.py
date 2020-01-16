@@ -166,6 +166,8 @@ class Event(models.Model):
                                      ("legislation", "legislation"),
                                      ("caselaw", "caselaw"),
                                      ("administrative", "administrative")))
+
+    new_type = models.ForeignKey('EventType', null=True, blank=True, related_name='events', on_delete=models.DO_NOTHING)
     timeline = models.ForeignKey('Meta', null=False, blank=False, related_name='events', on_delete=models.DO_NOTHING)
 
     def __str__(self):
