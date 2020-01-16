@@ -1,5 +1,6 @@
 import pytest
 from django.utils.text import slugify
+from test_fixtures.fixtures import *  # noqa
 
 from research.models import Meta
 
@@ -16,11 +17,16 @@ def test_create_meta():
 
 
 @pytest.mark.django_db
-def test_publish():
-    title = "My New Timeline"
-    meta = Meta.objects.create(title=title)
-    assert meta.slug == slugify(title)
-    assert not meta.published
+def test_publish(timelinemeta):
+    assert not timelinemeta.published
 
-    meta.publish_meta()
-    assert meta.published
+    timelinemeta.publish_meta()
+    assert timelinemeta.published
+
+
+@pytest.mark.django_db
+def test_unpublish(timelinemeta):
+    timelinemeta.published = True
+    timelinemeta.save()
+    timelinemeta.unpublish_meta()
+    assert not timelinemeta.published

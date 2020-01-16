@@ -38,3 +38,9 @@ def superuser():
 def timelinemeta():
     meta = MetaFactory()
     return meta
+
+
+@pytest.fixture
+def eventtype():
+    et = EventTypeFactory()
+    return et

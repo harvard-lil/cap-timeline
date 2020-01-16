@@ -22,18 +22,8 @@ const store = new Vuex.Store({
       russian: 'diamond-2',
       italian: 'square-2',
     },
-    eventTypes: {
-      us: false,
-      world: false,
-      legislation: false,
-      caselaw: false,
-    },
-    eventTranslation: {
-      us: "U.S. Event",
-      world: "World Event",
-      legislation: "Legislation",
-      caselaw: "Case Law"
-    },
+    eventTypes: {},
+    eventTranslation: {},
     event: null,
     year: null,
     absoluteMinYear: 1850,
@@ -67,6 +57,14 @@ const store = new Vuex.Store({
           .then((response) => {
             context.commit('loadGroupsByRegion', response.data)
           })
+    },
+    loadEventTypes(context, activateAll) {
+      let url = process.env.VUE_APP_BACKEND_DATA_URL + context.state.slug + '/event-types';
+      axios.get(url)
+          .then((response) => {
+            context.commit('loadEventTypes', {types: response.data, activateAll: activateAll})
+          })
+
     },
     loadYears(context) {
       let url = process.env.VUE_APP_BACKEND_DATA_URL + context.state.slug + '/year-settings';
@@ -110,6 +108,15 @@ const store = new Vuex.Store({
     },
     loadGroupsByRegion(state, groupsByRegion) {
       state.groupsByRegion = groupsByRegion;
+    },
+    loadEventTypes(state, data) {
+      let eventTypes = data.types;
+      for (let i=0; i<eventTypes.length; i++) {
+        if (!(state.eventTypes[eventTypes[i].slug])) {
+          Vue.set(state.eventTypes, eventTypes[i].slug, data.activateAll);
+        }
+        Vue.set(state.eventTranslation, eventTypes[i].slug, eventTypes[i].name);
+      }
     },
     loadYears(state, years) {
       state.absoluteMinYear = years.min;

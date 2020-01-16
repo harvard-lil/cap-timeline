@@ -133,9 +133,10 @@
         for (let i = 0; i < startingActiveEvents.length; i++) {
           store.commit("setEventStatus", {name: startingActiveEvents[i], status: true})
         }
+        store.dispatch('loadEventTypes', false);
       } else {
         // otherwise activate all events
-        store.commit("activateAllEvents")
+        store.dispatch('loadEventTypes', true);
       }
 
       if (this.$route.query.groups) {

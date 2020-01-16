@@ -78,12 +78,12 @@
         <div class="toggle-group">
             <h3>Event Types</h3>
             <ul class="event-types list-group">
-                <selectable-event v-for="(status, eventType) in eventTypes"
+                <selectable-event-type v-for="(status, eventType) in eventTypes"
                                   v-bind:key="eventType"
                                   :name="eventType"
                                   :status="status"
                                   :fullname="eventTranslation[eventType]">
-                </selectable-event>
+                </selectable-event-type>
             </ul>
         </div>
         <br/>
@@ -92,13 +92,13 @@
             <h3>Themes</h3>
             <ul class="theme-types">
                 <li class="list-item" v-for="(themeName, themeSlug) in themes" v-bind:key="themeSlug">
-          <span class="theme-icon icon" :class="themeSlug">
-            <svgicon icon="circle-3"
-                     :title="themeName"
-                     :class="themeSlug"
-                     width="15" height="15">
-            </svgicon>
-          </span>
+                  <span class="theme-icon icon" :class="themeSlug">
+                    <svgicon icon="circle-3"
+                             :title="themeName"
+                             :class="themeSlug"
+                             width="15" height="15">
+                    </svgicon>
+                  </span>
                     <label class="label">{{themeName}}</label>
                 </li>
             </ul>
@@ -125,12 +125,12 @@
   import 'vue-slider-component/theme/default.css';
 
   import SelectableGroup from './SelectableGroup';
-  import SelectableEvent from './SelectableEvent';
+  import SelectableEventType from './SelectableEventType';
   import store from '../store';
 
   export default {
     name: "toggles",
-    components: {SelectableGroup, SelectableEvent, VueSlider},
+    components: {SelectableGroup, SelectableEventType, VueSlider},
     data() {
       return {
         showingEvent: false,

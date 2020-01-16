@@ -7,7 +7,7 @@ from django.conf import settings
 from django.utils.text import slugify
 
 from users.models import TimelineUser
-from research.models import Meta as TimelineMeta
+from research.models import Meta as TimelineMeta, EventType
 
 
 @register
@@ -47,3 +47,10 @@ class MetaFactory(factory.DjangoModelFactory):
     class Meta:
         model = TimelineMeta
     title = factory.Faker('name')
+
+
+@register
+class EventTypeFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = EventType
+    name = factory.Faker('name')
