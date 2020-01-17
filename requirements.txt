@@ -22,7 +22,7 @@ django-libsass==0.7
 django-pipeline==1.6.14
 django-storages==1.7.1
 django-webpack-loader==0.6.0
-django==2.2.8
+django==2.2.9
 fabric3==1.14.post1
 factory-boy==2.12.0
 faker==3.0.0              # via factory-boy
@@ -56,4 +56,4 @@ urllib3==1.25.3           # via requests
 zipp==0.6.0               # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
-# setuptools==44.0.0        # via markdown, pytest
+# setuptools==45.0.0        # via markdown, pytest
