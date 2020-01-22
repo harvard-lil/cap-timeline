@@ -61,6 +61,12 @@
       updateHide() {
         // Complicated logic about when to hide event
         // Hiding depends on year, event types, and groups
+
+        // if we're in event view, show all related events for now
+        if (this.$parent.$options.name === 'event-view') {
+          this.hide = false;
+          return;
+        }
         if (this.endYear) {
           this.hideStatus.byYear = this.startYear < this.minYear || this.startYear > this.maxYear || this.endYear > this.maxYear || this.endYear < this.minYear;
         } else {
@@ -91,9 +97,8 @@
         }
       },
       getDetails() {
-        // this.$parent.selectedEvent = this.data.id;
         this.$store.commit('setSelectedEvent', this.data.id);
-        this.$router.push({name: 'eventview', params: {event_id: this.data.id}});
+        this.$router.push({name: 'eventview', params: {slug: this.$parent.slug, event_id: this.data.id} });
       },
       updateActiveGroups() {
         for (let i = 0; i < this.groups.length; i++) {
@@ -125,9 +130,6 @@
       eventTypeStatus() {
         this.updateHide();
       },
-      // topLevelActiveGroups() {
-      //   this.updateActiveGroups();
-      // },
       hide() {
         EventBus.$emit("updateHideStatus", {id: this.data.id, hide: this.hide})
       }

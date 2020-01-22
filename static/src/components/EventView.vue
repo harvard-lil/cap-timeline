@@ -48,15 +48,16 @@
                             </ul>
                         </div>
                     </template>
-                    <!--Relationships, preceding-->
+                    <!--Relationships list in event view card, preceding-->
                     <template v-if="relationships.preceding && relationships.preceding.length>0">
-                        <h4 class="small-title">Related,
-                            preceding</h4>
+                        <h4 class="small-title">
+                            Related, preceding
+                        </h4>
                         <div v-for="preceding in relationships.preceding" v-bind:key="preceding.id">
-                            <a class="related-event"
-                               @click="goToRelatedEvent(preceding.id)">
+                            <router-link class="related-event"
+                                         :to="'/' + slug + '/events/' + preceding.id" replace>
                                 {{preceding.name}}
-                            </a>
+                            </router-link>
                             ({{preceding.type}}, {{preceding.start_date.split('-')[0]}})
                         </div>
                     </template>
@@ -65,9 +66,9 @@
                         <h4 class="small-title">Related,
                             succeeding</h4>
                         <div v-for="succeeding in relationships.succeeding" v-bind:key="succeeding.id">
-                            <a class="related-event" @click="goToRelatedEvent(succeeding.id)">
+                            <router-link class="related-event" :to="'/' + slug + '/events/' + succeeding.id" replace>
                                 {{succeeding.name}}
-                            </a>
+                            </router-link>
                             ({{succeeding.type}}, {{succeeding.start_date.split('-')[0]}})
                         </div>
                     </template>
@@ -82,25 +83,29 @@
                 </div>
             </div>
         </div>
-        <h2 v-if="relationships.preceding && relationships.preceding.length>0">Preceding</h2>
-        <ul class="event-list event-list-detail-view">
-            <event v-for="(related_event, idx) in relationships.preceding"
-                   :tabindex="idx"
-                   v-on:keyup.enter="goToRelatedEvent(related_event.id)"
-                   :key="related_event.id"
-                   :data="related_event">
-            </event>
-
-        </ul>
-        <h2 v-if="relationships.succeeding && relationships.succeeding.length>0">Succeeding</h2>
-        <ul class="event-list event-list-detail-view">
-            <event v-for="(related_event, idx) in relationships.succeeding"
-                   :tabindex="idx"
-                   v-on:keyup.enter="goToRelatedEvent(related_event.id)"
-                   :key="related_event.id"
-                   :data="related_event">
-            </event>
-        </ul>
+        <!--    Related events:    -->
+        <!--    Preceding    -->
+        <template v-if="relationships.preceding && relationships.preceding.length>0">
+            <h2>Preceding</h2>
+            <ul class="event-list event-list-detail-view">
+                <event v-for="(related_event, idx) in relationships.preceding"
+                       v-bind:key="related_event.id"
+                       :tabindex="idx"
+                       :data="related_event">
+                </event>
+            </ul>
+        </template>
+        <!--    Succeeding    -->
+        <template v-if="relationships.succeeding && relationships.succeeding.length>0">
+            <h2>Succeeding</h2>
+            <ul class="event-list event-list-detail-view">
+                <event v-for="(related_event, idx) in relationships.succeeding"
+                       :tabindex="idx"
+                       :key="related_event.id"
+                       :data="related_event">
+                </event>
+            </ul>
+        </template>
     </div>
 </template>
 
@@ -125,12 +130,17 @@
         return store.getters.getSlug;
       }
     },
+    watch: {
+      $route (to, from) {
+        if (to.name === from.name) {
+          this.getData();
+        }
+      }
+    },
     methods: {
       getData() {
-        if (!store.getters.getSelectedEvent) {
-          store.commit('setSelectedEvent', this.$route.params.event_id);
-        }
-        let url = process.env.VUE_APP_BACKEND_DATA_URL + store.getters.getSlug + '/events/' + store.getters.getSelectedEvent;
+        store.commit('setSelectedEvent', this.$route.params.event_id);
+        let url = process.env.VUE_APP_BACKEND_DATA_URL + this.slug + '/events/' + store.getters.getSelectedEvent;
         axios.get(url)
             .then((response) => {
               this.event = response.data['event'];
@@ -138,9 +148,6 @@
               this.year = Number(this.event.start_date.substring(0, 4));
             })
       },
-      goToRelatedEvent(id) {
-        this.$router.push({params: {event_id: id}});
-      }
     },
     beforeMount() {
       this.getData();
