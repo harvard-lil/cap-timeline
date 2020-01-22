@@ -91,9 +91,9 @@
         }
       },
       getDetails() {
-        // this.$parent.selectedEvent = this.data.id;
         this.$store.commit('setSelectedEvent', this.data.id);
-        this.$router.push({name: 'eventview', params: {event_id: this.data.id}});
+        let newRoute = '/' + this.$parent.slug + '/events/' + this.data.id;
+        this.$router.go(newRoute)
       },
       updateActiveGroups() {
         for (let i = 0; i < this.groups.length; i++) {
