@@ -171,13 +171,5 @@ AUTH_USER_MODEL = 'users.TimelineUser'
 PERMA_KEY = "Claim your perma key: https://perma.cc/settings/tools"
 PERMA_FOLDER = "0"
 
-# TOGGLE KEYS
-TOGGLES = {
-    'years': {
-        'min': 1850,
-        'max': 1930
-    }
-}
-
 CAP_KEY = "Claim your CAP key: https://case.law/user/register/"
 CAP_URL = "https://api.case.law/v1/cases/"
