@@ -86,7 +86,7 @@ unpublish.short_description = "Unpublish timeline"
 
 @admin.register(Meta)
 class MetaAdmin(admin.ModelAdmin):
-    list_display = ["slug", "title", "subtitle", "published", "published_date"]
+    list_display = ["slug", "title", "subtitle", "published", "published_date", "start_year", "end_year"]
     actions = [publish, unpublish]
 
 

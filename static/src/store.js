@@ -26,8 +26,8 @@ const store = new Vuex.Store({
     eventTranslation: {},
     event: null,
     year: null,
-    absoluteMinYear: 1850,
-    absoluteMaxYear: 1930,
+    absoluteMinYear: null,
+    absoluteMaxYear: null,
     minYear: null,
     maxYear: null,
     zoomLevel: 1,
@@ -71,6 +71,7 @@ const store = new Vuex.Store({
       axios.get(url)
           .then((response) => {
             context.commit('loadYears', response.data)
+            return response.data
           })
     },
     loadThemes(context) {

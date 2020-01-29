@@ -28,19 +28,21 @@
         <!--year slider-->
         <div class="toggle-group">
             <h3>Years</h3>
-            <vue-slider v-model="yearValue"
-                        :min="minSliderYear"
-                        :max="maxSliderYear"
-                        :silent="true"
-                        :height="'14px'"
-                        :enable-cross="false">
-            </vue-slider>
+            <template v-if="absoluteMinYear && absoluteMaxYear">
+                <vue-slider v-model.lazy="yearsRange"
+                            :min="absoluteMinYear"
+                            :max="absoluteMaxYear"
+                            :silent="true"
+                            :height="'14px'"
+                            :enable-cross="false">
+                </vue-slider>
+            </template>
             <ul class="year-values list-inline">
                 <li class="list-inline-item">
-                    <input type="number" :min="minSliderYear" :max="yearValue[1]" v-model="yearValue[0]">
+                    <input type="number" :min="absoluteMinYear" :max="yearsRange[1]" v-model="yearsRange[0]">
                 </li>
                 <li class="list-inline-item">
-                    <input type="number" :max="maxSliderYear" :min="yearValue[0]" v-model="yearValue[1]">
+                    <input type="number" :max="absoluteMaxYear" :min="yearsRange[0]" v-model="yearsRange[1]">
                 </li>
             </ul>
         </div>
@@ -79,10 +81,10 @@
             <h3>Event Types</h3>
             <ul class="event-types list-group">
                 <selectable-event-type v-for="(status, eventType) in eventTypes"
-                                  v-bind:key="eventType"
-                                  :name="eventType"
-                                  :status="status"
-                                  :fullname="eventTranslation[eventType]">
+                                       v-bind:key="eventType"
+                                       :name="eventType"
+                                       :status="status"
+                                       :fullname="eventTranslation[eventType]">
                 </selectable-event-type>
             </ul>
         </div>
@@ -134,9 +136,7 @@
     data() {
       return {
         showingEvent: false,
-        minSliderYear: 0,
-        maxSliderYear: 100,
-        yearValue: [0, 100],
+        yearsRange: [],
         zoom: 1,
       }
     },
@@ -182,22 +182,42 @@
       }
     },
     watch: {
-      yearValue(newYearValue) {
+      yearsRange(newYearValue) {
         store.commit('setMinYear', Number(newYearValue[0]));
         store.commit('setMaxYear', Number(newYearValue[1]));
       },
+      minYear(newVal) {
+        this.yearsRange[0] = newVal;
+      },
+      maxYear(newVal) {
+        this.yearsRange[1] = newVal;
+
+      },
+      absoluteMinYear(year) {
+        if (!(this.minYear)) {
+          store.commit('setMinYear', year)
+        }
+      },
+      absoluteMaxYear(year) {
+        if (!(this.maxYear)) {
+          store.commit('setMaxYear', year)
+        }
+      }
     },
     mounted() {
-      this.minSliderYear = this.absoluteMinYear;
-      this.maxSliderYear = this.absoluteMaxYear;
-
       // check on params in route
       // if minyear and maxyear exist,
       // these overwrite the selected range
-      let startingMinYear = this.$route.query.minyear ? Number(this.$route.query.minyear) : this.minSliderYear;
-      let startingMaxYear = this.$route.query.maxyear ? Number(this.$route.query.maxyear) : this.maxSliderYear;
+      this.yearsRange[0] = this.$route.query.minyear ? Number(this.$route.query.minyear) : this.minYear || this.absoluteMinYear;
+      this.yearsRange[1] = this.$route.query.maxyear ? Number(this.$route.query.maxyear) : this.maxYear || this.absoluteMaxYear;
 
-      this.yearValue = [startingMinYear, startingMaxYear];
+      // update min and max years (a range within the absolute allowed range)
+      if (this.yearsRange[0]) {
+        store.commit('setMinYear', this.yearsRange[0])
+      }
+      if (this.yearsRange[1]) {
+        store.commit('setMaxYear', this.yearsRange[1])
+      }
       this.zoom = this.zoomLevel;
     }
   }

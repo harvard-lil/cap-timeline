@@ -3,7 +3,7 @@ import json
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.conf import settings
-from research import models
+from research import models, helpers
 from research.models import Event, EventType, Group, Region, Relationship, Theme, Meta
 from timeline import settings
 
@@ -81,15 +81,19 @@ def years(request, slug):
     all_years = set()
     # if an event takes several years, add all years between start year and end year
     for event_instance in all_events:
+        start_year = event_instance.start_date.year
         if event_instance.end_date:
+            end_year = event_instance.end_date.year + 1
             try:
-                years = range(event_instance.start_date.year, event_instance.end_date.year + 1)
-                all_years = all_years.union(set(years))
+                for year in range(start_year, end_year):
+                    if helpers.valid_year(year, metadata.start_year, metadata.end_year):
+                        all_years.add(year)
             except Exception as err:
                 print(err, event_instance)
         else:
             try:
-                all_years.add(event_instance.start_date.year)
+                if helpers.valid_year(start_year, metadata.start_year, metadata.end_year):
+                    all_years.add(start_year)
             except Exception as err:
                 print(err, event_instance)
 
@@ -135,7 +139,7 @@ def year_settings(request, slug):
     except models.Meta.DoesNotExist:
         raise Http404('Timeline not found')
 
-    return HttpResponse(json.dumps(settings.TOGGLES['years']), content_type='application/json')
+    return HttpResponse(json.dumps({"min": metadata.start_year, "max": metadata.end_year}), content_type='application/json')
 
 
 def themes(request, slug):
