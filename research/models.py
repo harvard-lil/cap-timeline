@@ -8,6 +8,8 @@ import pytz
 from autoslug import AutoSlugField
 from django.db import models
 from django.db.models import Q
+from django.core.validators import MaxValueValidator, MinValueValidator
+
 from django.conf import settings
 
 
@@ -252,8 +254,16 @@ class Meta(models.Model):
     title = models.CharField(null=False, blank=False, max_length=1000)
     subtitle = models.TextField(null=True, blank=True)
     slug = AutoSlugField(max_length=255, populate_from="title", unique=True, null=False, blank=False, primary_key=True)
-    published = models.BooleanField(default=False)
+    published = models.BooleanField(default=False, help_text="Set this field to true to show timeline on site.")
     published_date = models.DateTimeField(null=True, blank=True)
+    start_year = models.IntegerField(null=True, blank=True, validators=[
+        MaxValueValidator(2100),
+        MinValueValidator(1000),
+    ], help_text="First year that can show in the timeline")
+    end_year = models.IntegerField(null=True, blank=True, validators=[
+        MaxValueValidator(2100),
+        MinValueValidator(1000)
+    ], help_text="Last year that can show in the timeline")
 
     def __str__(self):
         return self.title
