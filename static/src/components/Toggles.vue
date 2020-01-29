@@ -29,7 +29,7 @@
         <div class="toggle-group">
             <h3>Years</h3>
             <template v-if="absoluteMinYear && absoluteMaxYear">
-                <vue-slider v-model.lazy="yearsRange"
+                <vue-slider v-model="yearsRange"
                             :min="absoluteMinYear"
                             :max="absoluteMaxYear"
                             :silent="true"
@@ -191,7 +191,6 @@
       },
       maxYear(newVal) {
         this.yearsRange[1] = newVal;
-
       },
       absoluteMinYear(year) {
         if (!(this.minYear)) {
@@ -204,13 +203,12 @@
         }
       }
     },
-    mounted() {
+    beforeMount() {
       // check on params in route
       // if minyear and maxyear exist,
       // these overwrite the selected range
       this.yearsRange[0] = this.$route.query.minyear ? Number(this.$route.query.minyear) : this.minYear || this.absoluteMinYear;
       this.yearsRange[1] = this.$route.query.maxyear ? Number(this.$route.query.maxyear) : this.maxYear || this.absoluteMaxYear;
-
       // update min and max years (a range within the absolute allowed range)
       if (this.yearsRange[0]) {
         store.commit('setMinYear', this.yearsRange[0])
