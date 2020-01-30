@@ -9,10 +9,12 @@
       grid-column-start: $i;
     }
   }
+
   .squiggly-line-container {
     position: relative;
     height: 50px;
   }
+
   .line {
     position: absolute;
     height: 10px;
@@ -24,10 +26,12 @@
     background: linear-gradient(45deg, transparent, transparent 49%,
             $color-black 49%, transparent 60%);
   }
+
   .line3 {
     background: linear-gradient(-45deg, transparent, transparent 49%,
             $color-black 49%, transparent 60%);
   }
+
   .line {
     background-size: 20px 20px;
   }
@@ -38,6 +42,7 @@
     font-weight: 600;
     border-bottom: 2px solid $color-dark;
     display: inline-block;
+
     &.squiggle {
       .arrow, .etc {
         top: 0.9em;
@@ -45,10 +50,12 @@
         background: $color-light;
         position: relative;
       }
+
       .etc {
         top: 0.75em;
         font-size: 0.8em;
       }
+
       path {
         fill: transparent;
         stroke: $color-black;
@@ -56,13 +63,18 @@
       }
     }
   }
+
   .container-wrapper {
     display: grid;
-    grid-template-columns: 1fr;
     grid-template-rows: 30px repeat(auto-fit, 200px);
-    grid-auto-flow: column;
+
     grid-row-gap: 0.4em;
     grid-auto-columns: 10em;
+    grid-auto-rows: minmax(5em, auto);
+    grid-gap: 0.5em 0;
+    overflow: hidden;
+    grid-template-columns: repeat(auto-fill, 1fr);
+    grid-auto-flow: dense;
   }
   .event-container {
     padding: 0;
@@ -70,41 +82,47 @@
     display: inline-block;
     margin-left: 0.4em;
     border: 1px solid $color-gray-medium;
-    border-radius: 2%;
     overflow-y: scroll;
+
     &:focus {
       outline: 2px solid $color-blue-bright;
     }
+
     .event-type {
       padding: 0.2em 0.4em;
       font-size: 14px;
       letter-spacing: 0.27px;
       border-radius: 2% 0;
     }
+
     .political_dissidents {
       float: right;
       margin-top: 3px;
+
       circle {
         fill: $color-black;
       }
     }
+
     .event-date, .group-section-label {
       font-size: 14px;
       font-weight: 600;
       color: $color-gray;
     }
+
     .group-section-label {
       font-weight: 400;
       margin-left: 0;
     }
+
     .event-contents {
       padding: 0.2em 0.4em;
     }
-    .event-description-short {
-    }
+
     .group-relationships {
       display: inline-block;
     }
+
     .event-name {
       font-weight: 600;
       font-size: 20px;
@@ -113,11 +131,13 @@
       letter-spacing: 0.46px;
     }
   }
+
   .group-list {
     margin: 0;
     display: inline list-item;
     list-style: none;
   }
+
   .group-list li {
     list-style: none;
   }

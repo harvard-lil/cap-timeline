@@ -1,31 +1,31 @@
 <template>
-  <div class="timeline">
-    <div class="container-wrapper">
-      <template v-for="(year, idx) in years">
-        <div v-if="year === '-'" v-bind:key="year + idx"
-             class="year-label squiggle "
-             :class="'col-'+getIdx(idx)">
-          <span class="arrow" title="">&#8672;</span>
-          <span class="etc">&#8230;</span>
-          <span class="arrow" title="">&#8674;</span>
+    <div class="timeline">
+        <div class="container-wrapper">
+            <template v-for="(year, idx) in years">
+                <div v-if="year === '-'" v-bind:key="year + idx"
+                     class="year-label squiggle "
+                     :class="'col-'+getIdx(idx)">
+                    <span class="arrow" title="">&#8672;</span>
+                    <span class="etc">&#8230;</span>
+                    <span class="arrow" title="">&#8674;</span>
+                </div>
+                <div v-else
+                     class="year-label"
+                     v-bind:key="year"
+                     :class="'col-'+getIdx(idx)">
+                    {{year}}
+                </div>
+                <template v-for="event in events[year]">
+                    <timeline-event v-bind:key="event.id"
+                                    :event="event"
+                                    :eventType="eventTranslation[event.type]"
+                                    :tabindex="idx"
+                                    :class="['event-type-'+event.type, 'span' + getLength(event), 'col-'+getIdx(idx)]">
+                    </timeline-event>
+                </template>
+            </template>
         </div>
-        <div v-else
-             class="year-label"
-             v-bind:key="year"
-             :class="'col-'+getIdx(idx)">
-          {{year}}
-        </div>
-        <template v-for="event in events[year]">
-          <timeline-event v-bind:key="event.id"
-                          :event="event"
-                          :eventType="eventTranslation[event.type]"
-                          :tabindex="idx"
-                          :class="['event-type-'+event.type, 'span' + getLength(event), 'col-'+getIdx(idx)]">
-          </timeline-event>
-        </template>
-      </template>
     </div>
-  </div>
 </template>
 
 <script>
