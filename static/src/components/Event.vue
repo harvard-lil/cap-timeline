@@ -6,7 +6,7 @@
     <div class="event-type" :class="'event-type-'+data.type">
       {{ eventTranslation[data.type] }}
     </div>
-    <div class="event-content">
+    <div class="small-event-card-container">
       <div class="event-title">
         <h3>{{ data.name }}</h3>
       </div>

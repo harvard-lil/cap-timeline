@@ -83,6 +83,7 @@ class Citation(models.Model):
             title=self.title,
             cite=self.caselaw_citation,
             url=self.url,
+            author_name=self.author_name,
             publication_title=self.publication_title,
             archived_url=self.archived_url,
             archived_date=str(self.archived_date),
