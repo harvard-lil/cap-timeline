@@ -4,7 +4,7 @@
         <div class="event-details-container" tabindex="0" :class="'event-type-'+event.type">
             <div class="col-1">
                 <div class="event-type">{{event.type}}</div>
-                <div class="event-content">
+                <div class="event-info">
                     <h4 class="small-title">Date</h4>
                     {{event.start_date_parsed}}<span
                         v-if="event.end_date_parsed">&#8211;{{event.end_date_parsed}}</span>
@@ -12,14 +12,14 @@
                         <h4 class="small-title">Sources</h4>
                         <p v-for="citation in event.citations"
                            :key="citation.id">
-                            {{citation.type.charAt(0).toUpperCase()+ citation.type.slice(1)}}: <a :href="citation.url"
-                                                                                                  target="_blank">{{citation.title}}</a>
+                            {{ citation.type.charAt(0).toUpperCase()+ citation.type.slice(1) }}:
+                            <a :href="citation.url" target="_blank">{{ citation.title }}</a>
+                            <span v-if="citation.author_name">, {{ citation.author_name }}</span>
                         </p>
                     </template>
 
                     <!--Groups affected-->
-                    <template v-if="event.groups &&
-          event.groups.length">
+                    <template v-if="event.groups && event.groups.length">
                         <h4 class="small-title">Groups affected</h4>
                         <div class="group-relationships">
                             <ul class="group-list">
@@ -72,14 +72,17 @@
                             ({{succeeding.type}}, {{succeeding.start_date.split('-')[0]}})
                         </div>
                     </template>
+                    <br/>
                 </div>
             </div>
-            <div class="col-2">
-                <h1>{{event.name}}</h1>
-                <h5 v-if="event.type === 'caselaw'">{{event.caselaw_citation}}</h5>
-                <div class="event-description-long" v-if="event.description_long">
-                    <h4 class="small-title">Description</h4>
-                    <span v-html="event.description_long"></span>
+            <div class="col-2 event-main-content">
+                <div class="event-content">
+                    <h1>{{event.name}}</h1>
+                    <h5 v-if="event.type === 'caselaw'">{{event.caselaw_citation}}</h5>
+                    <div class="event-description-long" v-if="event.description_long">
+                        <h4 class="small-title">Description</h4>
+                        <div v-html="event.description_long"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -131,7 +134,7 @@
       }
     },
     watch: {
-      $route (to, from) {
+      $route(to, from) {
         if (to.name === from.name) {
           this.getData();
         }

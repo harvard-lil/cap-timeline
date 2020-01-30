@@ -20,6 +20,7 @@ $group-colors: (
 @each $event-name, $event-color-value in $event-colors {
   .event-container.event-type-#{$event-name} {
     border: 1px solid $color-gray-light-medium;
+
     .group-symbol {
       //fill: #{$event-color-value};
       fill: $color-gray;
@@ -28,11 +29,7 @@ $group-colors: (
   .event-details-container.event-type-#{$event-name} {
     border: 1px solid $color-gray-light-medium;
     .group-symbol {
-      //fill: #{$event-color-value};
       fill: $color-gray;
-    }
-    .small-title {
-      color: #{$event-color-value};
     }
     .event-type {
       background-color: #{$event-color-value};
@@ -63,10 +60,15 @@ ul.event-list {
   grid-row-gap: 3em;
   padding: 0;
   margin-bottom: 3em;
+  .event-container {
+    margin-left: 0;
+    border-radius: 0;
+  }
 }
 
 .event-year-section {
   width: 100%;
+
   h1 {
     font-weight: 600;
     letter-spacing: 0.08em;
@@ -75,9 +77,11 @@ ul.event-list {
 
 .event-list-item {
   grid-area: auto;
+
   h3 {
     margin: 0;
   }
+
   &.event-type-world, &.event-type-us {
     background-color: $color-black;
     color: $color-white;
@@ -88,6 +92,10 @@ ul.event-list {
   padding-left: 0;
 }
 
+.small-event-card-container {
+  padding: 1em;
+}
+
 .event-container {
   list-style: none;
   cursor: pointer;
@@ -96,12 +104,15 @@ ul.event-list {
   h3 {
     margin: 0.2em 0;
   }
+
   ul {
     padding: 0;
   }
+
   .group-relationships {
     margin-top: -3px;
     display: inline-block;
+
     li {
       float: left;
       margin: .1em;
@@ -116,8 +127,10 @@ ul.event-list {
   padding: .5em 1em;
 }
 
-.event-content {
+.event-info {
   padding: 1em;
+  max-height: 480px;
+  overflow-y: scroll;
 }
 
 .event-description-short {
@@ -137,28 +150,49 @@ ul.event-list {
   display: grid;
   grid-template-columns: 12em 1fr;
   box-shadow: 0 0 4px 0 rgba(47, 47, 47, 0.50);
+  line-height: 1.6em;
+
   h1 {
     line-height: 1.1em
   }
+
   .col-1 {
     border-right: 1px solid $color-gray-light-medium;
   }
+
   .col-2 {
     padding: 1em;
+
+    &.event-main-content {
+      padding: 0;
+      max-height: 550px;
+      overflow-y: scroll;
+    }
+    .event-content {
+      width: 90%;
+      margin: 0 auto;
+    }
   }
+
   .small-title {
     text-transform: uppercase;
     font-weight: 600;
     margin-top: 0.8em;
     margin-bottom: 0.1em;
+    &:first-child {
+      margin-top: 0;
+    }
   }
+
   ul {
     padding-left: 0;
     margin: 0;
   }
+
   li {
     list-style: none;
   }
+
   .political_dissidents {
     circle {
       top: 2px;

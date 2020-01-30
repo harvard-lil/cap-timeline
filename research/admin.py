@@ -47,7 +47,7 @@ class EventAdmin(admin.ModelAdmin):
 
 @admin.register(Citation)
 class CitationAdmin(admin.ModelAdmin):
-    list_display = ["title", "type", "publication_title"]
+    list_display = ["title", "publication_title", "type", "archived_url"]
     list_filter = (TimelineFilter,)
 
 
