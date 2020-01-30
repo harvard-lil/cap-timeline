@@ -170,6 +170,19 @@ class Event(models.Model):
         return self.name
 
     def as_json(self):
+        relationships = []
+        for relationship in Relationship.objects.filter(
+                Q(event_one__id=self.id) | Q(event_two__id=self.id)):
+            rel = relationship.event_two if relationship.event_one.id == self.id else relationship.event_one
+            relationships.append([rel.id, rel.type.name])
+
+        json_obj = self.as_limited_json()
+        json_obj["description_long"] = markdown.markdown(self.description_long)
+        json_obj["relationships"] = relationships
+        json_obj["hide"] = self.hide
+        return json_obj
+
+    def as_limited_json(self):
         citations = []
         for cite in self.citation.all():
             c = cite.as_json() if self.citation else None
@@ -181,12 +194,6 @@ class Event(models.Model):
 
         end_date = str(self.end_date) if self.end_date else None
         end_date_parsed = self.end_date.strftime("%b %d, %Y") if self.end_date else None
-
-        relationships = []
-        for relationship in Relationship.objects.filter(
-                Q(event_one__id=self.id) | Q(event_two__id=self.id)):
-            rel = relationship.event_two if relationship.event_one.id == self.id else relationship.event_one
-            relationships.append([rel.id, rel.type.name])
 
         themes = {}
         for theme in self.themes.all():
@@ -201,10 +208,7 @@ class Event(models.Model):
             end_date_parsed=end_date_parsed,
             citations=citations,
             type=self.type.slug,
-            hide=self.hide,
             themes=themes,
-            relationships=relationships,
-            description_long=markdown.markdown(self.description_long),
             description_short=markdown.markdown(self.description_short),
             groups=[group.as_json() for group in self.groups.all()],
         )
@@ -291,11 +295,12 @@ class Meta(models.Model):
         self.save()
 
     def publish_all_data_for_timeline(self):
-        events = Event.objects.select_related('image', 'weight').filter(
-            hide=False, timeline=self.slug).order_by(
-            'start_date').prefetch_related(
-            'citation')
-        all_events = [event.as_json() for event in events]
+        events = Event.objects.filter(hide=False)\
+            .select_related('image', 'weight')\
+            .filter(hide=False, timeline=self.slug)\
+            .order_by('start_date')\
+            .prefetch_related('citation')
+        all_events = [event.as_limited_json() for event in events]
         storage_dir = os.path.join(settings.DB_DIR, 'json')
 
         filename = 'events-%s.json' % self.slug if self.slug else 'events.json'
