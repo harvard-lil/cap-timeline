@@ -31,7 +31,7 @@ def event_types(request, slug):
 
     all_event_types = EventType.objects.filter(timeline=metadata)\
         .order_by('name')\
-        .values('name', 'slug')
+        .values('name', 'slug', 'color')
     return HttpResponse(json.dumps(list(all_event_types)), content_type='application/json')
 
 

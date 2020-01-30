@@ -1,50 +1,5 @@
 $event-types: 'legislation', 'caselaw', 'world', 'us';
 
-// define colors
-$event-colors: (
-        'legislation': $color-legislation,
-        'caselaw': $color-caselaw,
-        'world': $color-world,
-        'us': $color-us,
-);
-
-$group-colors: (
-        'mexican': $color-purple,
-        'jewish': $color-red,
-        'japanese': $color-turquoise,
-        'indian': $color-navy,
-        'chinese': $color-green,
-);
-
-// event border colors
-@each $event-name, $event-color-value in $event-colors {
-  .event-container.event-type-#{$event-name} {
-    border: 1px solid $color-gray-light-medium;
-
-    .group-symbol {
-      //fill: #{$event-color-value};
-      fill: $color-gray;
-    }
-  }
-  .event-details-container.event-type-#{$event-name} {
-    border: 1px solid $color-gray-light-medium;
-    .group-symbol {
-      fill: $color-gray;
-    }
-    .event-type {
-      background-color: #{$event-color-value};
-      color: $color-white;
-      padding: 0.5em 1em;
-    }
-  }
-  .event-type.event-type-#{$event-name} {
-    background-color: $event-color-value;
-    color: $color-white;
-  }
-}
-
-// group colors
-
 p {
   margin: 0;
 }

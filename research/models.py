@@ -218,6 +218,16 @@ class EventType(models.Model):
     name = models.CharField(max_length=1000, blank=True)
     slug = AutoSlugField(max_length=255, populate_from="name", unique=True, null=False, blank=False, primary_key=True)
     timeline = models.ForeignKey('Meta', null=True, blank=True, related_name='eventtypes', on_delete=models.DO_NOTHING)
+    color = models.CharField(max_length=20, blank=True, null=True, help_text="Color for event type",
+                            choices=(("darkgreen", "darkgreen"),
+                                     ("blue", "blue"),
+                                     ("crimson", "crimson"),
+                                     ("lavender", "lavender"),
+                                     ("green", "green"),
+                                     ("gold", "gold"),
+                                     ("orange", "orange"),
+                                     ("pink", "pink"),
+                                     ("navy", "navy")))
 
     def __str__(self):
         return self.name

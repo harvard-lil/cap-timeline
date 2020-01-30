@@ -234,4 +234,12 @@ a {
     visibility: visible;
   }
 }
-
+@each $color-name, $color-value in $colors {
+  .event-container.#{$color-name},
+  .event-details-container.#{$color-name} {
+    .event-type {
+      background-color: $color-value;
+      color: $color-white;
+    }
+  }
+}

@@ -1,7 +1,7 @@
 <template>
     <div class="detail-view">
         <h1>{{year}}</h1>
-        <div class="event-details-container" tabindex="0" :class="'event-type-'+event.type">
+        <div class="event-details-container" tabindex="0" :class="['event-type-'+event.type, 'color-'+eventColors[event.type]]">
             <div class="col-1">
                 <div class="event-type">{{event.type}}</div>
                 <div class="event-info">
@@ -131,6 +131,9 @@
     computed: {
       slug() {
         return store.getters.getSlug;
+      },
+      eventColors() {
+        return store.getters.getEventColors;
       }
     },
     watch: {

@@ -20,7 +20,7 @@
                                     :event="event"
                                     :eventType="eventTranslation[event.type]"
                                     :tabindex="idx"
-                                    :class="['event-type-'+event.type, 'span' + getLength(event), 'col-'+getIdx(idx)]">
+                                    :class="['event-type-'+event.type, 'color-'+eventColors[event.type], 'span' + getLength(event), 'col-'+getIdx(idx)]">
                     </timeline-event>
                 </template>
             </template>
@@ -136,6 +136,9 @@
       slug() {
         return store.getters.getSlug;
       },
+      eventColors() {
+        return store.getters.getEventColors;
+      }
     },
     watch: {
       minYear() {

@@ -3,16 +3,15 @@ $font-family-monospace: "source-code", monospace;
 
 
 // colors
-$color-legislation: #276E76;
-$color-caselaw: #0075FF;
-$color-world: #6F2E4C;
-$color-us: #8E67C0;
+$color-darkgreen: #276E76;
+$color-blue: #0075FF;
+$color-crimson: #6F2E4C;
+$color-lavender: #8E67C0;
 
 $color-black: #2F2F2F;
 $color-red: #EA3F00;
 $color-orange: #f06d0d;
 $color-pink: #C35387;
-$color-purple: $color-us;
 $color-navy: #29466B;
 $color-turquoise: #3AA4B1;
 $color-green: #3EB76A;
@@ -34,3 +33,16 @@ $color-dark: #26262E;
 // fonts
 $font-weight-semibold: 600;
 $font-weight-bold: 700;
+
+// colors for customization
+$colors: (
+        'color-darkgreen': $color-darkgreen,
+        'color-blue': $color-blue,
+        'color-crimson': $color-crimson,
+        'color-lavender': $color-lavender,
+        'color-gold': $color-gold,
+        'color-pink': $color-pink,
+        'color-orange': $color-orange,
+        'color-navy': $color-navy,
+        'color-green': $color-green,
+)
