@@ -22,6 +22,7 @@ const store = new Vuex.Store({
       russian: 'diamond-2',
       italian: 'square-2',
     },
+    eventColors: {},
     eventTypes: {},
     eventTranslation: {},
     event: null,
@@ -63,6 +64,7 @@ const store = new Vuex.Store({
       axios.get(url)
           .then((response) => {
             context.commit('loadEventTypes', {types: response.data, activateAll: activateAll})
+            context.commit('setEventColors', response.data)
           })
 
     },
@@ -117,6 +119,11 @@ const store = new Vuex.Store({
           Vue.set(state.eventTypes, eventTypes[i].slug, data.activateAll);
         }
         Vue.set(state.eventTranslation, eventTypes[i].slug, eventTypes[i].name);
+      }
+    },
+    setEventColors(state, data) {
+      for (let i=0; i<data.length; i++) {
+       Vue.set(state.eventColors, data[i].slug, data[i].color);
       }
     },
     loadYears(state, years) {
@@ -189,6 +196,9 @@ const store = new Vuex.Store({
     },
     getEventTypes(state) {
       return state.eventTypes
+    },
+    getEventColors(state) {
+      return state.eventColors
     },
     getEventTranslation(state) {
       return state.eventTranslation

@@ -97,7 +97,7 @@ class RegionAdmin(admin.ModelAdmin):
 
 @admin.register(EventType)
 class EventTypeAdmin(admin.ModelAdmin):
-    list_display = ["slug", "name"]
+    list_display = ["slug", "name", "color"]
     list_filter = (TimelineFilter,)
 
 
