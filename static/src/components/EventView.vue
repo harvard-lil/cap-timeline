@@ -150,6 +150,8 @@
         axios.get(url)
             .then((response) => {
               this.event = response.data['event'];
+              // TODO: changing document title here is a hack. Need to use a plug in (or something more clever in the router) in the future.
+              document.title = this.event.name;
               this.relationships = response.data.related_events;
               this.year = Number(this.event.start_date.substring(0, 4));
             })
@@ -159,4 +161,5 @@
       this.getData();
     },
   }
+
 </script>
