@@ -15,6 +15,7 @@ jobs:
           POSTGRES_DB: research
           POSTGRES_ROLE: postgres
           POSTGRES_PASSWORD: password
+
     working_directory: ~/timeline
 
     steps:
