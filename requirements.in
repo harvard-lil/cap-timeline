@@ -14,7 +14,7 @@ django-autoslug
 django-extensions
 
 pytz
-pip-tools
+pip-tools==4.5.1
 Fabric3
 
 markdown
