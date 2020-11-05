@@ -15,3 +15,12 @@ COPY requirements.txt /app/
 RUN pip install pip==19.3.1 \
     && pip install -r requirements.txt \
     && rm requirements.txt
+
+# nodejs
+COPY package.json /app
+# pin node version -- see https://github.com/nodesource/distributions/issues/33
+RUN curl -o nodejs.deb https://deb.nodesource.com/node_12.x/pool/main/n/nodejs/nodejs_12.18.4-1nodesource1_amd64.deb \
+    && dpkg -i ./nodejs.deb \
+    && rm nodejs.deb \
+    && npm install \
+    && rm package.json
