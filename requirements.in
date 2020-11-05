@@ -16,6 +16,7 @@ django-extensions
 pytz
 pip-tools==4.5.1
 Fabric3
+cryptography>=3.2  # pinned for now, from Fabric3 via paramiko
 
 markdown
 
