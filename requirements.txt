@@ -21,7 +21,7 @@ django-libsass==0.7       # via -r requirements.in
 django-pipeline==1.6.14   # via -r requirements.in, libsasscompiler
 django-storages==1.7.1    # via -r requirements.in
 django-webpack-loader==0.6.0  # via -r requirements.in
-django==2.2.12            # via -r requirements.in, django-appconf, django-cors-headers, django-storages
+django==2.2.17            # via -r requirements.in, django-appconf, django-cors-headers, django-storages
 fabric3==1.14.post1       # via -r requirements.in
 factory-boy==2.12.0       # via -r requirements.in, pytest-factoryboy
 faker==3.0.0              # via factory-boy

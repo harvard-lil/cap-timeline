@@ -4,7 +4,7 @@ psycopg2
 
 libsasscompiler
 
-django
+django~=2.2.13
 django-storages
 django-pipeline
 django-libsass
