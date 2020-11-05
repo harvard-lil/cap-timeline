@@ -32,3 +32,18 @@ To generate svg icons
 ```
 $ npm run generate-icons 
 ```
+
+Docker
+------
+
+To get a dev set-up running in Docker, make sure you have Docker and `docker-compose` installed, then run
+```
+bash ./docker/init.sh
+```
+Then you should be able to run
+```
+docker-compose exec web fab run
+docker-compose exec web pytest
+docker-compose down
+```
+etc.
