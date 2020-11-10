@@ -86,8 +86,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'research',
         'USER': 'postgres',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'PASSWORD': 'example' if os.environ.get('DOCKERIZED') else '',
+        'HOST': 'db' if os.environ.get('DOCKERIZED') else 'localhost',
         'PORT': ''
     }
 }
