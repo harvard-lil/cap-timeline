@@ -8,7 +8,7 @@
        :title="event.name + ': ' + event.start_date_parsed + '(' + event.type + ')'">
     <div class="event-type" :class="'event-type-'+event.type">
       {{eventType}}
-      <span v-for="(themeName, themeSlug) in event.themes">
+      <span v-for="(themeName, themeSlug) in event.themes" :key="themeName">
         <svgicon icon="circle-3"
                  :title="themeName"
                  :class="themeSlug"
