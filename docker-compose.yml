@@ -13,7 +13,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/Dockerfile
-    image: timeline:0.05
+    image: timeline:0.06
     tty: true
     command: bash
     environment:
